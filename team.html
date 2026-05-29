@@ -36,8 +36,22 @@
     body.reveal-on [data-reveal] { opacity: 0; transform: translateY(26px); transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1); }
     body.reveal-on [data-reveal].in { opacity: 1; transform: none; }
 
-    /* ===== 001 - Editorial hero ===== */
-    .ehero { padding: clamp(48px, 9vh, 104px) 0 clamp(48px, 8vh, 88px); }
+    /* ===== 001 - Editorial hero (loft background) ===== */
+    .ehero { position: relative; overflow: hidden;
+      min-height: clamp(620px, 90vh, 900px);
+      padding: clamp(48px, 9vh, 104px) 0 clamp(72px, 11vh, 130px); }
+    .ehero > .wrap { position: relative; z-index: 2; }
+    .ehero::before { content: ""; position: absolute; inset: 0; z-index: 0;
+      background: url("assets/team-bg.webp") center right / cover no-repeat; }
+    .ehero::after { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+      background:
+        linear-gradient(to right, rgba(255,255,255,.97) 0%, rgba(255,255,255,.92) 36%, rgba(255,255,255,.6) 72%, rgba(255,255,255,.46) 100%),
+        linear-gradient(to bottom, rgba(255,255,255,0) 48%, rgba(255,255,255,.85) 86%, #ffffff 100%); }
+    @media (max-width: 860px) {
+      .ehero { min-height: 0; }
+      .ehero::after { background:
+        linear-gradient(to bottom, rgba(255,255,255,.93) 0%, rgba(255,255,255,.87) 55%, #ffffff 100%); }
+    }
     .ehero h1 {
       font-family: var(--serif); font-weight: 500;
       font-size: clamp(44px, 8.2vw, 112px); line-height: .96;
