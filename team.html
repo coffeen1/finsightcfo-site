@@ -85,41 +85,46 @@
     .team-intro { color: var(--ink-2); font-size: clamp(16px, 1.25vw, 18px); line-height: 1.72; margin: 20px auto 0; max-width: 52ch; }
 
     .team-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 350px)); justify-content: center; gap: clamp(26px, 3.2vw, 48px); margin-top: clamp(46px, 6vw, 78px); }
-    .tcard { text-align: center; }
-    .tcard-photo { position: relative; border-radius: 14px; overflow: hidden; aspect-ratio: 4 / 5; background: #1a1c20;
-      box-shadow: 0 28px 56px -32px rgba(18, 20, 26, .65); }
-    .tcard-photo img {
-      width: 100%; height: 100%; object-fit: cover; object-position: center 22%; display: block;
-      filter: grayscale(1) contrast(1.06) brightness(.97);
-      transition: transform .8s cubic-bezier(.2,.7,.2,1), filter .55s ease;
-    }
-    .tcard:hover .tcard-photo img { transform: scale(1.045); filter: grayscale(.12) contrast(1.04); }
-    .tcard-photo::after { content: ""; position: absolute; inset: 0; pointer-events: none;
-      background: linear-gradient(to top, rgba(14, 16, 22, .42), rgba(14, 16, 22, 0) 46%); }
 
-    .tcard-role { font-size: 11px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: var(--ink-3); margin: 24px 0 0; }
-    .tcard-name { font-family: var(--serif); font-weight: 500; font-size: clamp(25px, 2.5vw, 31px); letter-spacing: -.018em; color: var(--ink); margin: 9px 0 0; line-height: 1.08; }
-    .tcard-actions { display: flex; flex-direction: column; align-items: center; gap: 15px; margin-top: 22px; }
-    .tpill { display: inline-flex; align-items: center; gap: 9px; background: var(--btn); color: #fff; border: 0; border-radius: 40px;
-      padding: 12px 24px; font: inherit; font-size: 13.5px; font-weight: 600; letter-spacing: .005em; cursor: pointer; text-decoration: none;
-      transition: background .18s ease, transform .18s ease, box-shadow .18s ease; }
-    .tpill:hover { background: var(--btn-hover); transform: translateY(-1px); box-shadow: 0 10px 22px -14px rgba(11, 11, 11, .6); }
-    .tpill .ic { width: 15px; height: 15px; flex: none; }
-    .tmore { background: none; border: 0; padding: 0; cursor: pointer; font: inherit; font-size: 11.5px; font-weight: 700;
-      letter-spacing: .1em; text-transform: uppercase; color: var(--accent); display: inline-flex; align-items: center; gap: 8px; }
-    .tmore .chev { transition: transform .3s ease; font-size: 9px; }
-    .tmore[aria-expanded="true"] .chev { transform: rotate(180deg); }
+    /* ---- Flip cards: photo on the front, bio on the back (hover or tap) ---- */
+    .tcard { perspective: 1600px; }
+    .tcard-flip { position: relative; width: 100%; aspect-ratio: 4 / 5; transform-style: preserve-3d;
+      transition: transform .85s cubic-bezier(.4, .1, .2, 1); cursor: pointer;
+      box-shadow: 0 28px 56px -32px rgba(18, 20, 26, .65); border-radius: 14px; }
+    .tcard:hover .tcard-flip, .tcard.flipped .tcard-flip { transform: rotateY(180deg); }
+    .tcard-flip:focus-visible { outline: 2px solid var(--ink); outline-offset: 6px; }
 
-    /* expandable full-width bio detail below the grid */
-    .tdetail { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .55s cubic-bezier(.4,0,.2,1), margin-top .4s ease; }
-    .tdetail.open { grid-template-rows: 1fr; margin-top: clamp(26px, 3.4vw, 44px); }
-    .tdetail-in { overflow: hidden; min-height: 0; }
-    .tdetail-card { background: var(--panel); border: 1px solid var(--line); border-radius: 20px; padding: clamp(26px, 3.4vw, 46px);
-      box-shadow: var(--shadow); opacity: 0; transform: translateY(10px); transition: opacity .45s ease, transform .45s ease; }
-    .tdetail.open .tdetail-card { opacity: 1; transform: none; transition: opacity .5s ease .12s, transform .5s ease .12s; }
-    .tdetail-grid { display: grid; grid-template-columns: minmax(0, .64fr) minmax(0, 1fr); gap: clamp(26px, 4vw, 60px); align-items: start; }
-    .tdetail-name { font-family: var(--serif); font-weight: 600; font-size: clamp(27px, 3vw, 40px); letter-spacing: -.02em; line-height: 1.02; margin: 0; }
-    .tdetail-role { font-size: 11.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); margin: 13px 0 22px; }
+    .tcard-face { position: absolute; inset: 0; border-radius: 14px; overflow: hidden;
+      -webkit-backface-visibility: hidden; backface-visibility: hidden; }
+
+    /* front */
+    .tcard-front { background: #1a1c20; }
+    .tcard-front img { width: 100%; height: 100%; object-fit: cover; object-position: center 22%; display: block;
+      filter: grayscale(1) contrast(1.06) brightness(.97); }
+    .tcard-front::after { content: ""; position: absolute; inset: 0; pointer-events: none;
+      background: linear-gradient(to top, rgba(10, 11, 14, .78) 0%, rgba(10, 11, 14, .12) 38%, rgba(10, 11, 14, 0) 60%); }
+    .tcard-cap { position: absolute; left: 0; right: 0; bottom: 0; padding: 22px 20px; text-align: center; z-index: 1; }
+    .tcard-name { font-family: var(--serif); font-weight: 500; font-size: clamp(22px, 2.3vw, 28px); letter-spacing: -.015em; color: #fff; margin: 0; line-height: 1.08; }
+    .tcard-role { font-size: 10px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: rgba(255,255,255,.7); margin: 9px 0 0; }
+    .tcard-hint { position: absolute; top: 14px; right: 14px; z-index: 1; font-size: 9.5px; font-weight: 700; letter-spacing: .14em;
+      text-transform: uppercase; color: rgba(255,255,255,.78); background: rgba(0,0,0,.35); border: 1px solid rgba(255,255,255,.3);
+      border-radius: 30px; padding: 5px 11px; backdrop-filter: blur(4px); transition: opacity .3s ease; }
+    .tcard:hover .tcard-hint, .tcard.flipped .tcard-hint { opacity: 0; }
+
+    /* back: bio in black Times New Roman */
+    .tcard-back { transform: rotateY(180deg); background: #fff; border: 1px solid var(--line);
+      display: flex; flex-direction: column; padding: clamp(22px, 2.4vw, 30px); text-align: left;
+      font-family: "Times New Roman", Times, serif; color: #000; overflow-y: auto; }
+    .tcard-back h3 { font-family: "Times New Roman", Times, serif; font-weight: 700; font-size: clamp(20px, 2vw, 25px);
+      letter-spacing: 0; line-height: 1.1; margin: 0; color: #000; }
+    .tcard-back .tcard-back-role { font-family: "Times New Roman", Times, serif; font-style: italic; font-size: 13.5px;
+      color: #222; margin: 5px 0 0; }
+    .tcard-back .rule-sm { width: 38px; height: 2px; background: #000; margin: 13px 0 14px; }
+    .tcard-back p { font-family: "Times New Roman", Times, serif; font-size: clamp(13.5px, 1vw, 15px); line-height: 1.5;
+      color: #000; margin: 0 0 11px; }
+    .tcard-back p:last-child { margin-bottom: 0; }
+    .tcard-back .tcard-link { font-family: "Times New Roman", Times, serif; font-size: 14px; color: #000; text-decoration: underline;
+      text-underline-offset: 3px; margin-top: auto; padding-top: 14px; display: inline-block; }
 
     .fmeta { display: grid; grid-template-columns: auto 1fr; gap: 9px 20px; }
     .fmeta dt { color: var(--ink-3); font-size: 11px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; align-self: center; }
@@ -163,7 +168,7 @@
     }
     @media (prefers-reduced-motion: reduce) {
       body.reveal-on [data-reveal] { opacity: 1 !important; transform: none !important; transition: none !important; }
-      .tcard-photo img, .tdetail, .tdetail-card { transition: none !important; }
+      .tcard-flip { transition: none !important; }
     }
 
     /* ===== Team gate (minimal: dramatic lightning strike across the words) ===== */
@@ -299,109 +304,50 @@
 
       <!-- Bryce -->
       <article class="tcard">
-        <span class="tcard-photo">
-          <img src="assets/founder-bryce.webp" alt="Bryce Armstrong, Co-Founder of FinsightCFO" loading="lazy" decoding="async" />
-        </span>
-        <p class="tcard-role">Co-Founder · Strategy &amp; Operations</p>
-        <h3 class="tcard-name">Bryce Armstrong</h3>
-        <div class="tcard-actions">
-          <a class="tpill" href="https://www.linkedin.com/in/bryce-armstrong-4692a2280/" target="_blank" rel="noopener">
-            <svg class="ic" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5A2.5 2.5 0 1 1 0 3.5a2.5 2.5 0 0 1 4.98 0zM.5 8h4V24h-4V8zM8 8h3.8v2.2h.05c.53-1 1.83-2.2 3.77-2.2 4.03 0 4.78 2.65 4.78 6.1V24h-4v-7c0-1.67-.03-3.8-2.32-3.8-2.32 0-2.68 1.8-2.68 3.68V24H8V8z"/></svg>
-            Connect with Bryce
-          </a>
-          <button class="tmore" type="button" aria-expanded="false" aria-controls="detail-bryce">
-            <span class="lbl">Read full story</span><span class="chev" aria-hidden="true">▾</span>
-          </button>
+        <div class="tcard-flip" tabindex="0" role="button" aria-label="Bryce Armstrong, hover or tap to read bio">
+          <div class="tcard-face tcard-front">
+            <img src="assets/founder-bryce.webp" alt="Bryce Armstrong, Co-Founder of FinsightCFO" loading="lazy" decoding="async" />
+            <span class="tcard-hint">Read bio</span>
+            <div class="tcard-cap">
+              <h3 class="tcard-name">Bryce Armstrong</h3>
+              <p class="tcard-role">Co-Founder · Strategy &amp; Operations</p>
+            </div>
+          </div>
+          <div class="tcard-face tcard-back">
+            <h3>Bryce Armstrong</h3>
+            <p class="tcard-back-role">Co-Founder · Economics, Arizona State University</p>
+            <div class="rule-sm" aria-hidden="true"></div>
+            <p>Bryce studied Economics at Arizona State, building a foundation in markets and how financial systems shape growth. Growing up around small businesses, he saw firsthand how hard it is for owners to manage cash flow, payroll, and planning while running the company.</p>
+            <p>He believes owners need more than software, they need clear guidance and the CFO-level thinking larger companies rely on. At FinsightCFO he leads customer strategy, operations, and financial clarity, using AI to turn messy data into practical next steps.</p>
+            <a class="tcard-link" href="https://www.linkedin.com/in/bryce-armstrong-4692a2280/" target="_blank" rel="noopener">Connect on LinkedIn &rarr;</a>
+          </div>
         </div>
       </article>
 
       <!-- Luke -->
       <article class="tcard">
-        <span class="tcard-photo">
-          <img src="assets/founder-luke.webp" alt="Luke Coffeen, Co-Founder of FinsightCFO" loading="lazy" decoding="async" />
-        </span>
-        <p class="tcard-role">Co-Founder · Forecasting &amp; Underwriting</p>
-        <h3 class="tcard-name">Luke Coffeen</h3>
-        <div class="tcard-actions">
-          <a class="tpill" href="https://www.linkedin.com/in/lukecoffeen/" target="_blank" rel="noopener">
-            <svg class="ic" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5A2.5 2.5 0 1 1 0 3.5a2.5 2.5 0 0 1 4.98 0zM.5 8h4V24h-4V8zM8 8h3.8v2.2h.05c.53-1 1.83-2.2 3.77-2.2 4.03 0 4.78 2.65 4.78 6.1V24h-4v-7c0-1.67-.03-3.8-2.32-3.8-2.32 0-2.68 1.8-2.68 3.68V24H8V8z"/></svg>
-            Connect with Luke
-          </a>
-          <button class="tmore" type="button" aria-expanded="false" aria-controls="detail-luke">
-            <span class="lbl">Read full story</span><span class="chev" aria-hidden="true">▾</span>
-          </button>
+        <div class="tcard-flip" tabindex="0" role="button" aria-label="Luke Coffeen, hover or tap to read bio">
+          <div class="tcard-face tcard-front">
+            <img src="assets/founder-luke.webp" alt="Luke Coffeen, Co-Founder of FinsightCFO" loading="lazy" decoding="async" />
+            <span class="tcard-hint">Read bio</span>
+            <div class="tcard-cap">
+              <h3 class="tcard-name">Luke Coffeen</h3>
+              <p class="tcard-role">Co-Founder · Forecasting &amp; Underwriting</p>
+            </div>
+          </div>
+          <div class="tcard-face tcard-back">
+            <h3>Luke Coffeen</h3>
+            <p class="tcard-back-role">Co-Founder · Financial Planning &amp; Real Estate, W. P. Carey</p>
+            <div class="rule-sm" aria-hidden="true"></div>
+            <p>Luke studied Financial Planning and Real Estate at ASU's W. P. Carey School, building deep experience in financial modeling, underwriting, forecasting, and evaluating business opportunities.</p>
+            <p>His work centers on understanding risk and translating complex numbers into practical decisions. At FinsightCFO he leads forecasting logic, underwriting discipline, and cash flow visibility, using AI to make sophisticated financial thinking more accessible.</p>
+            <a class="tcard-link" href="https://www.linkedin.com/in/lukecoffeen/" target="_blank" rel="noopener">Connect on LinkedIn &rarr;</a>
+          </div>
         </div>
       </article>
 
     </div>
 
-    <!-- Bryce, full story -->
-    <div class="tdetail" id="detail-bryce" role="region" aria-label="Bryce Armstrong, full story">
-      <div class="tdetail-in">
-        <div class="tdetail-card">
-          <div class="tdetail-grid">
-            <div>
-              <h3 class="tdetail-name">Bryce Armstrong</h3>
-              <p class="tdetail-role">Co-Founder · Economics, Arizona State University</p>
-              <dl class="fmeta">
-                <dt>School</dt><dd>Arizona State University</dd>
-                <dt>Studied</dt><dd>Economics</dd>
-              </dl>
-              <div class="fexp">
-                <h4>Expertise</h4>
-                <div class="tags">
-                  <span class="tag">Economics</span>
-                  <span class="tag">Small business operations</span>
-                  <span class="tag">Customer strategy</span>
-                  <span class="tag">Financial clarity</span>
-                  <span class="tag">AI-enabled workflows</span>
-                </div>
-              </div>
-            </div>
-            <div class="fbio">
-              <p>Bryce Armstrong studied Economics at Arizona State University, where he developed a strong foundation in markets, business decision-making, and how financial systems shape growth. Growing up around small businesses, Bryce saw firsthand how frustrating it can be for owners to manage cash flow, expenses, payroll, and planning while also trying to run and grow the company.</p>
-              <p>That experience shaped his belief that small businesses need more than software. They need clear financial guidance, better systems, and access to the kind of CFO-level thinking that larger companies rely on. Bryce uses AI heavily to research, analyze, organize information, and build workflows that turn messy financial data into practical next steps for business owners.</p>
-              <p>At FinsightCFO, Bryce focuses on customer strategy, business operations, financial clarity, and making AI-powered finance support useful for real small business owners.</p>
-              <div class="fquote"><p>“I grew up seeing how much pressure small business owners carry. We want to give them the financial clarity and confidence that larger companies get from full finance teams.”</p></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Luke, full story -->
-    <div class="tdetail" id="detail-luke" role="region" aria-label="Luke Coffeen, full story">
-      <div class="tdetail-in">
-        <div class="tdetail-card">
-          <div class="tdetail-grid">
-            <div>
-              <h3 class="tdetail-name">Luke Coffeen</h3>
-              <p class="tdetail-role">Co-Founder · Financial Planning &amp; Real Estate, W. P. Carey</p>
-              <dl class="fmeta">
-                <dt>School</dt><dd>Arizona State University, W. P. Carey School of Business</dd>
-                <dt>Studied</dt><dd>Financial Planning and Real Estate</dd>
-              </dl>
-              <div class="fexp">
-                <h4>Expertise</h4>
-                <div class="tags">
-                  <span class="tag">Financial modeling</span>
-                  <span class="tag">Underwriting</span>
-                  <span class="tag">Forecasting</span>
-                  <span class="tag">Strategic analysis</span>
-                  <span class="tag">Cash flow visibility</span>
-                  <span class="tag">AI-supported analysis</span>
-                </div>
-              </div>
-            </div>
-            <div class="fbio">
-              <p>Luke Coffeen studied Financial Planning and Real Estate at Arizona State University’s W. P. Carey School of Business, where he built a strong foundation in finance, investment analysis, modeling, underwriting, and long-term decision-making. He brings deep experience in financial modeling, underwriting, forecasting, and evaluating business opportunities across a wide range of organizations.</p>
-              <p>Luke’s work centers on understanding risk, building clear financial models, and translating complex numbers into practical decisions. He uses AI heavily to accelerate research, structure analysis, test assumptions, and make sophisticated financial thinking more accessible. At FinsightCFO, Luke focuses on forecasting logic, underwriting discipline, cash flow visibility, reporting systems, and helping small businesses use financial data with more confidence.</p>
-              <div class="fquote"><p>“Small businesses deserve financial tools that do more than show numbers. They need systems that help them understand risk, see what is coming, and make stronger decisions with confidence.”</p></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
 
   </div>
 </section>
@@ -552,23 +498,18 @@
     setTimeout(enter, reduce ? 350 : 1920);
   })();
 
-  // Founder cards: "Read full story" expands a full-width detail panel (one at a time)
+  // Founder flip cards: hover flips them (CSS); click/tap/keyboard also toggles for touch + a11y
   (function () {
-    var btns = Array.prototype.slice.call(document.querySelectorAll('.tmore'));
-    if (!btns.length) return;
-    function setState(btn, open) {
-      var panel = document.getElementById(btn.getAttribute('aria-controls'));
-      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-      var lbl = btn.querySelector('.lbl');
-      if (lbl) lbl.textContent = open ? 'Hide story' : 'Read full story';
-      if (panel) panel.classList.toggle('open', open);
-    }
-    btns.forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        var panel = document.getElementById(btn.getAttribute('aria-controls'));
-        var willOpen = !(panel && panel.classList.contains('open'));
-        btns.forEach(function (b) { if (b !== btn) setState(b, false); });
-        setState(btn, willOpen);
+    var cards = Array.prototype.slice.call(document.querySelectorAll('.tcard'));
+    cards.forEach(function (card) {
+      var flip = card.querySelector('.tcard-flip');
+      if (!flip) return;
+      flip.addEventListener('click', function (e) {
+        if (e.target.closest('.tcard-link')) return; // let the LinkedIn link open normally
+        card.classList.toggle('flipped');
+      });
+      flip.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); card.classList.toggle('flipped'); }
       });
     });
   })();
