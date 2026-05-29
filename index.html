@@ -56,14 +56,14 @@
       height: 7px;
       border-radius: 50%;
       background: var(--accent);
-      box-shadow: 0 0 0 0 rgba(176, 30, 40, .5);
+      box-shadow: 0 0 0 0 rgba(28, 111, 212, .5);
       animation: pulse 2.2s infinite;
       flex: none;
     }
     @keyframes pulse {
-      0%   { box-shadow: 0 0 0 0 rgba(176, 30, 40, .45); }
-      70%  { box-shadow: 0 0 0 9px rgba(176, 30, 40, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(176, 30, 40, 0); }
+      0%   { box-shadow: 0 0 0 0 rgba(28, 111, 212, .45); }
+      70%  { box-shadow: 0 0 0 9px rgba(28, 111, 212, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(28, 111, 212, 0); }
     }
     .hero h1 {
       font-family: var(--serif);
@@ -106,7 +106,7 @@
       pointer-events: none;
       z-index: 2;
       background:
-        linear-gradient(120deg, rgba(176, 30, 40, .10) 0%, rgba(176, 30, 40, 0) 46%),
+        linear-gradient(120deg, rgba(28, 111, 212, .10) 0%, rgba(28, 111, 212, 0) 46%),
         linear-gradient(to bottom, rgba(255, 255, 255, .22) 0%, rgba(255, 255, 255, 0) 12%);
     }
 
@@ -328,7 +328,7 @@
     .plan ul { list-style: none; margin: 0 0 24px; padding: 0; display: flex; flex-direction: column; gap: 11px; flex: 1; }
     .plan li { display: flex; gap: 10px; font-size: 14.5px; }
     .plan li::before { content: "›"; color: var(--accent); font-weight: 700; }
-    .plan--feat li::before { color: #E0888D; }
+    .plan--feat li::before { color: #8FC4F5; }
     .plan .btn { justify-content: center; }
 
     /* Expandable plan details */
@@ -347,7 +347,7 @@
       color: var(--accent);
       user-select: none;
     }
-    .plan--feat .plan-more > summary { color: #E0888D; }
+    .plan--feat .plan-more > summary { color: #8FC4F5; }
     .plan-more > summary::-webkit-details-marker { display: none; }
     .plan-more > summary::after { content: "\25BE"; font-size: 11px; transition: transform .2s; }
     .plan-more[open] > summary::after { transform: rotate(180deg); }
@@ -365,7 +365,7 @@
     .pm-block li { display: flex; gap: 8px; font-size: 12.5px; color: var(--ink-2); line-height: 1.4; }
     .plan--feat .pm-block li { color: var(--accent-soft); }
     .pm-block li::before { content: "\203A"; color: var(--accent); font-weight: 700; flex: none; }
-    .plan--feat .pm-block li::before { color: #E0888D; }
+    .plan--feat .pm-block li::before { color: #8FC4F5; }
     .pm-turn { font-size: 11.5px; color: var(--ink-3); line-height: 1.45; }
     .plan--feat .pm-turn { color: var(--accent-soft); }
     .pm-turn strong { color: var(--ink-2); }
@@ -454,7 +454,7 @@
     .intro-stage { position: relative; z-index: 2; width: min(680px, 86vw); text-align: center; }
     .intro-chart { width: 100%; height: auto; display: block; }
     .intro-line { fill: none; stroke: var(--accent); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round;
-      filter: drop-shadow(0 6px 14px rgba(176, 30, 40,.35)); }
+      filter: drop-shadow(0 6px 14px rgba(28, 111, 212,.35)); }
     .intro-area { fill: url(#introGrad); opacity: 0; animation: introUp .8s ease 1.1s forwards; }
     .intro-tip { fill: var(--accent); opacity: 0; transform-box: fill-box; transform-origin: center;
       animation: introPop .45s cubic-bezier(.2,1.4,.4,1) 1.55s forwards; }
@@ -465,7 +465,7 @@
     @keyframes introUp { to { opacity: 1; } }
     .intro-tag { position: absolute; top: 2%; right: 3%; display: inline-flex; align-items: center; gap: 6px;
       background: var(--accent); color: #fff; font-family: var(--sans); font-weight: 700; font-size: 14px;
-      letter-spacing: .02em; padding: 7px 13px; border-radius: 30px; box-shadow: 0 12px 26px -10px rgba(176, 30, 40,.6);
+      letter-spacing: .02em; padding: 7px 13px; border-radius: 30px; box-shadow: 0 12px 26px -10px rgba(28, 111, 212,.6);
       opacity: 0; transform: translateY(10px) scale(.9); animation: introTag .55s cubic-bezier(.2,1.4,.4,1) 1.7s forwards; }
     @keyframes introTag { to { opacity: 1; transform: translateY(0) scale(1); } }
     .intro-title { font-family: var(--serif); font-weight: 500; font-size: clamp(34px, 6vw, 58px); line-height: 1;
@@ -559,6 +559,30 @@
     .intake-success p { color: var(--ink-2); font-size: 16px; margin: 0 auto; max-width: 420px; line-height: 1.6; }
     @media (max-width: 900px) { .intake-grid { grid-template-columns: 1fr; } .svc-summary { position: static; } }
     @media (max-width: 560px) { .svc-toggle { grid-template-columns: 1fr; } .frow { grid-template-columns: 1fr; } .filechecks { grid-template-columns: 1fr; } }
+
+    /* ---- Report mockup (inside browser frame) ---- */
+    .report-mock { background: #fff; padding: 20px 22px 22px; }
+    .rm-head { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--line-2); padding-bottom: 13px; }
+    .rm-title { font-family: var(--serif); font-size: 18px; font-weight: 600; letter-spacing: -.01em; }
+    .rm-tag { font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); border: 1px solid var(--accent); border-radius: 20px; padding: 3px 9px; }
+    .rm-kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 16px; }
+    .rm-kpi { border: 1px solid var(--line); border-radius: 12px; padding: 11px 12px; display: flex; flex-direction: column; gap: 2px; }
+    .rm-k { font-size: 10px; color: var(--ink-3); font-weight: 600; letter-spacing: .02em; }
+    .rm-v { font-family: var(--mono); font-size: 17px; font-weight: 600; letter-spacing: -.02em; color: var(--ink); }
+    .rm-d { font-size: 10px; color: var(--ink-3); font-weight: 600; }
+    .rm-d.up { color: var(--accent); }
+    .rm-chart { margin-top: 14px; border: 1px solid var(--line); border-radius: 12px; padding: 13px 14px; }
+    .rm-chart-h { display: flex; align-items: center; justify-content: space-between; font-size: 10.5px; color: var(--ink-3); font-weight: 600; }
+    .rm-legend { display: inline-flex; align-items: center; gap: 5px; font-size: 10px; color: var(--ink-3); }
+    .rm-legend i { width: 8px; height: 8px; border-radius: 2px; display: inline-block; }
+    .rm-legend i.a { background: var(--accent); }
+    .rm-legend i.b { background: var(--ink-4); margin-left: 8px; }
+    .rm-svg { width: 100%; height: auto; display: block; margin-top: 10px; }
+    .rm-insights { margin-top: 16px; }
+    .rm-ins-h { font-size: 10px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 9px; }
+    .rm-insights ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 7px; }
+    .rm-insights li { display: flex; gap: 9px; font-size: 12px; color: var(--ink-2); line-height: 1.4; }
+    .rm-insights li::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); margin-top: 5px; flex: none; }
   </style>
 </head>
 <body>
@@ -570,8 +594,8 @@
     <svg class="intro-chart" viewBox="0 0 1000 420" fill="none" aria-hidden="true">
       <defs>
         <linearGradient id="introGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#B01E28" stop-opacity=".22" />
-          <stop offset="100%" stop-color="#B01E28" stop-opacity="0" />
+          <stop offset="0%" stop-color="#1C6FD4" stop-opacity=".22" />
+          <stop offset="100%" stop-color="#1C6FD4" stop-opacity="0" />
         </linearGradient>
       </defs>
       <path class="intro-area" d="M60,360 L200,330 L340,348 L470,262 L610,286 L760,176 L880,212 L950,84 L950,400 L60,400 Z" />
@@ -739,12 +763,12 @@
 <!-- ======= FEATURES ======= -->
 <section class="section" id="features" aria-labelledby="features-heading">
   <div class="wrap">
-    <div class="shead">
+    <div class="shead" data-reveal>
       <div class="eyebrow">What we do</div>
       <h2 id="features-heading">CFO-level financial analysis, delivered as a report.</h2>
       <p>Not self-serve software, a hands-on financial service. Send us your numbers and our team, with AI-assisted analysis, turns them into clear guidance.</p>
     </div>
-    <div class="feat-grid">
+    <div class="feat-grid" data-reveal>
 
       <div class="feat">
         <div class="feat-ico">
@@ -814,11 +838,11 @@
 <!-- ======= HOW IT WORKS ======= -->
 <section class="section section--alt" id="how" aria-labelledby="how-heading">
   <div class="wrap">
-    <div class="shead">
+    <div class="shead" data-reveal>
       <div class="eyebrow">How it works</div>
       <h2 id="how-heading">From financial files to CFO-level insight in three steps.</h2>
     </div>
-    <div class="steps home-steps">
+    <div class="steps home-steps" data-reveal>
       <div class="step">
         <div class="step-n">STEP 01</div>
         <h3>Submit your financial information</h3>
@@ -862,12 +886,41 @@
         <a href="#start" class="btn btn--solid">Start your report</a>
       </div>
     </div>
-    <div class="browser">
+    <div class="browser" data-reveal>
       <div class="browser-bar">
         <i></i><i></i><i></i>
         <span class="url">FinsightCFO, Financial Health Report.pdf</span>
       </div>
-      <img src="assets/dashboard-preview.webp" loading="lazy" decoding="async" alt="Example FinsightCFO financial report preview" />
+      <div class="report-mock" role="img" aria-label="Example FinsightCFO financial report showing key metrics, a revenue versus expenses chart, and AI-assisted insights">
+        <div class="rm-head">
+          <div class="rm-title">Financial Health Report</div>
+          <span class="rm-tag">PDF</span>
+        </div>
+        <div class="rm-kpis">
+          <div class="rm-kpi"><span class="rm-k">Cash on hand</span><span class="rm-v">$312,400</span><span class="rm-d up">▲ 6.2%</span></div>
+          <div class="rm-kpi"><span class="rm-k">Runway</span><span class="rm-v">14 mo</span><span class="rm-d">stable</span></div>
+          <div class="rm-kpi"><span class="rm-k">Gross margin</span><span class="rm-v">61%</span><span class="rm-d up">▲ 3 pts</span></div>
+        </div>
+        <div class="rm-chart">
+          <div class="rm-chart-h"><span>Revenue vs. expenses</span><span class="rm-legend"><i class="a"></i>Revenue<i class="b"></i>Expenses</span></div>
+          <svg class="rm-svg" viewBox="0 0 320 108" fill="none" aria-hidden="true">
+            <line x1="0" y1="26" x2="320" y2="26" stroke="#EDEDED" stroke-width="1" />
+            <line x1="0" y1="60" x2="320" y2="60" stroke="#EDEDED" stroke-width="1" />
+            <line x1="0" y1="94" x2="320" y2="94" stroke="#EDEDED" stroke-width="1" />
+            <path d="M0 80 L53 73 L106 76 L160 58 L213 60 L266 41 L320 31 L320 108 L0 108 Z" fill="rgba(28,111,212,.08)" />
+            <polyline points="0,80 53,73 106,76 160,58 213,60 266,41 320,31" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+            <polyline points="0,92 53,88 106,86 160,80 213,76 266,72 320,67" stroke="var(--ink-4)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="3 4" />
+          </svg>
+        </div>
+        <div class="rm-insights">
+          <div class="rm-ins-h">AI-assisted insights</div>
+          <ul>
+            <li>Revenue rose 12%, but expenses rose 19%, compressing margin.</li>
+            <li>Cash could tighten in about 45 days if receivables slip.</li>
+            <li>Prioritize collections and a vendor review next month.</li>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -875,12 +928,12 @@
 <!-- ======= WHAT YOU CAN SUBMIT ======= -->
 <section class="section" id="submit" aria-labelledby="submit-heading">
   <div class="wrap">
-    <div class="shead">
+    <div class="shead" data-reveal>
       <div class="eyebrow">What you can submit</div>
       <h2 id="submit-heading">Send whatever you have, we'll work with it.</h2>
       <p>Export your numbers from your bank or accounting tools and send them our way. Common documents and formats include:</p>
     </div>
-    <div class="submit-grid" role="list">
+    <div class="submit-grid" role="list" data-reveal>
       <span class="submit-item" role="listitem">Profit &amp; loss statements</span>
       <span class="submit-item" role="listitem">Balance sheets</span>
       <span class="submit-item" role="listitem">Cash flow statements</span>
@@ -904,12 +957,12 @@
 <!-- ======= PRICING ======= -->
 <section class="section section--alt" id="pricing" aria-labelledby="pricing-heading">
   <div class="wrap">
-    <div class="shead shead--center">
+    <div class="shead shead--center" data-reveal>
       <div class="eyebrow">Pricing</div>
       <h2 id="pricing-heading">Financial clarity, priced simply.</h2>
       <p>Start with a one-time cleanup or CFO-style report, or get ongoing monthly visibility into your numbers.</p>
     </div>
-    <div class="price-grid">
+    <div class="price-grid" data-reveal>
 
       <!-- Financial Cleanup -->
       <div class="plan">
@@ -1110,7 +1163,7 @@
 <!-- ======= START YOUR REPORT (intake) ======= -->
 <section class="section section--alt" id="start" aria-labelledby="start-heading">
   <div class="wrap">
-    <div class="shead shead--center">
+    <div class="shead shead--center" data-reveal>
       <div class="eyebrow">Start your report</div>
       <h2 id="start-heading">Start your FinsightCFO report</h2>
       <p>Choose the service that fits your business, send us your financial information, and we'll turn it into a clear AI-assisted CFO report with insights, risks, and next steps.</p>
@@ -1246,12 +1299,12 @@
 <!-- ======= FAQ ======= -->
 <section class="section" id="faq" aria-labelledby="faq-heading">
   <div class="wrap">
-    <div class="shead shead--center">
+    <div class="shead shead--center" data-reveal>
       <div class="eyebrow">FAQ</div>
       <h2 id="faq-heading">Questions, answered.</h2>
       <p>The things business owners ask us most before sending their first set of files.</p>
     </div>
-    <div class="faq-list">
+    <div class="faq-list" data-reveal>
       <details class="faq-item">
         <summary>Is my financial data safe?</summary>
         <div class="faq-a">Yes. Only the team preparing your report sees your files, we never sell your information, and you can ask us to delete it at any time. We also ask that you <strong>don't</strong> send passwords, bank logins, or Social Security numbers, we don't need them. See our <a href="privacy.html">Privacy Policy</a> and <a href="privacy.html#security">Security</a> page for details.</div>
@@ -1360,6 +1413,17 @@
   }
   window.addEventListener('scroll', updateActive, { passive: true });
   updateActive();
+
+  // Gentle scroll reveal
+  (function () {
+    document.body.classList.add('reveal-on');
+    var els = Array.prototype.slice.call(document.querySelectorAll('[data-reveal]'));
+    if (!('IntersectionObserver' in window)) { els.forEach(function (e) { e.classList.add('in'); }); return; }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+    els.forEach(function (e) { io.observe(e); });
+  })();
 
   // ===== Start your report - intake form =====
   (function () {
