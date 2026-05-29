@@ -489,13 +489,33 @@
         rgba(244, 245, 246, 0) 100%);
     }
     .skyfoot .footer {
+      position: relative;
       background: transparent;
       border-top: none;
     }
+    /* Soft dark veil over the footer band so light text reads on the clouds */
+    .skyfoot .footer::before {
+      content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+      background: linear-gradient(to bottom,
+        rgba(18, 24, 38, 0) 0%,
+        rgba(18, 24, 38, .34) 38%,
+        rgba(18, 24, 38, .56) 100%);
+    }
+    .skyfoot .footer > .wrap { position: relative; z-index: 1; }
+    /* Light footer text for contrast against the sky */
+    .skyfoot .footer .foot-brand p { color: rgba(255, 255, 255, .82); }
+    .skyfoot .footer .foot-col h4 { color: #fff; }
+    .skyfoot .footer .foot-col a { color: rgba(255, 255, 255, .82); }
+    .skyfoot .footer .foot-col a:hover { color: #fff; }
+    .skyfoot .footer .foot-bottom { border-top-color: rgba(255, 255, 255, .26); }
+    .skyfoot .footer .foot-bottom span,
+    .skyfoot .footer .foot-legal a { color: rgba(255, 255, 255, .74); }
+    .skyfoot .footer .foot-legal a:hover { color: #fff; }
     .skyfoot .footer .foot-brand p,
     .skyfoot .footer .foot-col a,
     .skyfoot .footer .foot-col h4,
-    .skyfoot .footer .foot-bottom { text-shadow: 0 1px 2px rgba(255, 255, 255, .55); }
+    .skyfoot .footer .foot-bottom span,
+    .skyfoot .footer .foot-legal a { text-shadow: 0 1px 3px rgba(0, 0, 0, .45); }
 
     /* ---- Start your report (intake) ---- */
     .intake-grid { display: grid; grid-template-columns: 1.25fr .85fr; gap: 40px; align-items: start; margin-top: 48px; }
@@ -1341,7 +1361,7 @@
     <div class="foot-grid">
       <div class="foot-brand">
         <a href="index.html" class="logo">
-          <img src="assets/logo.webp" class="logo-img logo-img--foot" alt="FinsightCFO" />
+          <img src="assets/logo-foot.webp" class="logo-img logo-img--foot" alt="FinsightCFO" />
         </a>
         <p>AI-assisted CFO reports for small businesses, understand your numbers, plan ahead, and act with confidence.</p>
       </div>
