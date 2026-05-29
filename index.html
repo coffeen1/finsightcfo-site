@@ -480,6 +480,23 @@
       #introOverlay *, #introOverlay { animation-duration: .01ms !important; animation-delay: 0s !important;
         animation-iteration-count: 1 !important; }
     }
+
+    /* ---- FAQ ---- */
+    .faq-list { max-width: 820px; margin: 48px auto 0; }
+    .faq-item { border-bottom: 1px solid var(--line); }
+    .faq-item summary {
+      list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between;
+      gap: 20px; padding: 22px 0; font-family: var(--serif); font-size: 20px; font-weight: 600;
+      letter-spacing: -.01em; color: var(--ink);
+    }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-item summary::after {
+      content: "+"; font-family: var(--sans); font-size: 26px; font-weight: 400; line-height: 1;
+      color: var(--accent); flex: none; transition: transform .2s;
+    }
+    .faq-item[open] summary::after { transform: rotate(45deg); }
+    .faq-item .faq-a { padding: 0 0 24px; color: var(--ink-2); font-size: 16px; line-height: 1.65; max-width: 720px; }
+    .faq-item .faq-a a { color: var(--accent); text-decoration: underline; }
   </style>
 </head>
 <body>
@@ -595,7 +612,7 @@
 <header class="nav" id="top">
   <div class="wrap nav-in">
     <a href="index.html" class="logo">
-      <img src="assets/logo.png" class="logo-img" alt="FinsightCFO" />
+      <img src="assets/logo.webp" class="logo-img" alt="FinsightCFO" />
     </a>
     <nav class="nav-links" aria-label="Main navigation">
       <a href="#features">Features</a>
@@ -636,7 +653,7 @@
       </div>
     </div>
     <div class="hero-img">
-      <img src="assets/hero.png" alt="A founder reviewing a financial report at their desk" />
+      <img src="assets/hero.webp" alt="A founder reviewing a financial report at their desk" />
       <div class="hero-img-overlay" aria-hidden="true"></div>
       <div class="float float-tl" aria-hidden="true">
         <div class="float-k">Runway</div>
@@ -798,7 +815,7 @@
         <i></i><i></i><i></i>
         <span class="url">FinsightCFO — Financial Health Report.pdf</span>
       </div>
-      <img src="assets/dashboard-preview.png" alt="Example FinsightCFO financial report preview" />
+      <img src="assets/dashboard-preview.webp" loading="lazy" decoding="async" alt="Example FinsightCFO financial report preview" />
     </div>
   </div>
 </section>
@@ -1074,13 +1091,54 @@
   </div>
 </section>
 
+<!-- ======= FAQ ======= -->
+<section class="section" id="faq" aria-labelledby="faq-heading">
+  <div class="wrap">
+    <div class="shead shead--center">
+      <div class="eyebrow">FAQ</div>
+      <h2 id="faq-heading">Questions, answered.</h2>
+      <p>The things business owners ask us most before sending their first set of files.</p>
+    </div>
+    <div class="faq-list">
+      <details class="faq-item">
+        <summary>Is my financial data safe?</summary>
+        <div class="faq-a">Yes. Only the team preparing your report sees your files, we never sell your information, and you can ask us to delete it at any time. We also ask that you <strong>don't</strong> send passwords, bank logins, or Social Security numbers — we don't need them. See our <a href="privacy.html">Privacy Policy</a> and <a href="privacy.html#security">Security</a> page for details.</div>
+      </details>
+      <details class="faq-item">
+        <summary>What if my books are messy or incomplete?</summary>
+        <div class="faq-a">That's exactly what the <a href="#pricing">Financial Cleanup</a> is for. Send whatever you have — we'll organize your income and expense categories, flag what's missing or unclear, and tell you what to fix before deeper analysis. You don't need perfect books to start.</div>
+      </details>
+      <details class="faq-item">
+        <summary>How long until I get my report?</summary>
+        <div class="faq-a">We confirm the turnaround with you as soon as we receive your files — it depends on the service and how much data you send. Most reports are delivered within a few business days, and your finished report arrives straight in your inbox.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Do you replace my accountant or CPA?</summary>
+        <div class="faq-a">No. FinsightCFO provides financial analysis and decision support that works <em>alongside</em> your CPA, bookkeeper, or tax advisor. Our reports are not accounting, tax, or legal advice — they help you understand your numbers and decide what to do next.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Is this software I log into?</summary>
+        <div class="faq-a">No — there's no dashboard or login. FinsightCFO is a hands-on service: you send us your financial files, our team analyzes them with AI-assisted tools, and we email you a finished CFO-style report.</div>
+      </details>
+      <details class="faq-item">
+        <summary>What do I actually need to send?</summary>
+        <div class="faq-a">Whatever you have — profit &amp; loss statements, balance sheets, bank statements, revenue and expense reports, or QuickBooks/Excel/CSV exports. See the full list under <a href="#submit">What you can submit</a>.</div>
+      </details>
+      <details class="faq-item">
+        <summary>How do I get started and pay?</summary>
+        <div class="faq-a">Pick a service under <a href="#pricing">Pricing</a> or <a href="mailto:contact@finsightcfo.org?subject=Start%20my%20report">start your report</a>. We'll confirm the scope and payment details with you before any work begins — no surprises.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
 <!-- ======= FOOTER ======= -->
 <footer class="footer" aria-label="Site footer">
   <div class="wrap">
     <div class="foot-grid">
       <div class="foot-brand">
         <a href="index.html" class="logo">
-          <img src="assets/logo.png" class="logo-img logo-img--foot" alt="FinsightCFO" />
+          <img src="assets/logo.webp" class="logo-img logo-img--foot" alt="FinsightCFO" />
         </a>
         <p>AI-assisted CFO reports for small businesses — understand your numbers, plan ahead, and act with confidence.</p>
       </div>
@@ -1102,6 +1160,7 @@
         <a href="#how">How it works</a>
         <a href="#submit">What to submit</a>
         <a href="#sample">Sample report</a>
+        <a href="#faq">FAQ</a>
       </div>
     </div>
     <div class="foot-bottom">
@@ -1199,6 +1258,88 @@
       a.setAttribute('href', href + '&body=' + encodeURIComponent(pick(subject)));
     });
   })();
+</script>
+
+<!-- Structured data for search engines -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://finsightcfo.org/#org",
+      "name": "FinsightCFO",
+      "url": "https://finsightcfo.org/",
+      "email": "contact@finsightcfo.org",
+      "logo": "https://finsightcfo.org/assets/logo.png",
+      "description": "AI-assisted CFO reports for small businesses — send your financial files and receive a clear, CFO-style report back.",
+      "founder": [
+        { "@type": "Person", "name": "Bryce Armstrong" },
+        { "@type": "Person", "name": "Luke Coffeen" }
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://finsightcfo.org/#website",
+      "url": "https://finsightcfo.org/",
+      "name": "FinsightCFO",
+      "publisher": { "@id": "https://finsightcfo.org/#org" }
+    },
+    {
+      "@type": "Service",
+      "name": "AI-assisted CFO reports",
+      "provider": { "@id": "https://finsightcfo.org/#org" },
+      "serviceType": "Financial analysis and CFO reporting",
+      "areaServed": "US",
+      "description": "Send your financial files and receive a CFO-style report with forecasts, risks, and recommended next steps.",
+      "offers": [
+        { "@type": "Offer", "name": "Financial Cleanup", "price": "500", "priceCurrency": "USD" },
+        { "@type": "Offer", "name": "Financial Health Report", "price": "800", "priceCurrency": "USD" },
+        { "@type": "Offer", "name": "Monthly Subscription", "price": "700", "priceCurrency": "USD" }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is my financial data safe?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. Only the team preparing your report sees your files, we never sell your information, and you can ask us to delete it at any time. We also ask that you do not send passwords, bank logins, or Social Security numbers." }
+        },
+        {
+          "@type": "Question",
+          "name": "What if my books are messy or incomplete?",
+          "acceptedAnswer": { "@type": "Answer", "text": "That is exactly what the Financial Cleanup is for. Send whatever you have and we will organize your categories, flag what is missing, and tell you what to fix before deeper analysis." }
+        },
+        {
+          "@type": "Question",
+          "name": "How long until I get my report?",
+          "acceptedAnswer": { "@type": "Answer", "text": "We confirm the turnaround when we receive your files. Most reports are delivered within a few business days, straight to your inbox." }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you replace my accountant or CPA?",
+          "acceptedAnswer": { "@type": "Answer", "text": "No. FinsightCFO provides financial analysis and decision support that works alongside your CPA, bookkeeper, or tax advisor. Our reports are not accounting, tax, or legal advice." }
+        },
+        {
+          "@type": "Question",
+          "name": "Is this software I log into?",
+          "acceptedAnswer": { "@type": "Answer", "text": "No. There is no dashboard or login. You send us your financial files, our team analyzes them with AI-assisted tools, and we email you a finished CFO-style report." }
+        },
+        {
+          "@type": "Question",
+          "name": "What do I actually need to send?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Whatever you have: profit and loss statements, balance sheets, bank statements, revenue and expense reports, or QuickBooks, Excel, or CSV exports." }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I get started and pay?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Pick a service on the pricing section or start your report by email. We confirm the scope and payment details with you before any work begins." }
+        }
+      ]
+    }
+  ]
+}
 </script>
 
 </body>
