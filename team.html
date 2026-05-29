@@ -192,12 +192,20 @@
     @keyframes drift2 { from { transform: translate(0,0) scale(1.05); } to { transform: translate(-7%, 8%) scale(.9); } }
     @keyframes drift3 { from { transform: translate(0,0) scale(1); } to { transform: translate(5%, -9%) scale(1.22); } }
     .gate-center { position: relative; z-index: 2; text-align: center; pointer-events: none; padding: 0 24px; }
-    .gate-icon { width: 86px; height: 86px; border-radius: 50%; background: #fff; border: 1px solid var(--line);
-      box-shadow: 0 24px 60px -22px rgba(20,20,20,.45); display: grid; place-items: center; margin: 0 auto; color: var(--accent); position: relative; }
-    .gate-icon svg { width: 40px; height: 40px; }
-    .gate-icon::after { content: ""; position: absolute; inset: -10px; border-radius: 50%; border: 1px solid rgba(182,138,69,.45); animation: gatePulse 2.4s ease-out infinite; }
-    @keyframes gatePulse { 0% { transform: scale(.85); opacity: .7; } 100% { transform: scale(1.5); opacity: 0; } }
-    .gate-title { font-family: var(--serif); font-weight: 500; font-size: clamp(30px, 5vw, 52px); letter-spacing: -.02em; color: var(--ink); margin: 24px 0 0; line-height: 1; }
+    .gate-emblem { position: relative; width: 108px; height: 108px; margin: 0 auto; }
+    .gate-emblem::before { content: ""; position: absolute; inset: 0; border-radius: 50%; border: 2px solid rgba(182,138,69,.16); }
+    .gate-ring { position: absolute; inset: 0; width: 100%; height: 100%; animation: gateSpin 2.2s cubic-bezier(.5,.15,.5,.85) infinite; }
+    .gate-ring circle { fill: none; stroke: var(--accent); stroke-width: 2.2; stroke-linecap: round; stroke-dasharray: 60 230; }
+    @keyframes gateSpin { to { transform: rotate(360deg); } }
+    .gate-badge { position: absolute; inset: 11px; border-radius: 50%; background: #fff; border: 1px solid var(--line);
+      box-shadow: 0 22px 50px -20px rgba(20,20,20,.45), 0 0 0 6px rgba(255,255,255,.5); display: grid; place-items: center; }
+    .gate-glyph { width: 52px; height: 52px; overflow: visible; }
+    .gate-glyph line { stroke: var(--accent); stroke-width: 2; stroke-linecap: round; opacity: .5; }
+    .gate-glyph circle { fill: var(--accent); transform-box: fill-box; transform-origin: center; animation: gateNode 2s ease-in-out infinite; }
+    .gate-glyph circle:nth-of-type(2) { animation-delay: .35s; }
+    .gate-glyph circle:nth-of-type(3) { animation-delay: .7s; }
+    @keyframes gateNode { 0%,100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.35); opacity: .75; } }
+    .gate-title { font-family: var(--serif); font-weight: 500; font-size: clamp(30px, 5vw, 52px); letter-spacing: -.02em; color: var(--ink); margin: 26px 0 0; line-height: 1; }
     .gate-hint { font-family: var(--mono); font-size: 11.5px; letter-spacing: .22em; text-transform: uppercase; color: var(--ink-3); margin-top: 18px; opacity: 0; animation: gateHintIn .8s ease 1s forwards; }
     @keyframes gateHintIn { to { opacity: .8; } }
     /* shooting stars */
@@ -214,7 +222,7 @@
     @keyframes shoot3 { 0% { opacity: 0; transform: translate(0,0); } 12% { opacity: .85; } 85% { opacity: .85; } 100% { opacity: 0; transform: translate(94vw, 7vh); } }
     body.gate-lock { overflow: hidden; }
     @media (prefers-reduced-motion: reduce) {
-      .gate-smoke i, .gate-icon::after, .gate-stars span { animation: none !important; }
+      .gate-smoke i, .gate-ring, .gate-glyph circle, .gate-stars span { animation: none !important; }
       .gate-stars { display: none; }
     }
   </style>
@@ -226,13 +234,18 @@
   <div class="gate-smoke"><i class="s1"></i><i class="s2"></i><i class="s3"></i><i class="s4"></i><i class="s5"></i></div>
   <div class="gate-stars"></div>
   <div class="gate-center">
-    <div class="gate-icon">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M16 19v-1a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v1" />
-        <circle cx="9" cy="7" r="3.2" />
-        <path d="M22 19v-1a4 4 0 0 0-3-3.87" />
-        <path d="M16 4.13a4 4 0 0 1 0 7.75" />
-      </svg>
+    <div class="gate-emblem">
+      <svg class="gate-ring" viewBox="0 0 100 100"><circle cx="50" cy="50" r="47" /></svg>
+      <div class="gate-badge">
+        <svg class="gate-glyph" viewBox="0 0 64 64" aria-hidden="true">
+          <line x1="32" y1="20" x2="18" y2="45" />
+          <line x1="32" y1="20" x2="46" y2="45" />
+          <line x1="18" y1="45" x2="46" y2="45" />
+          <circle cx="32" cy="20" r="5" />
+          <circle cx="18" cy="45" r="5" />
+          <circle cx="46" cy="45" r="5" />
+        </svg>
+      </div>
     </div>
     <div class="gate-title">Meet the team</div>
   </div>
@@ -566,7 +579,7 @@
       document.body.classList.remove('gate-lock');
       setTimeout(function () { if (gate.parentNode) gate.parentNode.removeChild(gate); }, 850);
     }
-    setTimeout(enter, reduce ? 400 : 2800);
+    setTimeout(enter, reduce ? 400 : 2000);
   })();
 
   // Interactive founder profiles, accordion (one open at a time, others quiet down)
