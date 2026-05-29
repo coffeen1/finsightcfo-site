@@ -92,7 +92,7 @@
     .fprofile-trigger:hover .fprofile-photo::after { opacity: 1; }
     .fprofile.open .fprofile-photo { box-shadow: 0 30px 62px -26px rgba(20, 20, 20,.62); }
 
-    .fprofile-no { font-family: var(--serif); font-weight: 500; font-size: clamp(34px,4.4vw,58px); line-height: 1; color: var(--accent); letter-spacing: -.02em; }
+    .fprofile-no { font-family: var(--serif); font-weight: 500; font-size: clamp(34px,4.4vw,58px); line-height: 1; color: var(--accent); letter-spacing: -.02em; margin-right: 16px; }
     .fprofile-name {
       font-family: var(--serif); font-weight: 600; font-size: clamp(30px,4.4vw,56px); line-height: 1.02;
       letter-spacing: -.02em; margin: 6px 0 0; color: var(--ink); transition: color .2s ease; display: inline-block;
@@ -100,8 +100,8 @@
     .fprofile-name::after { content: ""; display: block; height: 2px; width: 0; background: var(--accent); transition: width .4s cubic-bezier(.2,.7,.2,1); margin-top: 8px; }
     .fprofile-trigger:hover .fprofile-name, .fprofile.open .fprofile-name { color: var(--accent); }
     .fprofile-trigger:hover .fprofile-name::after, .fprofile.open .fprofile-name::after { width: 66px; }
-    .fprofile-role { font-size: 12.5px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--ink-3); margin-top: 14px; }
-    .fprofile-cta { display: inline-flex; align-items: center; gap: 12px; margin-top: 24px; font-size: 12.5px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--accent); }
+    .fprofile-role { display: block; font-size: 12.5px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--ink-3); margin-top: 14px; }
+    .fprofile-cta { display: flex; width: fit-content; align-items: center; gap: 12px; margin-top: 24px; font-size: 12.5px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--accent); }
     .fprofile-plus { position: relative; width: 26px; height: 26px; border: 1.5px solid var(--accent); border-radius: 50%; flex: none; }
     .fprofile-plus::before, .fprofile-plus::after { content: ""; position: absolute; top: 50%; left: 50%; background: var(--accent); transition: transform .3s ease; }
     .fprofile-plus::before { width: 11px; height: 1.7px; transform: translate(-50%, -50%); }
