@@ -78,9 +78,11 @@
 
     /* ===== 003 - Interactive founder profiles ===== */
     /* ===== 003 - Meet the founders (editorial team cards) ===== */
-    .team-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 440px); gap: clamp(24px, 5vw, 76px); align-items: end; }
-    .team-h { font-family: var(--serif); font-weight: 500; font-size: clamp(32px, 4.8vw, 60px); line-height: 1.0; letter-spacing: -.028em; margin: 22px 0 0; max-width: 15ch; }
-    .team-intro { color: var(--ink-2); font-size: clamp(16px, 1.25vw, 18px); line-height: 1.72; margin: 0; max-width: 46ch; }
+    .founders-sec { padding-top: clamp(40px, 5vw, 64px); }
+    .team-head { text-align: center; max-width: 720px; margin: 0 auto; }
+    .team-head .elabel { justify-content: center; }
+    .team-h { font-family: var(--serif); font-weight: 500; font-size: clamp(30px, 4vw, 50px); line-height: 1.02; letter-spacing: -.025em; margin: 18px auto 0; max-width: 16ch; }
+    .team-intro { color: var(--ink-2); font-size: clamp(16px, 1.25vw, 18px); line-height: 1.72; margin: 20px auto 0; max-width: 52ch; }
 
     .team-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 350px)); justify-content: center; gap: clamp(26px, 3.2vw, 48px); margin-top: clamp(46px, 6vw, 78px); }
     .tcard { text-align: center; }
@@ -150,12 +152,9 @@
 
     /* ===== Responsive ===== */
     @media (max-width: 860px) {
-      .estory { grid-template-columns: 1fr; gap: 28px; }
-      .estory-head { position: static; }
-      .team-head { grid-template-columns: 1fr; align-items: start; gap: 18px; }
-      .team-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+      .estory-cols { grid-template-columns: 1fr; gap: 30px; text-align: center; }
+      .team-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
       .tdetail-grid { grid-template-columns: 1fr; gap: 24px; }
-      .beliefs { grid-template-columns: 1fr; }
     }
     @media (max-width: 560px) {
       .ehero-cta { flex-direction: column; align-items: stretch; }
