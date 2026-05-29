@@ -10,9 +10,9 @@
   --bg: #FFFFFF;
   --panel: #FFFFFF;
   --panel-2: #F6F6F6;
-  --accent: #5577A0;
-  --accent-press: #46668C;
-  --accent-soft: #EEF2F7;
+  --accent: #7A4A28;
+  --accent-press: #5E3920;
+  --accent-soft: #F1E9E2;
   --badge: #0B0B0B;
   --btn: #0B0B0B;
   --btn-hover: #262626;
@@ -306,7 +306,7 @@ em.disp { font-style: italic; font-family: var(--serif); }
 }
 
 /* ---- Polish: motion, focus, selection, scrollbar, type ---- */
-::selection { background: rgba(85, 119, 160, .16); color: var(--ink); }
+::selection { background: rgba(122, 74, 40, .16); color: var(--ink); }
 a:focus-visible, button:focus-visible, summary:focus-visible, [tabindex]:focus-visible {
   outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px;
 }
