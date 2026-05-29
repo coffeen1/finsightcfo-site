@@ -23,57 +23,58 @@
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500;1,6..72,600&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
   <style>
+    /* ===== Black & white theme (scoped to the team page) ===== */
+    body { --accent: #141414; --accent-press: #000; --accent-soft: #F0F0F0; }
+
     /* ===== Editorial labels ===== */
     .elabel {
       display: inline-flex; align-items: center; gap: 14px;
       font-family: var(--mono); font-size: 12.5px; font-weight: 600;
-      letter-spacing: .18em; text-transform: uppercase; color: var(--accent);
+      letter-spacing: .2em; text-transform: uppercase; color: var(--ink-3);
     }
-    .elabel .ln { width: 56px; height: 1px; background: var(--accent); opacity: .45; }
+    .elabel .ln { width: 56px; height: 1px; background: var(--ink-4); opacity: .9; }
     section[id] { scroll-margin-top: 84px; }
 
     /* ===== Scroll reveal ===== */
     body.reveal-on [data-reveal] { opacity: 0; transform: translateY(26px); transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1); }
     body.reveal-on [data-reveal].in { opacity: 1; transform: none; }
 
-    /* ===== 001 - Editorial hero (loft background) ===== */
-    .ehero { position: relative; overflow: hidden;
-      min-height: clamp(620px, 90vh, 900px);
-      padding: clamp(48px, 9vh, 104px) 0 clamp(72px, 11vh, 130px); }
-    .ehero > .wrap { position: relative; z-index: 2; }
-    .ehero::before { content: ""; position: absolute; inset: 0; z-index: 0;
-      background: url("assets/team-bg.webp") center 58% / cover no-repeat; }
-    .ehero::after { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
-      background:
-        linear-gradient(to right, rgba(255,255,255,.96) 0%, rgba(255,255,255,.88) 34%, rgba(255,255,255,.5) 66%, rgba(255,255,255,.3) 100%),
-        linear-gradient(to bottom, rgba(255,255,255,0) 52%, rgba(244,245,246,.82) 86%, #F4F5F6 100%); }
-    @media (max-width: 860px) {
-      .ehero { min-height: 0; }
-      .ehero::after { background:
-        linear-gradient(to bottom, rgba(255,255,255,.92) 0%, rgba(244,245,246,.86) 55%, #F4F5F6 100%); }
-    }
+    /* ===== 001 - Founders hero (centered, black & white) ===== */
+    .ehero { position: relative; overflow: hidden; text-align: center;
+      padding: clamp(96px, 15vh, 168px) 0 clamp(36px, 5vw, 64px); }
+    .ehero > .wrap { position: relative; z-index: 2; max-width: 980px; }
+    .ehero .elabel { justify-content: center; }
     .ehero h1 {
       font-family: var(--serif); font-weight: 500;
-      font-size: clamp(44px, 8.2vw, 112px); line-height: .96;
-      letter-spacing: -.025em; margin: 26px 0 0; max-width: 15ch;
+      font-size: clamp(46px, 8vw, 100px); line-height: .98;
+      letter-spacing: -.03em; margin: 26px auto 0; max-width: 16ch;
     }
+    .ehero h1 em { font-style: italic; }
     .ehero .lede {
-      color: var(--ink-2); font-size: clamp(18px, 1.8vw, 21px);
-      line-height: 1.6; max-width: 640px; margin: 32px 0 0;
+      color: var(--ink-2); font-size: clamp(18px, 1.7vw, 21px);
+      line-height: 1.62; max-width: 600px; margin: 30px auto 0;
     }
-    .ehero-cta { display: flex; gap: 14px; margin-top: 38px; flex-wrap: wrap; }
+    .ehero-cta { display: flex; gap: 14px; margin-top: 38px; flex-wrap: wrap; justify-content: center; }
+    /* thin hairline that ties the hero into the founders block below */
+    .founders-divider { width: 100%; max-width: var(--maxw); margin: clamp(40px,6vw,72px) auto 0; height: 1px;
+      background: linear-gradient(to right, transparent, var(--ink-4) 18%, var(--ink-4) 82%, transparent); }
 
-    /* ===== 002 - Story ===== */
-    .estory { display: grid; grid-template-columns: minmax(0, 360px) minmax(0, 1fr); gap: clamp(32px, 6vw, 88px); align-items: start; }
-    .estory-head { position: sticky; top: 100px; }
+    /* ===== Story (horizontal, full-width band) ===== */
+    .estory-sec { background: #0c0d10; color: #fff; }
+    .estory-head { text-align: center; max-width: 760px; margin: 0 auto; }
+    .estory-head .elabel { justify-content: center; color: rgba(255,255,255,.6); }
+    .estory-head .elabel .ln { background: rgba(255,255,255,.4); }
     .estory-head h2 {
-      font-family: var(--serif); font-weight: 500;
-      font-size: clamp(30px, 4vw, 50px); line-height: 1.04; letter-spacing: -.02em; margin: 18px 0 0;
+      font-family: var(--serif); font-weight: 500; color: #fff;
+      font-size: clamp(32px, 4.4vw, 58px); line-height: 1.02; letter-spacing: -.025em; margin: 20px auto 0; max-width: 18ch;
     }
-    .estory-head .rule { width: 46px; height: 3px; background: var(--accent); border-radius: 2px; margin-top: 24px; }
-    .estory-body p { font-size: clamp(16.5px, 1.4vw, 19px); line-height: 1.78; color: var(--ink-2); margin: 0 0 22px; max-width: 64ch; text-wrap: pretty; }
-    .estory-body p:first-child { font-family: var(--serif); font-size: clamp(21px, 2.1vw, 27px); line-height: 1.5; color: var(--ink); letter-spacing: -.01em; }
-    .estory-body p:last-child { margin-bottom: 0; }
+    .estory-head .rule { width: 54px; height: 2px; background: rgba(255,255,255,.7); border-radius: 2px; margin: 26px auto 0; }
+    .estory-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(28px, 4vw, 56px); margin-top: clamp(48px, 6vw, 80px); }
+    .estory-cols p { font-size: clamp(15px, 1.1vw, 16.5px); line-height: 1.72; color: rgba(255,255,255,.72); margin: 0; text-wrap: pretty; }
+    .estory-cols p.lead-line { font-family: var(--serif); font-size: clamp(19px, 1.7vw, 23px); line-height: 1.5; color: #fff; letter-spacing: -.01em; }
+    .estory-num { font-family: var(--serif); font-size: 22px; color: rgba(255,255,255,.45); margin: 0 0 14px; }
+    .estory-closer { text-align: center; font-family: var(--serif); font-style: italic; font-size: clamp(20px, 2.2vw, 30px);
+      line-height: 1.4; color: #fff; max-width: 24ch; margin: clamp(44px,6vw,72px) auto 0; }
 
     /* ===== 003 - Interactive founder profiles ===== */
     /* ===== 003 - Meet the founders (editorial team cards) ===== */
@@ -249,7 +250,7 @@
 <header class="nav" aria-label="Site header">
   <div class="wrap nav-in">
     <a href="index.html" class="logo">
-      <img src="assets/logo.webp" class="logo-img" alt="FinsightCFO" />
+      <img src="assets/logo-black.webp" class="logo-img" alt="FinsightCFO" />
     </a>
     <nav class="nav-links" aria-label="Main navigation">
       <a href="index.html#features">Features</a>
@@ -273,46 +274,26 @@
   </div>
 </header>
 
-<!-- ======= 001, EDITORIAL HERO ======= -->
+<!-- ======= 001, FOUNDERS HERO + MEET THE FOUNDERS (one section) ======= -->
 <section class="ehero" id="founders" aria-labelledby="ehero-heading">
   <div class="wrap">
     <span class="elabel">001 / Our founders<span class="ln" aria-hidden="true"></span></span>
-    <h1 id="ehero-heading">Built for the people building something that matters.</h1>
-    <p class="lede">FinsightCFO was founded by Bryce Armstrong and Luke Coffeen to help small businesses understand their numbers, plan ahead, and access the kind of CFO-level insight that larger companies use to make better decisions.</p>
+    <h1 id="ehero-heading">Built for the people building something that <em>matters.</em></h1>
+    <p class="lede">FinsightCFO was founded by Bryce Armstrong and Luke Coffeen to give small businesses the kind of CFO-level insight that larger companies use to make better decisions.</p>
     <div class="ehero-cta">
       <a href="index.html#start" class="btn btn--solid">Start your report</a>
       <a href="index.html#pricing" class="btn btn--ghost">View services</a>
     </div>
   </div>
+  <div class="founders-divider" aria-hidden="true"></div>
 </section>
 
-<!-- ======= 002, WHY WE STARTED ======= -->
-<section class="section section--alt" aria-labelledby="story-heading">
-  <div class="wrap estory">
-    <div class="estory-head" data-reveal>
-      <span class="elabel">002 / Why we started<span class="ln" aria-hidden="true"></span></span>
-      <h2 id="story-heading">Small businesses deserve better financial clarity.</h2>
-      <div class="rule" aria-hidden="true"></div>
-    </div>
-    <div class="estory-body" data-reveal>
-      <p>We started FinsightCFO because we kept seeing the same problem: small business owners were building real companies, serving real customers, and making important decisions without the financial support that larger organizations take for granted.</p>
-      <p>Most owners have the data somewhere, bank statements, accounting exports, payroll reports, expense records, revenue reports, and spreadsheets. But having the data is not the same as understanding what it means.</p>
-      <p>Large companies can afford CFO teams, consultants, analysts, and custom financial models. Small businesses usually cannot. We believe AI can help close that gap.</p>
-      <p>We use AI heavily in our own work to research faster, structure analysis, organize financial information, test assumptions, and turn scattered numbers into clearer business decisions. FinsightCFO combines AI-assisted analysis with practical CFO-style thinking so small businesses can receive useful reports, forecasts, risks, and next steps without needing a full finance department.</p>
-      <p>This is about helping businesses build something good, powerful, and lasting.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ======= 003, MEET THE FOUNDERS (editorial cards) ======= -->
-<section class="section" aria-labelledby="meet-heading">
+<section class="section founders-sec" aria-labelledby="meet-heading">
   <div class="wrap">
     <div class="team-head" data-reveal>
-      <div>
-        <span class="elabel">003 / Meet the founders<span class="ln" aria-hidden="true"></span></span>
-        <h2 id="meet-heading" class="team-h">The people behind FinsightCFO.</h2>
-      </div>
-      <p class="team-intro">Two operators who pair real CFO-style thinking with AI-assisted analysis, on a shared mission to give small businesses the financial clarity that larger companies take for granted.</p>
+      <span class="elabel">Meet the founders<span class="ln" aria-hidden="true"></span></span>
+      <h2 id="meet-heading" class="team-h">The people behind FinsightCFO.</h2>
+      <p class="team-intro">Two operators who pair real CFO-style thinking with AI-assisted analysis, on a shared mission to make institutional-grade finance accessible.</p>
     </div>
 
     <div class="team-grid" data-reveal>
@@ -426,62 +407,29 @@
   </div>
 </section>
 
-<!-- ======= 004, WHAT WE BELIEVE ======= -->
-<section class="section section--alt" aria-labelledby="believe-heading">
+<!-- ======= 002, WHY WE STARTED (horizontal, full-width band) ======= -->
+<section class="section estory-sec" aria-labelledby="story-heading">
   <div class="wrap">
-    <div data-reveal>
-      <span class="elabel">004 / What we believe<span class="ln" aria-hidden="true"></span></span>
-      <h2 id="believe-heading" class="serif" style="font-weight:500;font-size:clamp(30px,4vw,50px);line-height:1.04;letter-spacing:-.02em;margin:18px 0 0;max-width:20ch;">Better financial clarity helps better businesses get built.</h2>
+    <div class="estory-head" data-reveal>
+      <span class="elabel">002 / Why we started<span class="ln" aria-hidden="true"></span></span>
+      <h2 id="story-heading">Small businesses deserve better financial clarity.</h2>
+      <div class="rule" aria-hidden="true"></div>
     </div>
-    <div class="beliefs" data-reveal>
-      <div class="belief">
-        <div class="belief-n">01</div>
-        <h3>Small businesses deserve serious financial support</h3>
-        <p>Institutional-level CFO guidance should not only be available to large companies with large budgets.</p>
+    <div class="estory-cols" data-reveal>
+      <div>
+        <div class="estory-num">01</div>
+        <p class="lead-line">Owners were building real companies and making big decisions without the financial support larger organizations take for granted.</p>
       </div>
-      <div class="belief">
-        <div class="belief-n">02</div>
-        <h3>AI should make expertise more accessible</h3>
-        <p>We use AI to speed up analysis, organize information, surface patterns, and make financial insight easier to understand.</p>
+      <div>
+        <div class="estory-num">02</div>
+        <p>Most owners have the data somewhere — bank statements, accounting exports, payroll, expense and revenue reports, spreadsheets. But having the data is not the same as understanding what it means. Large companies can afford CFO teams, analysts, and custom models. Small businesses usually cannot.</p>
       </div>
-      <div class="belief">
-        <div class="belief-n">03</div>
-        <h3>Reports should lead to action</h3>
-        <p>A financial report is only useful if it helps an owner decide what to do next.</p>
-      </div>
-      <div class="belief">
-        <div class="belief-n">04</div>
-        <h3>Growth should be built on clarity</h3>
-        <p>The strongest businesses understand their cash, margins, risks, and opportunities before making the next move.</p>
+      <div>
+        <div class="estory-num">03</div>
+        <p>We believe AI can close that gap. We use it heavily to research faster, structure analysis, and turn scattered numbers into clearer decisions — pairing AI-assisted analysis with practical CFO-style thinking, so you get useful reports, forecasts, and next steps without a full finance department.</p>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- ======= 005, HOW IT WORKS ======= -->
-<section class="section" aria-labelledby="how-heading">
-  <div class="wrap">
-    <div data-reveal>
-      <span class="elabel">005 / How it works<span class="ln" aria-hidden="true"></span></span>
-      <h2 id="how-heading" class="serif" style="font-weight:500;font-size:clamp(30px,4vw,50px);line-height:1.04;letter-spacing:-.02em;margin:18px 0 0;">From financial files to CFO-level insight.</h2>
-    </div>
-    <div class="steps" data-reveal>
-      <div class="step">
-        <div class="step-n">STEP 01</div>
-        <h3>Submit your financial information</h3>
-        <p>Export your reports, statements, or accounting files and send them securely through FinsightCFO.</p>
-      </div>
-      <div class="step">
-        <div class="step-n">STEP 02</div>
-        <h3>We analyze the numbers with AI</h3>
-        <p>Our team uses AI-assisted financial analysis to organize your data, review cash flow, identify trends, flag risks, and build a clear report.</p>
-      </div>
-      <div class="step">
-        <div class="step-n">STEP 03</div>
-        <h3>Receive your completed report</h3>
-        <p>We send back a practical financial report with insights, forecasts, risks, and recommended next steps.</p>
-      </div>
-    </div>
+    <p class="estory-closer" data-reveal>This is about helping businesses build something good, powerful, and lasting.</p>
   </div>
 </section>
 
@@ -505,7 +453,7 @@
     <div class="foot-grid">
       <div class="foot-brand">
         <a href="index.html" class="logo">
-          <img src="assets/logo.webp" class="logo-img logo-img--foot" alt="FinsightCFO" />
+          <img src="assets/logo-black.webp" class="logo-img logo-img--foot" alt="FinsightCFO" />
         </a>
         <p>AI-assisted CFO reports for small businesses, understand your numbers, plan ahead, and act with confidence.</p>
       </div>
