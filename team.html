@@ -162,8 +162,8 @@
       .fprofile-photo img, .fprofile-name, .fprofile-name::after { transition: none !important; }
     }
 
-    /* ===== Team gate (smoky intro, click to enter) ===== */
-    #teamGate { position: fixed; inset: 0; z-index: 9999; overflow: hidden; cursor: pointer;
+    /* ===== Team gate (soft fog + shooting stars, auto-reveals after 3.2s) ===== */
+    #teamGate { position: fixed; inset: 0; z-index: 9999; overflow: hidden;
       background: #efece6; display: flex; align-items: center; justify-content: center; will-change: opacity; }
     #teamGate.gate-hide { animation: gateOut .8s ease forwards; }
     @keyframes gateOut { to { opacity: 0; visibility: hidden; } }
@@ -186,19 +186,36 @@
     .gate-title { font-family: var(--serif); font-weight: 500; font-size: clamp(30px, 5vw, 52px); letter-spacing: -.02em; color: var(--ink); margin: 24px 0 0; line-height: 1; }
     .gate-hint { font-family: var(--mono); font-size: 11.5px; letter-spacing: .22em; text-transform: uppercase; color: var(--ink-3); margin-top: 18px; opacity: 0; animation: gateHintIn .8s ease 1s forwards; }
     @keyframes gateHintIn { to { opacity: .8; } }
+    /* shooting stars */
+    .gate-stars { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 1; }
+    .gate-stars span { position: absolute; width: 2px; height: 2px; border-radius: 50%; background: #fff;
+      box-shadow: 0 0 6px 1px rgba(255,255,255,.6); opacity: 0; }
+    .gate-stars span::after { content: ""; position: absolute; top: 50%; right: 1px; transform: translateY(-50%);
+      width: 64px; height: 1px; background: linear-gradient(to left, rgba(255,255,255,.55), rgba(255,255,255,0)); }
+    .gate-stars .g { background: #f1e4cb; box-shadow: 0 0 6px 1px rgba(214,184,130,.55); }
+    .gate-stars .g::after { background: linear-gradient(to left, rgba(214,184,130,.5), rgba(214,184,130,0)); }
+    .gate-stars .st1 { top: 20%; left: -8%; animation: shoot1 2.0s ease-in .2s 1 both; }
+    .gate-stars .st2 { top: 54%; left: 4%;  animation: shoot2 2.2s ease-in .9s 1 both; }
+    .gate-stars .st3 { top: 33%; left: 44%; animation: shoot3 1.8s ease-in 1.7s 1 both; }
+    .gate-stars .st4 { top: 68%; left: 20%; animation: shoot1 1.7s ease-in 2.3s 1 both; }
+    @keyframes shoot1 { 0% { opacity: 0; transform: translate(0,0); } 14% { opacity: .85; } 80% { opacity: .85; } 100% { opacity: 0; transform: translate(42vw, 7vh); } }
+    @keyframes shoot2 { 0% { opacity: 0; transform: translate(0,0); } 14% { opacity: .8; } 80% { opacity: .8; } 100% { opacity: 0; transform: translate(38vw, -5vh); } }
+    @keyframes shoot3 { 0% { opacity: 0; transform: translate(0,0); } 16% { opacity: .85; } 80% { opacity: .85; } 100% { opacity: 0; transform: translate(30vw, 5vh); } }
     body.gate-lock { overflow: hidden; }
     @media (prefers-reduced-motion: reduce) {
-      .gate-smoke i, .gate-icon::after { animation: none !important; }
+      .gate-smoke i, .gate-icon::after, .gate-stars span { animation: none !important; }
+      .gate-stars { display: none; }
     }
   </style>
 </head>
 <body>
 
-<!-- ======= TEAM GATE (smoky intro, click to enter) ======= -->
-<div id="teamGate" role="button" tabindex="0" aria-label="Enter the team page">
-  <div class="gate-smoke" aria-hidden="true"><i class="s1"></i><i class="s2"></i><i class="s3"></i><i class="s4"></i><i class="s5"></i></div>
+<!-- ======= TEAM GATE (soft fog + shooting stars, auto-reveals after 3.2s) ======= -->
+<div id="teamGate" role="presentation" aria-hidden="true">
+  <div class="gate-smoke"><i class="s1"></i><i class="s2"></i><i class="s3"></i><i class="s4"></i><i class="s5"></i></div>
+  <div class="gate-stars"><span class="st1"></span><span class="st2 g"></span><span class="st3"></span><span class="st4 g"></span></div>
   <div class="gate-center">
-    <div class="gate-icon" aria-hidden="true">
+    <div class="gate-icon">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
         <path d="M16 19v-1a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v1" />
         <circle cx="9" cy="7" r="3.2" />
@@ -207,7 +224,6 @@
       </svg>
     </div>
     <div class="gate-title">Meet the team</div>
-    <div class="gate-hint">Click to enter</div>
   </div>
 </div>
 
@@ -508,28 +524,19 @@
     });
   });
 
-  // Team gate: smoky intro that opens to the page on click / key / scroll
+  // Team gate: soft fog + shooting stars, then auto-reveals the page after 3.2s
   (function () {
     var gate = document.getElementById('teamGate');
     if (!gate) return;
     document.body.classList.add('gate-lock');
     window.scrollTo(0, 0);
     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var done = false;
     function enter() {
-      if (done) return;
-      done = true;
       gate.classList.add('gate-hide');
       document.body.classList.remove('gate-lock');
       setTimeout(function () { if (gate.parentNode) gate.parentNode.removeChild(gate); }, 850);
     }
-    gate.addEventListener('click', enter);
-    gate.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); enter(); } });
-    window.addEventListener('keydown', enter, { once: true });
-    window.addEventListener('wheel', enter, { once: true, passive: true });
-    window.addEventListener('touchmove', enter, { once: true, passive: true });
-    setTimeout(enter, reduce ? 1500 : 7000); // safety auto-dismiss
-    try { gate.focus({ preventScroll: true }); } catch (e) {}
+    setTimeout(enter, reduce ? 400 : 3200);
   })();
 
   // Interactive founder profiles, accordion (one open at a time, others quiet down)
