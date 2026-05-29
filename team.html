@@ -179,7 +179,7 @@
       white-space: nowrap; }
     /* dim resting letters */
     .gate-word .base { color: rgba(255, 255, 255, .10); }
-    /* glowing duplicate, lit only inside the narrow window the bolt is passing through */
+    /* glowing duplicate, wiped in left-to-right and left lit (stays glowing once struck) */
     .gate-word .sweep {
       position: absolute; left: 0; top: 0; width: 100%; color: #fbfdff;
       text-shadow:
@@ -188,57 +188,54 @@
         0 0 26px rgba(140, 185, 255, .8),
         0 0 52px rgba(96, 150, 255, .55),
         0 0 90px rgba(70, 130, 255, .4);
-      -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.25) 40%, #000 50%, rgba(0,0,0,.25) 60%, transparent 100%);
-      mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.25) 40%, #000 50%, rgba(0,0,0,.25) 60%, transparent 100%);
-      -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
-      -webkit-mask-size: 34% 100%; mask-size: 34% 100%;
-      -webkit-mask-position: -50% center; mask-position: -50% center;
+      clip-path: inset(0 100% 0 0);
       opacity: 0;
-      animation: gateSweep 1.5s cubic-bezier(.5, .02, .45, 1) .3s forwards;
+      animation: gateReveal 1.5s cubic-bezier(.5, .02, .45, 1) .3s forwards;
     }
-    @keyframes gateSweep {
-      0%   { -webkit-mask-position: -50% center; mask-position: -50% center; opacity: 0; }
+    @keyframes gateReveal {
+      0%   { clip-path: inset(0 100% 0 0); opacity: 0; }
       5%   { opacity: 1; }
-      26%  { opacity: .5; } 29% { opacity: 1; }   /* flicker */
-      53%  { opacity: .55; } 56% { opacity: 1; }  /* flicker */
-      90%  { opacity: 1; }
-      100% { -webkit-mask-position: 150% center; mask-position: 150% center; opacity: 1; }
+      26%  { opacity: .55; } 29% { opacity: 1; }   /* flicker */
+      53%  { opacity: .6; } 56% { opacity: 1; }    /* flicker */
+      100% { clip-path: inset(0 0 0 0); opacity: 1; }
     }
 
-    /* the jagged bolt that travels along the words */
+    /* the jagged bolt, streaks across the FULL width of the screen */
     .gate-bolt { position: absolute; left: 0; top: 50%; transform: translateY(-50%);
-      width: 100%; height: 150%; overflow: visible; pointer-events: none; z-index: 2; }
+      width: 100vw; height: 56vh; overflow: visible; pointer-events: none; z-index: 2; }
     .gate-bolt path {
-      fill: none; stroke: #f2f7ff; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round;
-      filter: drop-shadow(0 0 3px rgba(255,255,255,.95)) drop-shadow(0 0 9px rgba(150,190,255,.9)) drop-shadow(0 0 20px rgba(80,140,255,.7));
-      stroke-dasharray: .14 2; stroke-dashoffset: .14; opacity: 0;
+      fill: none; stroke: #f2f7ff; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round;
+      filter: drop-shadow(0 0 3px rgba(255,255,255,.95)) drop-shadow(0 0 9px rgba(150,190,255,.9)) drop-shadow(0 0 22px rgba(80,140,255,.7));
+      stroke-dasharray: .1 2; stroke-dashoffset: .1; opacity: 0;
       animation: boltTravel 1.5s cubic-bezier(.5, .02, .45, 1) .3s forwards;
     }
+    .gate-bolt .branch { stroke-width: 1.4; opacity: 0;
+      animation: boltTravel 1.5s cubic-bezier(.5, .02, .45, 1) .34s forwards; }
     @keyframes boltTravel {
-      0%   { stroke-dashoffset: .14; opacity: 0; }
+      0%   { stroke-dashoffset: .1; opacity: 0; }
       4%   { opacity: 1; }
-      26%  { opacity: .45; } 29% { opacity: 1; }   /* flicker */
+      26%  { opacity: .4; } 29% { opacity: 1; }    /* flicker */
       50%  { stroke-dashoffset: -.5; }
-      53%  { opacity: .5; } 56% { opacity: 1; }     /* flicker */
+      53%  { opacity: .45; } 56% { opacity: 1; }   /* flicker */
       90%  { opacity: 1; }
-      100% { stroke-dashoffset: -1.14; opacity: 0; }
+      100% { stroke-dashoffset: -1.1; opacity: 0; }
     }
 
-    /* electric flash as the bolt strikes through */
+    /* electric flash as the bolt cracks across */
     .gate-flash { position: absolute; inset: 0; pointer-events: none; mix-blend-mode: screen; opacity: 0;
-      background: radial-gradient(130% 90% at 50% 50%, rgba(214,232,255,.55), rgba(120,170,255,0) 62%);
+      background: radial-gradient(150% 100% at 50% 50%, rgba(214,232,255,.6), rgba(120,170,255,0) 64%);
       animation: gateFlash 1.5s ease .3s forwards; }
     @keyframes gateFlash {
-      0%, 22% { opacity: 0; }
-      26% { opacity: .5; } 30% { opacity: .1; }     /* first crack */
-      52% { opacity: .15; } 55% { opacity: .55; } 60% { opacity: .08; }  /* mid surge */
-      85% { opacity: .12; } 90% { opacity: .7; }     /* strike on final M */
-      100% { opacity: 0; }
+      0%, 18% { opacity: 0; }
+      24% { opacity: .55; } 30% { opacity: .1; }    /* first crack */
+      52% { opacity: .15; } 55% { opacity: .6; } 60% { opacity: .08; }   /* mid surge */
+      85% { opacity: .12; } 92% { opacity: .8; }    /* strike across */
+      100% { opacity: .14; }
     }
 
     body.gate-lock { overflow: hidden; }
     @media (prefers-reduced-motion: reduce) {
-      .gate-word .sweep { animation: none; opacity: 1; -webkit-mask-image: none; mask-image: none; }
+      .gate-word .sweep { animation: none; opacity: 1; clip-path: none; }
       .gate-bolt, .gate-flash { display: none; }
     }
   </style>
@@ -247,16 +244,17 @@
 
 <!-- ======= TEAM GATE (minimal: dramatic lightning strike, auto-reveals) ======= -->
 <div id="teamGate" role="presentation" aria-hidden="true">
+  <svg class="gate-bolt" viewBox="0 0 1000 200" preserveAspectRatio="none" aria-hidden="true">
+    <path pathLength="1" d="M0,100 L62,60 L96,124 L168,44 L206,132 L300,52 L342,128 L440,36 L486,130 L582,50 L626,126 L724,40 L770,128 L864,58 L908,120 L958,80 L1000,102" />
+    <path class="branch" pathLength="1" d="M440,36 L470,2 M486,130 L516,168 M724,40 L756,8" />
+  </svg>
   <div class="gate-stage">
     <p class="gate-word">
       <span class="base">Meet the team</span>
       <span class="sweep" aria-hidden="true">Meet the team</span>
     </p>
-    <svg class="gate-bolt" viewBox="0 0 1000 200" preserveAspectRatio="none" aria-hidden="true">
-      <path pathLength="1" d="M0,100 L78,52 L120,118 L210,40 L252,128 L360,58 L398,120 L512,34 L556,126 L668,56 L708,124 L820,46 L864,116 L940,70 L1000,98" />
-    </svg>
-    <div class="gate-flash" aria-hidden="true"></div>
   </div>
+  <div class="gate-flash" aria-hidden="true"></div>
 </div>
 
 <!-- ======= NAV ======= -->
