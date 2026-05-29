@@ -194,16 +194,7 @@
       width: 64px; height: 1px; background: linear-gradient(to left, rgba(255,255,255,.55), rgba(255,255,255,0)); }
     .gate-stars .g { background: #f1e4cb; box-shadow: 0 0 6px 1px rgba(214,184,130,.55); }
     .gate-stars .g::after { background: linear-gradient(to left, rgba(214,184,130,.5), rgba(214,184,130,0)); }
-    .gate-stars .st1 { top: 12%; left: -12%; animation: shoot1 1.9s ease-in 0s   infinite; }
-    .gate-stars .st2 { top: 26%; left: -10%; animation: shoot2 2.2s ease-in .4s  infinite; }
-    .gate-stars .st3 { top: 40%; left: -12%; animation: shoot1 1.7s ease-in 1.0s infinite; }
-    .gate-stars .st4 { top: 54%; left: -9%;  animation: shoot3 2.0s ease-in .3s  infinite; }
-    .gate-stars .st5 { top: 68%; left: -12%; animation: shoot1 1.8s ease-in 1.3s infinite; }
-    .gate-stars .st6 { top: 80%; left: -10%; animation: shoot2 2.1s ease-in .8s  infinite; }
-    .gate-stars .st7 { top: 33%; left: -8%;  animation: shoot3 1.6s ease-in 1.6s infinite; }
-    .gate-stars .st8 { top: 60%; left: -11%; animation: shoot1 1.7s ease-in 2.0s infinite; }
-    .gate-stars .st9 { top: 18%; left: -9%;  animation: shoot2 1.9s ease-in 2.3s infinite; }
-    .gate-stars .st10 { top: 47%; left: -10%; animation: shoot3 2.0s ease-in 1.1s infinite; }
+    /* individual stars are generated in JS (randomized position, speed, delay) */
     @keyframes shoot1 { 0% { opacity: 0; transform: translate(0,0); } 10% { opacity: .85; } 85% { opacity: .85; } 100% { opacity: 0; transform: translate(92vw, 11vh); } }
     @keyframes shoot2 { 0% { opacity: 0; transform: translate(0,0); } 10% { opacity: .8; } 85% { opacity: .8; } 100% { opacity: 0; transform: translate(86vw, -9vh); } }
     @keyframes shoot3 { 0% { opacity: 0; transform: translate(0,0); } 12% { opacity: .85; } 85% { opacity: .85; } 100% { opacity: 0; transform: translate(94vw, 7vh); } }
@@ -219,7 +210,7 @@
 <!-- ======= TEAM GATE (soft fog + shooting stars, auto-reveals after 3.2s) ======= -->
 <div id="teamGate" role="presentation" aria-hidden="true">
   <div class="gate-smoke"><i class="s1"></i><i class="s2"></i><i class="s3"></i><i class="s4"></i><i class="s5"></i></div>
-  <div class="gate-stars"><span class="st1"></span><span class="st2 g"></span><span class="st3"></span><span class="st4 g"></span><span class="st5"></span><span class="st6 g"></span><span class="st7"></span><span class="st8 g"></span><span class="st9"></span><span class="st10 g"></span></div>
+  <div class="gate-stars"></div>
   <div class="gate-center">
     <div class="gate-icon">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
@@ -537,6 +528,25 @@
     document.body.classList.add('gate-lock');
     window.scrollTo(0, 0);
     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Fill the fog with shooting stars (randomized so they stream across continuously)
+    var sky = gate.querySelector('.gate-stars');
+    if (sky && !reduce) {
+      var names = ['shoot1', 'shoot2', 'shoot3'];
+      var frag = document.createDocumentFragment();
+      for (var i = 0; i < 34; i++) {
+        var s = document.createElement('span');
+        if (i % 3 === 0) s.className = 'g';
+        s.style.top = (Math.random() * 94) + '%';
+        s.style.left = (-16 + Math.random() * 10) + '%';
+        var dur = (1.3 + Math.random() * 1.2).toFixed(2);
+        var delay = (Math.random() * 3).toFixed(2);
+        s.style.animation = names[i % 3] + ' ' + dur + 's ease-in ' + delay + 's infinite';
+        frag.appendChild(s);
+      }
+      sky.appendChild(frag);
+    }
+
     function enter() {
       gate.classList.add('gate-hide');
       document.body.classList.remove('gate-lock');
