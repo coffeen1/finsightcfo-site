@@ -462,6 +462,41 @@
     .faq-item .faq-a { padding: 0 0 24px; color: var(--ink-2); font-size: 16px; line-height: 1.65; max-width: 720px; }
     .faq-item .faq-a a { color: var(--accent); text-decoration: underline; }
 
+    /* ---- Uniform off-white: drop the alternating gray bands on the homepage ---- */
+    .section--alt {
+      background-color: transparent;
+      background-image: none;
+      border-top-color: transparent;
+      border-bottom-color: transparent;
+    }
+
+    /* ---- Sky footer: cloud image behind the FAQ + footer ---- */
+    .skyfoot { position: relative; isolation: isolate; }
+    .skyfoot::before {
+      content: ""; position: absolute; inset: 0; z-index: -2;
+      background-color: #cdd8e6;
+      background-image: url("assets/sky-footer.webp");
+      background-size: cover;
+      background-position: bottom center;
+      background-repeat: no-repeat;
+    }
+    .skyfoot::after {
+      content: ""; position: absolute; left: 0; right: 0; top: 0; height: 62%; z-index: -1; pointer-events: none;
+      background: linear-gradient(to bottom,
+        #F4F5F6 0%,
+        rgba(244, 245, 246, .92) 14%,
+        rgba(244, 245, 246, .5) 44%,
+        rgba(244, 245, 246, 0) 100%);
+    }
+    .skyfoot .footer {
+      background: transparent;
+      border-top: none;
+    }
+    .skyfoot .footer .foot-brand p,
+    .skyfoot .footer .foot-col a,
+    .skyfoot .footer .foot-col h4,
+    .skyfoot .footer .foot-bottom { text-shadow: 0 1px 2px rgba(255, 255, 255, .55); }
+
     /* ---- Start your report (intake) ---- */
     .intake-grid { display: grid; grid-template-columns: 1.25fr .85fr; gap: 40px; align-items: start; margin-top: 48px; }
     .intake-step { margin-bottom: 36px; }
@@ -1256,6 +1291,9 @@
 </section>
 
 
+<!-- ======= SKY FOOTER (FAQ + footer over cloud image) ======= -->
+<div class="skyfoot">
+
 <!-- ======= FAQ ======= -->
 <section class="section" id="faq" aria-labelledby="faq-heading">
   <div class="wrap">
@@ -1338,6 +1376,8 @@
     </div>
   </div>
 </footer>
+
+</div><!-- /.skyfoot -->
 
 <script>
   // Mobile menu toggle
