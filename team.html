@@ -97,6 +97,12 @@
     .tcard-face { position: absolute; inset: 0; border-radius: 14px; overflow: hidden;
       -webkit-backface-visibility: hidden; backface-visibility: hidden; }
 
+    /* only the face you can see receives clicks (prevents the front caption from
+       swallowing taps on the back, e.g. the LinkedIn link) */
+    .tcard-back { pointer-events: none; }
+    .tcard:hover .tcard-back, .tcard.flipped .tcard-back { pointer-events: auto; }
+    .tcard:hover .tcard-front, .tcard.flipped .tcard-front { pointer-events: none; }
+
     /* front */
     .tcard-front { background: #1a1c20; }
     .tcard-front img { width: 100%; height: 100%; object-fit: cover; object-position: center 22%; display: block;
@@ -124,7 +130,7 @@
       color: #000; margin: 0 0 11px; }
     .tcard-back p:last-child { margin-bottom: 0; }
     .tcard-back .tcard-link { font-family: "Times New Roman", Times, serif; font-size: 14px; color: #000; text-decoration: underline;
-      text-underline-offset: 3px; margin-top: auto; padding-top: 14px; display: inline-block; }
+      text-underline-offset: 3px; margin-top: auto; padding-top: 14px; display: inline-block; position: relative; z-index: 2; cursor: pointer; }
 
     /* ===== Responsive ===== */
     @media (max-width: 860px) {
