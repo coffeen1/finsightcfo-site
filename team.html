@@ -166,54 +166,97 @@
       .tcard-photo img, .tdetail, .tdetail-card { transition: none !important; }
     }
 
-    /* ===== Team gate (minimal: electric light sweep across the words) ===== */
+    /* ===== Team gate (minimal: dramatic lightning strike across the words) ===== */
     #teamGate { position: fixed; inset: 0; z-index: 9999; overflow: hidden;
-      background: #07080b; display: flex; align-items: center; justify-content: center; will-change: opacity; }
-    #teamGate.gate-hide { animation: gateOut .65s ease forwards; }
+      background: #06070a; display: flex; align-items: center; justify-content: center; will-change: opacity; }
+    #teamGate.gate-hide { animation: gateOut .6s ease forwards; }
     @keyframes gateOut { to { opacity: 0; visibility: hidden; } }
 
-    .gate-word { position: relative; margin: 0; padding: 0 24px; text-align: center;
+    .gate-stage { position: relative; display: inline-block; padding: 0 24px; }
+    .gate-word { position: relative; margin: 0; text-align: center; z-index: 1;
       font-family: var(--serif); font-weight: 500; text-transform: uppercase;
-      font-size: clamp(26px, 6.4vw, 76px); letter-spacing: clamp(.12em, 1.1vw, .26em); line-height: 1;
+      font-size: clamp(20px, 5vw, 58px); letter-spacing: clamp(.12em, 1vw, .24em); line-height: 1;
       white-space: nowrap; }
     /* dim resting letters */
-    .gate-word .base { color: rgba(255, 255, 255, .12); }
-    /* glowing duplicate, revealed only inside a narrow window that sweeps across */
+    .gate-word .base { color: rgba(255, 255, 255, .10); }
+    /* glowing duplicate, lit only inside the narrow window the bolt is passing through */
     .gate-word .sweep {
-      position: absolute; left: 0; top: 0; width: 100%; padding: 0 24px; color: #f3f7ff;
+      position: absolute; left: 0; top: 0; width: 100%; color: #fbfdff;
       text-shadow:
-        0 0 5px rgba(214, 230, 255, .95),
-        0 0 14px rgba(150, 190, 255, .85),
-        0 0 30px rgba(110, 160, 255, .6),
-        0 0 60px rgba(90, 140, 255, .42);
-      -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.4) 38%, #000 50%, rgba(0,0,0,.4) 62%, transparent 100%);
-      mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.4) 38%, #000 50%, rgba(0,0,0,.4) 62%, transparent 100%);
+        0 0 4px rgba(255, 255, 255, 1),
+        0 0 12px rgba(200, 224, 255, .95),
+        0 0 26px rgba(140, 185, 255, .8),
+        0 0 52px rgba(96, 150, 255, .55),
+        0 0 90px rgba(70, 130, 255, .4);
+      -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.25) 40%, #000 50%, rgba(0,0,0,.25) 60%, transparent 100%);
+      mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.25) 40%, #000 50%, rgba(0,0,0,.25) 60%, transparent 100%);
       -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
-      -webkit-mask-size: 42% 100%; mask-size: 42% 100%;
-      -webkit-mask-position: -55% center; mask-position: -55% center;
+      -webkit-mask-size: 34% 100%; mask-size: 34% 100%;
+      -webkit-mask-position: -50% center; mask-position: -50% center;
       opacity: 0;
-      animation: gateSweep 1.65s cubic-bezier(.45, .05, .4, 1) .25s forwards;
+      animation: gateSweep 1.5s cubic-bezier(.5, .02, .45, 1) .3s forwards;
     }
     @keyframes gateSweep {
-      0%   { -webkit-mask-position: -55% center; mask-position: -55% center; opacity: 0; }
-      8%   { opacity: 1; }
-      92%  { opacity: 1; }
-      100% { -webkit-mask-position: 155% center; mask-position: 155% center; opacity: 1; }
+      0%   { -webkit-mask-position: -50% center; mask-position: -50% center; opacity: 0; }
+      5%   { opacity: 1; }
+      26%  { opacity: .5; } 29% { opacity: 1; }   /* flicker */
+      53%  { opacity: .55; } 56% { opacity: 1; }  /* flicker */
+      90%  { opacity: 1; }
+      100% { -webkit-mask-position: 150% center; mask-position: 150% center; opacity: 1; }
     }
+
+    /* the jagged bolt that travels along the words */
+    .gate-bolt { position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+      width: 100%; height: 150%; overflow: visible; pointer-events: none; z-index: 2; }
+    .gate-bolt path {
+      fill: none; stroke: #f2f7ff; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round;
+      filter: drop-shadow(0 0 3px rgba(255,255,255,.95)) drop-shadow(0 0 9px rgba(150,190,255,.9)) drop-shadow(0 0 20px rgba(80,140,255,.7));
+      stroke-dasharray: .14 2; stroke-dashoffset: .14; opacity: 0;
+      animation: boltTravel 1.5s cubic-bezier(.5, .02, .45, 1) .3s forwards;
+    }
+    @keyframes boltTravel {
+      0%   { stroke-dashoffset: .14; opacity: 0; }
+      4%   { opacity: 1; }
+      26%  { opacity: .45; } 29% { opacity: 1; }   /* flicker */
+      50%  { stroke-dashoffset: -.5; }
+      53%  { opacity: .5; } 56% { opacity: 1; }     /* flicker */
+      90%  { opacity: 1; }
+      100% { stroke-dashoffset: -1.14; opacity: 0; }
+    }
+
+    /* electric flash as the bolt strikes through */
+    .gate-flash { position: absolute; inset: 0; pointer-events: none; mix-blend-mode: screen; opacity: 0;
+      background: radial-gradient(130% 90% at 50% 50%, rgba(214,232,255,.55), rgba(120,170,255,0) 62%);
+      animation: gateFlash 1.5s ease .3s forwards; }
+    @keyframes gateFlash {
+      0%, 22% { opacity: 0; }
+      26% { opacity: .5; } 30% { opacity: .1; }     /* first crack */
+      52% { opacity: .15; } 55% { opacity: .55; } 60% { opacity: .08; }  /* mid surge */
+      85% { opacity: .12; } 90% { opacity: .7; }     /* strike on final M */
+      100% { opacity: 0; }
+    }
+
     body.gate-lock { overflow: hidden; }
     @media (prefers-reduced-motion: reduce) {
       .gate-word .sweep { animation: none; opacity: 1; -webkit-mask-image: none; mask-image: none; }
+      .gate-bolt, .gate-flash { display: none; }
     }
   </style>
 </head>
 <body>
 
-<!-- ======= TEAM GATE (minimal: electric light sweep, auto-reveals) ======= -->
+<!-- ======= TEAM GATE (minimal: dramatic lightning strike, auto-reveals) ======= -->
 <div id="teamGate" role="presentation" aria-hidden="true">
-  <p class="gate-word">
-    <span class="base">Meet the team</span>
-    <span class="sweep" aria-hidden="true">Meet the team</span>
-  </p>
+  <div class="gate-stage">
+    <p class="gate-word">
+      <span class="base">Meet the team</span>
+      <span class="sweep" aria-hidden="true">Meet the team</span>
+    </p>
+    <svg class="gate-bolt" viewBox="0 0 1000 200" preserveAspectRatio="none" aria-hidden="true">
+      <path pathLength="1" d="M0,100 L78,52 L120,118 L210,40 L252,128 L360,58 L398,120 L512,34 L556,126 L668,56 L708,124 L820,46 L864,116 L940,70 L1000,98" />
+    </svg>
+    <div class="gate-flash" aria-hidden="true"></div>
+  </div>
 </div>
 
 <!-- ======= NAV ======= -->
@@ -541,8 +584,8 @@
       document.body.classList.remove('gate-lock');
       setTimeout(function () { if (gate.parentNode) gate.parentNode.removeChild(gate); }, 700);
     }
-    // sweep starts at .25s and runs 1.65s; fade out just as the light clears the final "M"
-    setTimeout(enter, reduce ? 350 : 2050);
+    // bolt starts at .3s and runs 1.5s; fade out just as it strikes through the final "M"
+    setTimeout(enter, reduce ? 350 : 1880);
   })();
 
   // Founder cards: "Read full story" expands a full-width detail panel (one at a time)
