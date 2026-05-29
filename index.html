@@ -42,7 +42,7 @@
       align-items: center;
       gap: 8px;
       background: var(--badge);
-      color: #EDEAE2;
+      color: #ECECEC;
       font-size: 11.5px;
       font-weight: 600;
       letter-spacing: .12em;
@@ -56,14 +56,14 @@
       height: 7px;
       border-radius: 50%;
       background: var(--accent);
-      box-shadow: 0 0 0 0 rgba(182, 138, 69, .5);
+      box-shadow: 0 0 0 0 rgba(176, 30, 40, .5);
       animation: pulse 2.2s infinite;
       flex: none;
     }
     @keyframes pulse {
-      0%   { box-shadow: 0 0 0 0 rgba(182, 138, 69, .45); }
-      70%  { box-shadow: 0 0 0 9px rgba(182, 138, 69, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(182, 138, 69, 0); }
+      0%   { box-shadow: 0 0 0 0 rgba(176, 30, 40, .45); }
+      70%  { box-shadow: 0 0 0 9px rgba(176, 30, 40, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(176, 30, 40, 0); }
     }
     .hero h1 {
       font-family: var(--serif);
@@ -106,7 +106,7 @@
       pointer-events: none;
       z-index: 2;
       background:
-        linear-gradient(120deg, rgba(182, 138, 69, .10) 0%, rgba(182, 138, 69, 0) 46%),
+        linear-gradient(120deg, rgba(176, 30, 40, .10) 0%, rgba(176, 30, 40, 0) 46%),
         linear-gradient(to bottom, rgba(255, 255, 255, .22) 0%, rgba(255, 255, 255, 0) 12%);
     }
 
@@ -306,7 +306,7 @@
     }
     .plan--feat {
       background: var(--badge);
-      color: #EDEAE2;
+      color: #ECECEC;
       border-color: var(--badge);
       transform: translateY(-10px);
       box-shadow: 0 30px 60px -28px rgba(20, 20, 20, .6);
@@ -328,7 +328,7 @@
     .plan ul { list-style: none; margin: 0 0 24px; padding: 0; display: flex; flex-direction: column; gap: 11px; flex: 1; }
     .plan li { display: flex; gap: 10px; font-size: 14.5px; }
     .plan li::before { content: "›"; color: var(--accent); font-weight: 700; }
-    .plan--feat li::before { color: #D9BA82; }
+    .plan--feat li::before { color: #E0888D; }
     .plan .btn { justify-content: center; }
 
     /* Expandable plan details */
@@ -347,7 +347,7 @@
       color: var(--accent);
       user-select: none;
     }
-    .plan--feat .plan-more > summary { color: #D9BA82; }
+    .plan--feat .plan-more > summary { color: #E0888D; }
     .plan-more > summary::-webkit-details-marker { display: none; }
     .plan-more > summary::after { content: "\25BE"; font-size: 11px; transition: transform .2s; }
     .plan-more[open] > summary::after { transform: rotate(180deg); }
@@ -365,11 +365,11 @@
     .pm-block li { display: flex; gap: 8px; font-size: 12.5px; color: var(--ink-2); line-height: 1.4; }
     .plan--feat .pm-block li { color: var(--accent-soft); }
     .pm-block li::before { content: "\203A"; color: var(--accent); font-weight: 700; flex: none; }
-    .plan--feat .pm-block li::before { color: #D9BA82; }
+    .plan--feat .pm-block li::before { color: #E0888D; }
     .pm-turn { font-size: 11.5px; color: var(--ink-3); line-height: 1.45; }
     .plan--feat .pm-turn { color: var(--accent-soft); }
     .pm-turn strong { color: var(--ink-2); }
-    .plan--feat .pm-turn strong { color: #EDEAE2; }
+    .plan--feat .pm-turn strong { color: #ECECEC; }
 
     /* ---- Sample report ---- */
     .sample-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 48px; align-items: start; }
@@ -454,7 +454,7 @@
     .intro-stage { position: relative; z-index: 2; width: min(680px, 86vw); text-align: center; }
     .intro-chart { width: 100%; height: auto; display: block; }
     .intro-line { fill: none; stroke: var(--accent); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round;
-      filter: drop-shadow(0 6px 14px rgba(182, 138, 69,.35)); }
+      filter: drop-shadow(0 6px 14px rgba(176, 30, 40,.35)); }
     .intro-area { fill: url(#introGrad); opacity: 0; animation: introUp .8s ease 1.1s forwards; }
     .intro-tip { fill: var(--accent); opacity: 0; transform-box: fill-box; transform-origin: center;
       animation: introPop .45s cubic-bezier(.2,1.4,.4,1) 1.55s forwards; }
@@ -465,7 +465,7 @@
     @keyframes introUp { to { opacity: 1; } }
     .intro-tag { position: absolute; top: 2%; right: 3%; display: inline-flex; align-items: center; gap: 6px;
       background: var(--accent); color: #fff; font-family: var(--sans); font-weight: 700; font-size: 14px;
-      letter-spacing: .02em; padding: 7px 13px; border-radius: 30px; box-shadow: 0 12px 26px -10px rgba(182, 138, 69,.6);
+      letter-spacing: .02em; padding: 7px 13px; border-radius: 30px; box-shadow: 0 12px 26px -10px rgba(176, 30, 40,.6);
       opacity: 0; transform: translateY(10px) scale(.9); animation: introTag .55s cubic-bezier(.2,1.4,.4,1) 1.7s forwards; }
     @keyframes introTag { to { opacity: 1; transform: translateY(0) scale(1); } }
     .intro-title { font-family: var(--serif); font-weight: 500; font-size: clamp(34px, 6vw, 58px); line-height: 1;
@@ -570,8 +570,8 @@
     <svg class="intro-chart" viewBox="0 0 1000 420" fill="none" aria-hidden="true">
       <defs>
         <linearGradient id="introGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#B68A45" stop-opacity=".22" />
-          <stop offset="100%" stop-color="#B68A45" stop-opacity="0" />
+          <stop offset="0%" stop-color="#B01E28" stop-opacity=".22" />
+          <stop offset="100%" stop-color="#B01E28" stop-opacity="0" />
         </linearGradient>
       </defs>
       <path class="intro-area" d="M60,360 L200,330 L340,348 L470,262 L610,286 L760,176 L880,212 L950,84 L950,400 L60,400 Z" />
