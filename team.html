@@ -178,16 +178,17 @@
 
     /* ===== Team gate (soft fog + shooting stars, auto-reveals after 3.2s) ===== */
     #teamGate { position: fixed; inset: 0; z-index: 9999; overflow: hidden;
-      background: #ECECEC; display: flex; align-items: center; justify-content: center; will-change: opacity; }
+      background: radial-gradient(120% 120% at 50% 38%, #DDE3EE 0%, #C9D2E1 55%, #BBC6D8 100%);
+      display: flex; align-items: center; justify-content: center; will-change: opacity; }
     #teamGate.gate-hide { animation: gateOut .8s ease forwards; }
     @keyframes gateOut { to { opacity: 0; visibility: hidden; } }
     .gate-smoke { position: absolute; inset: -25%; pointer-events: none; filter: blur(46px); }
-    .gate-smoke i { position: absolute; display: block; border-radius: 50%; mix-blend-mode: multiply; will-change: transform; }
-    .gate-smoke .s1 { width: 46vw; height: 46vw; left: 8%;  top: 6%;  background: rgba(20,20,20,.16);  animation: drift1 19s ease-in-out infinite alternate; }
-    .gate-smoke .s2 { width: 40vw; height: 40vw; right: 4%; top: 18%; background: rgba(122, 74, 40,.20); animation: drift2 23s ease-in-out infinite alternate; }
-    .gate-smoke .s3 { width: 52vw; height: 52vw; left: 24%; bottom: 2%; background: rgba(20,20,20,.12);  animation: drift3 27s ease-in-out infinite alternate; }
-    .gate-smoke .s4 { width: 30vw; height: 30vw; right: 18%; bottom: 10%; background: rgba(120, 120, 120,.18); animation: drift1 21s ease-in-out infinite alternate-reverse; }
-    .gate-smoke .s5 { width: 34vw; height: 34vw; left: 38%; top: 30%; background: rgba(122, 74, 40,.12); animation: drift2 25s ease-in-out infinite alternate-reverse; }
+    .gate-smoke i { position: absolute; display: block; border-radius: 50%; mix-blend-mode: screen; will-change: transform; }
+    .gate-smoke .s1 { width: 46vw; height: 46vw; left: 8%;  top: 6%;  background: rgba(255, 255, 255, .62); animation: drift1 19s ease-in-out infinite alternate; }
+    .gate-smoke .s2 { width: 40vw; height: 40vw; right: 4%; top: 18%; background: rgba(150, 182, 226, .50); animation: drift2 23s ease-in-out infinite alternate; }
+    .gate-smoke .s3 { width: 52vw; height: 52vw; left: 24%; bottom: 2%; background: rgba(255, 255, 255, .52); animation: drift3 27s ease-in-out infinite alternate; }
+    .gate-smoke .s4 { width: 30vw; height: 30vw; right: 18%; bottom: 10%; background: rgba(120, 158, 212, .44); animation: drift1 21s ease-in-out infinite alternate-reverse; }
+    .gate-smoke .s5 { width: 34vw; height: 34vw; left: 38%; top: 30%; background: rgba(255, 255, 255, .46); animation: drift2 25s ease-in-out infinite alternate-reverse; }
     @keyframes drift1 { from { transform: translate(0,0) scale(1); } to { transform: translate(8%, -6%) scale(1.18); } }
     @keyframes drift2 { from { transform: translate(0,0) scale(1.05); } to { transform: translate(-7%, 8%) scale(.9); } }
     @keyframes drift3 { from { transform: translate(0,0) scale(1); } to { transform: translate(5%, -9%) scale(1.22); } }
@@ -214,8 +215,8 @@
       box-shadow: 0 0 6px 1px rgba(255,255,255,.6); opacity: 0; }
     .gate-stars span::after { content: ""; position: absolute; top: 50%; right: 1px; transform: translateY(-50%);
       width: 64px; height: 1px; background: linear-gradient(to left, rgba(255,255,255,.55), rgba(255,255,255,0)); }
-    .gate-stars .g { background: #E3D5C6; box-shadow: 0 0 6px 1px rgba(205, 176, 150,.55); }
-    .gate-stars .g::after { background: linear-gradient(to left, rgba(205, 176, 150,.5), rgba(205, 176, 150,0)); }
+    .gate-stars .g { background: #DCE7F6; box-shadow: 0 0 6px 1px rgba(168, 196, 235,.6); }
+    .gate-stars .g::after { background: linear-gradient(to left, rgba(168, 196, 235,.55), rgba(168, 196, 235,0)); }
     /* individual stars are generated in JS (randomized position, speed, delay) */
     @keyframes shoot1 { 0% { opacity: 0; transform: translate(0,0); } 10% { opacity: .85; } 85% { opacity: .85; } 100% { opacity: 0; transform: translate(92vw, 11vh); } }
     @keyframes shoot2 { 0% { opacity: 0; transform: translate(0,0); } 10% { opacity: .8; } 85% { opacity: .8; } 100% { opacity: 0; transform: translate(86vw, -9vh); } }
