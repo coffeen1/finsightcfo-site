@@ -161,9 +161,55 @@
       body.reveal-on [data-reveal] { opacity: 1 !important; transform: none !important; transition: none !important; }
       .fprofile-photo img, .fprofile-name, .fprofile-name::after { transition: none !important; }
     }
+
+    /* ===== Team gate (smoky intro, click to enter) ===== */
+    #teamGate { position: fixed; inset: 0; z-index: 9999; overflow: hidden; cursor: pointer;
+      background: #efece6; display: flex; align-items: center; justify-content: center; will-change: opacity; }
+    #teamGate.gate-hide { animation: gateOut .8s ease forwards; }
+    @keyframes gateOut { to { opacity: 0; visibility: hidden; } }
+    .gate-smoke { position: absolute; inset: -25%; pointer-events: none; filter: blur(46px); }
+    .gate-smoke i { position: absolute; display: block; border-radius: 50%; mix-blend-mode: multiply; will-change: transform; }
+    .gate-smoke .s1 { width: 46vw; height: 46vw; left: 8%;  top: 6%;  background: rgba(20,20,20,.16);  animation: drift1 19s ease-in-out infinite alternate; }
+    .gate-smoke .s2 { width: 40vw; height: 40vw; right: 4%; top: 18%; background: rgba(182,138,69,.20); animation: drift2 23s ease-in-out infinite alternate; }
+    .gate-smoke .s3 { width: 52vw; height: 52vw; left: 24%; bottom: 2%; background: rgba(20,20,20,.12);  animation: drift3 27s ease-in-out infinite alternate; }
+    .gate-smoke .s4 { width: 30vw; height: 30vw; right: 18%; bottom: 10%; background: rgba(120,120,118,.18); animation: drift1 21s ease-in-out infinite alternate-reverse; }
+    .gate-smoke .s5 { width: 34vw; height: 34vw; left: 38%; top: 30%; background: rgba(182,138,69,.12); animation: drift2 25s ease-in-out infinite alternate-reverse; }
+    @keyframes drift1 { from { transform: translate(0,0) scale(1); } to { transform: translate(8%, -6%) scale(1.18); } }
+    @keyframes drift2 { from { transform: translate(0,0) scale(1.05); } to { transform: translate(-7%, 8%) scale(.9); } }
+    @keyframes drift3 { from { transform: translate(0,0) scale(1); } to { transform: translate(5%, -9%) scale(1.22); } }
+    .gate-center { position: relative; z-index: 2; text-align: center; pointer-events: none; padding: 0 24px; }
+    .gate-icon { width: 86px; height: 86px; border-radius: 50%; background: #fff; border: 1px solid var(--line);
+      box-shadow: 0 24px 60px -22px rgba(20,20,20,.45); display: grid; place-items: center; margin: 0 auto; color: var(--accent); position: relative; }
+    .gate-icon svg { width: 40px; height: 40px; }
+    .gate-icon::after { content: ""; position: absolute; inset: -10px; border-radius: 50%; border: 1px solid rgba(182,138,69,.45); animation: gatePulse 2.4s ease-out infinite; }
+    @keyframes gatePulse { 0% { transform: scale(.85); opacity: .7; } 100% { transform: scale(1.5); opacity: 0; } }
+    .gate-title { font-family: var(--serif); font-weight: 500; font-size: clamp(30px, 5vw, 52px); letter-spacing: -.02em; color: var(--ink); margin: 24px 0 0; line-height: 1; }
+    .gate-hint { font-family: var(--mono); font-size: 11.5px; letter-spacing: .22em; text-transform: uppercase; color: var(--ink-3); margin-top: 18px; opacity: 0; animation: gateHintIn .8s ease 1s forwards; }
+    @keyframes gateHintIn { to { opacity: .8; } }
+    body.gate-lock { overflow: hidden; }
+    @media (prefers-reduced-motion: reduce) {
+      .gate-smoke i, .gate-icon::after { animation: none !important; }
+    }
   </style>
 </head>
 <body>
+
+<!-- ======= TEAM GATE (smoky intro, click to enter) ======= -->
+<div id="teamGate" role="button" tabindex="0" aria-label="Enter the team page">
+  <div class="gate-smoke" aria-hidden="true"><i class="s1"></i><i class="s2"></i><i class="s3"></i><i class="s4"></i><i class="s5"></i></div>
+  <div class="gate-center">
+    <div class="gate-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M16 19v-1a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v1" />
+        <circle cx="9" cy="7" r="3.2" />
+        <path d="M22 19v-1a4 4 0 0 0-3-3.87" />
+        <path d="M16 4.13a4 4 0 0 1 0 7.75" />
+      </svg>
+    </div>
+    <div class="gate-title">Meet the team</div>
+    <div class="gate-hint">Click to enter</div>
+  </div>
+</div>
 
 <!-- ======= NAV ======= -->
 <header class="nav" aria-label="Site header">
@@ -461,6 +507,30 @@
       navToggle.textContent = '☰';
     });
   });
+
+  // Team gate: smoky intro that opens to the page on click / key / scroll
+  (function () {
+    var gate = document.getElementById('teamGate');
+    if (!gate) return;
+    document.body.classList.add('gate-lock');
+    window.scrollTo(0, 0);
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var done = false;
+    function enter() {
+      if (done) return;
+      done = true;
+      gate.classList.add('gate-hide');
+      document.body.classList.remove('gate-lock');
+      setTimeout(function () { if (gate.parentNode) gate.parentNode.removeChild(gate); }, 850);
+    }
+    gate.addEventListener('click', enter);
+    gate.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); enter(); } });
+    window.addEventListener('keydown', enter, { once: true });
+    window.addEventListener('wheel', enter, { once: true, passive: true });
+    window.addEventListener('touchmove', enter, { once: true, passive: true });
+    setTimeout(enter, reduce ? 1500 : 7000); // safety auto-dismiss
+    try { gate.focus({ preventScroll: true }); } catch (e) {}
+  })();
 
   // Interactive founder profiles, accordion (one open at a time, others quiet down)
   (function () {
