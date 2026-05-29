@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="FinsightCFO turns your financial files into a clear, AI-assisted CFO report — forecasting cash, flagging risk, and laying out the next move for your business." />
+  <title>FinsightCFO — Finance with Foresight</title>
+  <link rel="canonical" href="https://finsightcfo.org/" />
+  <!-- Social sharing (Open Graph + Twitter) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="FinsightCFO" />
+  <meta property="og:title" content="FinsightCFO — Finance with Foresight" />
+  <meta property="og:description" content="Send your financial files and get a clear, AI-assisted CFO report back — forecasting cash, flagging risk, and laying out the next move." />
+  <meta property="og:url" content="https://finsightcfo.org/" />
+  <meta property="og:image" content="https://finsightcfo.org/assets/hero.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="FinsightCFO — Finance with Foresight" />
+  <meta name="twitter:description" content="Send your financial files and get a clear, AI-assisted CFO report back." />
+  <meta name="twitter:image" content="https://finsightcfo.org/assets/hero.png" />
+  <link rel="icon" type="image/png" href="assets/logo-mark.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500;1,6..72,600&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* ---- Hero ---- */
+    .hero { padding: 0; }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: stretch;
+      min-height: calc(100vh - 73px);
+    }
+    .hero-copy {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 56px 56px 56px max(32px, calc((100vw - 1200px) / 2 + 32px));
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--badge);
+      color: #f3e9df;
+      font-size: 11.5px;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      padding: 7px 14px;
+      border-radius: 30px;
+      width: fit-content;
+    }
+    .badge .pulse {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 0 rgba(163, 80, 42, .5);
+      animation: pulse 2.2s infinite;
+      flex: none;
+    }
+    @keyframes pulse {
+      0%   { box-shadow: 0 0 0 0 rgba(163, 80, 42, .45); }
+      70%  { box-shadow: 0 0 0 9px rgba(163, 80, 42, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(163, 80, 42, 0); }
+    }
+    .hero h1 {
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: clamp(48px, 6.8vw, 90px);
+      line-height: .98;
+      letter-spacing: -.02em;
+      margin: 24px 0 0;
+    }
+    .hero h1 .l2 { display: block; }
+    .hero p.lede { color: var(--ink-2); font-size: 18px; max-width: 480px; margin: 26px 0 0; }
+    .hero-cta { display: flex; gap: 14px; margin-top: 34px; flex-wrap: wrap; }
+    .hero-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 26px;
+      color: var(--ink-3);
+      font-size: 13.5px;
+    }
+    .hero-meta .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); flex: none; }
+
+    /* Full-bleed image panel */
+    .hero-img {
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-img img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 60% center;
+    }
+    .hero-img-overlay {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 2;
+      background:
+        linear-gradient(to right, var(--bg) 0%, rgba(247, 241, 231, .65) 9%, rgba(247, 241, 231, .1) 26%, rgba(247, 241, 231, 0) 42%),
+        linear-gradient(120deg, rgba(163, 80, 42, .15) 0%, rgba(163, 80, 42, 0) 50%),
+        linear-gradient(to bottom, rgba(247, 241, 231, .3) 0%, rgba(247, 241, 231, 0) 14%),
+        linear-gradient(to top, rgba(44, 32, 24, .1) 0%, rgba(44, 32, 24, 0) 22%);
+    }
+
+    /* Floating stat cards */
+    .hero-img .float {
+      position: absolute;
+      z-index: 3;
+      background: rgba(255, 253, 249, .94);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      padding: 12px 15px;
+      box-shadow: 0 12px 30px -10px rgba(60, 35, 15, .35);
+    }
+    .float-tl { top: 22px; left: 22px; }
+    .float-br { bottom: 22px; right: 22px; }
+    .float-k { font-size: 11px; color: var(--ink-3); font-weight: 600; letter-spacing: .02em; }
+    .float-v {
+      font-family: var(--mono);
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: -.02em;
+      margin-top: 3px;
+      color: var(--ink);
+    }
+    .float-d {
+      font-size: 11px;
+      color: var(--accent);
+      font-weight: 600;
+      margin-top: 2px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* ---- Trust strip ---- */
+    .trust {
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      padding: 26px 0;
+    }
+    .trust-in {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .trust-label {
+      font-size: 12.5px;
+      color: var(--ink-3);
+      font-weight: 600;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+    }
+    .trust-logos { display: flex; align-items: center; gap: 32px; flex-wrap: wrap; justify-content: center; }
+    .trust-logos span {
+      font-family: var(--serif);
+      font-size: 19px;
+      font-weight: 600;
+      color: var(--ink-3);
+      letter-spacing: -.01em;
+    }
+
+    /* ---- Features ---- */
+    .feat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 52px; }
+    .feat {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 28px;
+      transition: transform .18s, box-shadow .18s, border-color .18s;
+    }
+    .feat:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 18px 40px -22px rgba(60, 35, 15, .4);
+      border-color: var(--ink-4);
+    }
+    .feat-ico {
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      display: grid;
+      place-items: center;
+      margin-bottom: 18px;
+    }
+    .feat-ico svg { width: 23px; height: 23px; }
+    .feat h3 { font-family: var(--serif); font-weight: 600; font-size: 21px; margin: 0 0 8px; letter-spacing: -.01em; }
+    .feat p { color: var(--ink-2); font-size: 15px; margin: 0; }
+
+    /* ---- How it works (home-specific margin) ---- */
+    .home-steps { margin-top: 56px; }
+    .home-steps .step h3 { font-size: 25px; }
+
+    /* ---- Platform preview ---- */
+    .platform-grid { display: grid; grid-template-columns: 1fr 1.25fr; gap: 56px; align-items: center; }
+    .bullets { list-style: none; margin: 26px 0 0; padding: 0; display: flex; flex-direction: column; gap: 16px; }
+    .bullets li { display: flex; gap: 13px; font-size: 16px; color: var(--ink-2); }
+    .bullets .tick {
+      flex: none;
+      width: 24px;
+      height: 24px;
+      border-radius: 7px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      display: grid;
+      place-items: center;
+      font-size: 13px;
+      font-weight: 700;
+      margin-top: 1px;
+    }
+    .bullets strong { color: var(--ink); font-weight: 600; }
+    .browser {
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      box-shadow: 0 34px 64px -30px rgba(60, 35, 15, .5);
+    }
+    .browser-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 15px;
+      background: var(--panel-2);
+      border-bottom: 1px solid var(--line);
+    }
+    .browser-bar i { width: 11px; height: 11px; border-radius: 50%; background: var(--line); display: block; }
+    .browser-bar .url {
+      margin-left: 12px;
+      font-size: 12.5px;
+      color: var(--ink-3);
+      font-family: var(--mono);
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      padding: 4px 12px;
+      flex: 1;
+      max-width: 340px;
+    }
+    .browser img { display: block; width: 100%; }
+
+    /* ---- What you can submit ---- */
+    .submit-grid { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 44px; }
+    .submit-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      padding: 12px 16px;
+      font-size: 14.5px;
+      font-weight: 500;
+      color: var(--ink);
+    }
+    .submit-item::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 2px;
+      background: var(--accent);
+      flex: none;
+    }
+    .submit-note {
+      margin-top: 30px;
+      background: var(--accent-soft);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 12px 12px 0;
+      padding: 16px 20px;
+      font-size: 14.5px;
+      color: var(--ink-2);
+      max-width: 840px;
+      line-height: 1.55;
+    }
+    .submit-note strong { color: var(--ink); }
+
+    /* ---- Pricing ---- */
+    .price-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+      margin-top: 56px;
+      align-items: start;
+    }
+    .plan {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .plan--feat {
+      background: var(--badge);
+      color: #f4ece2;
+      border-color: var(--badge);
+      transform: translateY(-10px);
+      box-shadow: 0 30px 60px -28px rgba(60, 35, 15, .6);
+    }
+    .plan-name { font-size: 14px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-3); }
+    .plan--feat .plan-name { color: var(--accent-soft); }
+    .plan-price {
+      font-family: var(--serif);
+      font-size: 46px;
+      font-weight: 500;
+      letter-spacing: -.02em;
+      line-height: 1;
+      margin-top: 6px;
+    }
+    .plan-price span { font-family: var(--sans); font-size: 15px; color: var(--ink-3); font-weight: 500; }
+    .plan--feat .plan-price span { color: var(--ink-4); }
+    .plan-desc { font-size: 14.5px; color: var(--ink-2); margin: 4px 0 18px; }
+    .plan--feat .plan-desc { color: var(--accent-soft); }
+    .plan ul { list-style: none; margin: 0 0 24px; padding: 0; display: flex; flex-direction: column; gap: 11px; flex: 1; }
+    .plan li { display: flex; gap: 10px; font-size: 14.5px; }
+    .plan li::before { content: "›"; color: var(--accent); font-weight: 700; }
+    .plan--feat li::before { color: #e6a983; }
+    .plan .btn { justify-content: center; }
+
+    /* Expandable plan details */
+    .plan-more { margin-top: 6px; border-top: 1px solid var(--line-2); padding-top: 12px; }
+    .plan--feat .plan-more { border-color: rgba(255, 255, 255, .16); }
+    .plan-more > summary {
+      list-style: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 12.5px;
+      font-weight: 700;
+      letter-spacing: .02em;
+      color: var(--accent);
+      user-select: none;
+    }
+    .plan--feat .plan-more > summary { color: #e6a983; }
+    .plan-more > summary::-webkit-details-marker { display: none; }
+    .plan-more > summary::after { content: "\25BE"; font-size: 11px; transition: transform .2s; }
+    .plan-more[open] > summary::after { transform: rotate(180deg); }
+    .pm-body { margin-top: 14px; display: flex; flex-direction: column; gap: 16px; }
+    .pm-block h5 {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+      margin: 0 0 8px;
+    }
+    .plan--feat .pm-block h5 { color: var(--accent-soft); }
+    .pm-block ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+    .pm-block li { display: flex; gap: 8px; font-size: 12.5px; color: var(--ink-2); line-height: 1.4; }
+    .plan--feat .pm-block li { color: var(--accent-soft); }
+    .pm-block li::before { content: "\203A"; color: var(--accent); font-weight: 700; flex: none; }
+    .plan--feat .pm-block li::before { color: #e6a983; }
+    .pm-turn { font-size: 11.5px; color: var(--ink-3); line-height: 1.45; }
+    .plan--feat .pm-turn { color: var(--accent-soft); }
+    .pm-turn strong { color: var(--ink-2); }
+    .plan--feat .pm-turn strong { color: #f4ece2; }
+
+    /* ---- Sample report ---- */
+    .sample-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 48px; align-items: start; }
+    .report-doc {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 26px 30px;
+      box-shadow: var(--shadow);
+    }
+    .report-doc-h { border-bottom: 1px solid var(--line); padding-bottom: 14px; margin-bottom: 6px; }
+    .report-doc-title { font-family: var(--serif); font-size: 19px; font-weight: 600; }
+    .report-doc-sub { font-size: 12px; color: var(--ink-3); margin-top: 3px; }
+    .report-toc { list-style: none; margin: 0; padding: 0; }
+    .report-toc li {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--line-2);
+      font-size: 14.5px;
+    }
+    .report-toc li:last-child { border-bottom: 0; }
+    .report-toc .n { font-family: var(--serif); font-size: 13px; color: var(--accent); font-weight: 600; flex: none; }
+    .insight-col h4 {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+      margin: 0 0 14px;
+    }
+    .insight-ex {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 12px 12px 0;
+      padding: 13px 16px;
+      font-size: 14.5px;
+      color: var(--ink);
+      margin-bottom: 11px;
+      line-height: 1.45;
+    }
+    .trust-note {
+      margin: 34px auto 0;
+      text-align: center;
+      font-size: 13.5px;
+      color: var(--ink-3);
+      max-width: 760px;
+      line-height: 1.55;
+    }
+
+    /* ---- Responsive (home) ---- */
+    @media (max-width: 900px) {
+      .hero-grid { grid-template-columns: 1fr; min-height: 0; }
+      .hero-copy { padding: 48px 24px 32px; }
+      .hero-img { height: 360px; margin: 0; border-radius: 0; }
+      .hero-img-overlay { display: none; }
+      .feat-grid { grid-template-columns: 1fr 1fr; }
+      .price-grid { grid-template-columns: 1fr; }
+      .plan--feat { transform: none; }
+      .platform-grid { grid-template-columns: 1fr; gap: 40px; }
+      .sample-grid { grid-template-columns: 1fr; }
+      .home-steps { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .feat-grid { grid-template-columns: 1fr; }
+      .hero-cta { flex-direction: column; align-items: stretch; }
+      .hero-cta .btn { justify-content: center; }
+    }
+    /* ===== Intro overlay (homepage "rising signal" open animation) ===== */
+    #introOverlay { position: fixed; inset: 0; z-index: 9999; background: var(--bg);
+      background-image: radial-gradient(rgba(90,60,35,.07) 1px, transparent 1px); background-size: 23px 23px;
+      display: flex; align-items: center; justify-content: center; overflow: hidden; will-change: opacity; }
+    #introOverlay.intro-hide { animation: introFade .7s ease forwards; }
+    @keyframes introFade { to { opacity: 0; visibility: hidden; } }
+    .intro-bgpaths { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; opacity: .55; }
+    .intro-bgpaths path { fill: none; stroke: var(--accent); stroke-opacity: .12;
+      stroke-dasharray: 6 10; animation: introDrift linear infinite; }
+    @keyframes introDrift { to { stroke-dashoffset: -160; } }
+    .intro-stage { position: relative; z-index: 2; width: min(680px, 86vw); text-align: center; }
+    .intro-chart { width: 100%; height: auto; display: block; }
+    .intro-line { fill: none; stroke: var(--accent); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round;
+      filter: drop-shadow(0 6px 14px rgba(163,80,42,.35)); }
+    .intro-area { fill: url(#introGrad); opacity: 0; animation: introUp .8s ease 1.1s forwards; }
+    .intro-tip { fill: var(--accent); opacity: 0; transform-box: fill-box; transform-origin: center;
+      animation: introPop .45s cubic-bezier(.2,1.4,.4,1) 1.55s forwards; }
+    .intro-tip-ring { fill: none; stroke: var(--accent); stroke-width: 3; opacity: 0; transform-box: fill-box;
+      transform-origin: center; animation: introRing 1.1s ease-out 1.7s infinite; }
+    @keyframes introPop { from { opacity: 0; transform: scale(0); } to { opacity: 1; transform: scale(1); } }
+    @keyframes introRing { 0% { opacity: .6; transform: scale(.4); } 100% { opacity: 0; transform: scale(2.4); } }
+    @keyframes introUp { to { opacity: 1; } }
+    .intro-tag { position: absolute; top: 2%; right: 3%; display: inline-flex; align-items: center; gap: 6px;
+      background: var(--accent); color: #fff; font-family: var(--sans); font-weight: 700; font-size: 14px;
+      letter-spacing: .02em; padding: 7px 13px; border-radius: 30px; box-shadow: 0 12px 26px -10px rgba(163,80,42,.6);
+      opacity: 0; transform: translateY(10px) scale(.9); animation: introTag .55s cubic-bezier(.2,1.4,.4,1) 1.7s forwards; }
+    @keyframes introTag { to { opacity: 1; transform: translateY(0) scale(1); } }
+    .intro-title { font-family: var(--serif); font-weight: 500; font-size: clamp(34px, 6vw, 58px); line-height: 1;
+      letter-spacing: -.02em; color: var(--ink); margin: 28px 0 0; }
+    .intro-title em { font-style: italic; color: var(--accent); }
+    .intro-title .ch { display: inline-block; opacity: 0; transform: translateY(42px);
+      animation: introCh .55s cubic-bezier(.2,.8,.3,1) forwards; }
+    @keyframes introCh { to { opacity: 1; transform: translateY(0); } }
+    .intro-sub { font-family: var(--sans); color: var(--ink-3); font-size: 13px; letter-spacing: .16em;
+      text-transform: uppercase; margin-top: 16px; opacity: 0; animation: introUp .6s ease 1.35s forwards; }
+    body.intro-lock { overflow: hidden; }
+    @media (prefers-reduced-motion: reduce) {
+      #introOverlay *, #introOverlay { animation-duration: .01ms !important; animation-delay: 0s !important;
+        animation-iteration-count: 1 !important; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ======= INTRO OVERLAY (rising-signal open animation) ======= -->
+<div id="introOverlay" role="presentation" aria-hidden="true">
+  <svg class="intro-bgpaths" viewBox="0 0 696 316" preserveAspectRatio="xMidYMid slice" fill="none" aria-hidden="true"></svg>
+  <div class="intro-stage">
+    <svg class="intro-chart" viewBox="0 0 1000 420" fill="none" aria-hidden="true">
+      <defs>
+        <linearGradient id="introGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#a3502a" stop-opacity=".22" />
+          <stop offset="100%" stop-color="#a3502a" stop-opacity="0" />
+        </linearGradient>
+      </defs>
+      <path class="intro-area" d="M60,360 L200,330 L340,348 L470,262 L610,286 L760,176 L880,212 L950,84 L950,400 L60,400 Z" />
+      <path class="intro-line" id="introLine" d="M60,360 L200,330 L340,348 L470,262 L610,286 L760,176 L880,212 L950,84" />
+      <circle class="intro-tip-ring" cx="950" cy="84" r="11" />
+      <circle class="intro-tip" cx="950" cy="84" r="11" />
+    </svg>
+    <div class="intro-tag">▲ +18.4%</div>
+    <h2 class="intro-title" id="introTitle"></h2>
+    <div class="intro-sub">Finance with Foresight</div>
+  </div>
+</div>
+<script>
+  (function () {
+    var overlay = document.getElementById('introOverlay');
+    if (!overlay) return;
+    var KEY = 'fsIntroSeen';
+    // Play once per browser session — skip instantly on subsequent visits
+    try { if (sessionStorage.getItem(KEY)) { overlay.parentNode.removeChild(overlay); return; } } catch (e) {}
+    try { sessionStorage.setItem(KEY, '1'); } catch (e) {}
+
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document.body.classList.add('intro-lock');
+    window.scrollTo(0, 0);
+
+    // Faint flowing background paths (homage to the BackgroundPaths effect)
+    var bg = overlay.querySelector('.intro-bgpaths');
+    if (bg) {
+      var SVGNS = 'http://www.w3.org/2000/svg';
+      function fpath(i, pos) {
+        return 'M-' + (380 - i * 5 * pos) + ' -' + (189 + i * 6) +
+          'C-' + (380 - i * 5 * pos) + ' -' + (189 + i * 6) +
+          ' -' + (312 - i * 5 * pos) + ' ' + (216 - i * 6) +
+          ' ' + (152 - i * 5 * pos) + ' ' + (343 - i * 6) +
+          'C' + (616 - i * 5 * pos) + ' ' + (470 - i * 6) +
+          ' ' + (684 - i * 5 * pos) + ' ' + (875 - i * 6) +
+          ' ' + (684 - i * 5 * pos) + ' ' + (875 - i * 6);
+      }
+      [1, -1].forEach(function (pos) {
+        for (var i = 0; i < 24; i++) {
+          var p = document.createElementNS(SVGNS, 'path');
+          p.setAttribute('d', fpath(i, pos));
+          p.style.strokeWidth = (0.5 + i * 0.06) + 'px';
+          p.style.animationDuration = (18 + Math.random() * 12) + 's';
+          bg.appendChild(p);
+        }
+      });
+    }
+
+    // Draw the rising "stock signal" line
+    var line = document.getElementById('introLine');
+    if (line) {
+      if (reduce) {
+        line.style.strokeDasharray = 'none';
+      } else {
+        var len = line.getTotalLength();
+        line.style.strokeDasharray = len;
+        line.style.strokeDashoffset = len;
+        line.getBoundingClientRect(); // force reflow before transitioning
+        line.style.transition = 'stroke-dashoffset 1.6s cubic-bezier(.4,.05,.2,1) .25s';
+        line.style.strokeDashoffset = '0';
+      }
+    }
+
+    // Headline letters rise in, with "Foresight." in accent italic
+    var title = document.getElementById('introTitle');
+    if (title) {
+      var segs = [{ t: 'Finance with ', em: false }, { t: 'Foresight.', em: true }];
+      var idx = 0;
+      segs.forEach(function (s) {
+        var holder = s.em ? document.createElement('em') : document.createDocumentFragment();
+        for (var k = 0; k < s.t.length; k++) {
+          var span = document.createElement('span');
+          span.className = 'ch';
+          span.textContent = s.t[k] === ' ' ? ' ' : s.t[k];
+          span.style.animationDelay = (0.3 + idx * 0.03) + 's';
+          idx++;
+          holder.appendChild(span);
+        }
+        title.appendChild(holder);
+      });
+    }
+
+    // Dismiss — auto after the reveal, or on click/keypress to skip
+    var done = false;
+    function dismiss() {
+      if (done) return;
+      done = true;
+      overlay.classList.add('intro-hide');
+      document.body.classList.remove('intro-lock');
+      setTimeout(function () { if (overlay.parentNode) overlay.parentNode.removeChild(overlay); }, 750);
+    }
+    setTimeout(dismiss, reduce ? 700 : 2800);
+    overlay.addEventListener('click', dismiss);
+    window.addEventListener('keydown', dismiss, { once: true });
+  })();
+</script>
+
+<!-- ======= NAV ======= -->
+<header class="nav" id="top">
+  <div class="wrap nav-in">
+    <a href="index.html" class="logo">
+      <img src="assets/logo.png" class="logo-img" alt="FinsightCFO" />
+    </a>
+    <nav class="nav-links" aria-label="Main navigation">
+      <a href="#features">Features</a>
+      <a href="#how">How it works</a>
+      <a href="#platform">The report</a>
+      <a href="#pricing">Pricing</a>
+      <a href="team.html">Team</a>
+    </nav>
+    <div class="nav-right">
+      <a href="mailto:contact@finsightcfo.org?subject=Start%20my%20report" class="btn btn--dark btn--sm">Start your report</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">☰</button>
+    </div>
+  </div>
+  <div class="mobile-menu" id="mobileMenu" role="navigation" aria-label="Mobile navigation">
+    <a href="#features">Features</a>
+    <a href="#how">How it works</a>
+    <a href="#platform">The report</a>
+    <a href="#pricing">Pricing</a>
+    <a href="team.html">Team</a>
+    <a href="mailto:contact@finsightcfo.org?subject=Start%20my%20report">Start your report →</a>
+  </div>
+</header>
+
+<!-- ======= HERO ======= -->
+<section class="hero" aria-label="Hero">
+  <div class="hero-grid">
+    <div class="hero-copy">
+      <span class="badge"><span class="pulse" aria-hidden="true"></span>AI Finance Office</span>
+      <h1>Finance with<span class="l2"><em class="disp">Foresight.</em></span></h1>
+      <p class="lede">FinsightCFO turns your financial files into a clear, AI-assisted CFO report — forecasting cash, flagging risk, and laying out the next move for your business.</p>
+      <div class="hero-cta">
+        <a href="mailto:contact@finsightcfo.org?subject=Start%20my%20report" class="btn btn--solid">Start your report</a>
+        <a href="#how" class="btn btn--ghost">See how it works</a>
+      </div>
+      <div class="hero-meta">
+        <span class="dot" aria-hidden="true"></span>
+        Send your financial files — get a CFO-level report back, fast
+      </div>
+    </div>
+    <div class="hero-img">
+      <img src="assets/hero.png" alt="A founder reviewing a financial report at their desk" />
+      <div class="hero-img-overlay" aria-hidden="true"></div>
+      <div class="float float-tl" aria-hidden="true">
+        <div class="float-k">Runway</div>
+        <div class="float-v">40 months</div>
+        <div class="float-d">▲ healthy</div>
+      </div>
+      <div class="float float-br" aria-hidden="true">
+        <div class="float-k">Net burn · 3-mo avg</div>
+        <div class="float-v">$90,000<span style="font-size:12px;color:var(--ink-3);">/mo</span></div>
+        <div class="float-d">2 AI insights ready</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======= TRUST STRIP ======= -->
+<div class="trust" aria-label="Integrations">
+  <div class="wrap trust-in">
+    <span class="trust-label">Works with exports from</span>
+    <div class="trust-logos" aria-label="Supported platforms">
+      <span>Mercury</span>
+      <span>QuickBooks</span>
+      <span>Stripe</span>
+      <span>Ramp</span>
+      <span>Gusto</span>
+      <span>Brex</span>
+    </div>
+  </div>
+</div>
+
+<!-- ======= FEATURES ======= -->
+<section class="section" id="features" aria-labelledby="features-heading">
+  <div class="wrap">
+    <div class="shead">
+      <div class="eyebrow">What we do</div>
+      <h2 id="features-heading">CFO-level financial analysis, delivered as a report.</h2>
+      <p>Not self-serve software — a hands-on financial service. Send us your numbers and our team, with AI-assisted analysis, turns them into clear guidance.</p>
+    </div>
+    <div class="feat-grid">
+
+      <div class="feat">
+        <div class="feat-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 17 L9 11 L13 14 L21 5"/><path d="M21 9 V5 H17"/>
+          </svg>
+        </div>
+        <h3>Cash flow forecasting</h3>
+        <p>Project inflows, outflows, and end-of-month cash, with runway and upcoming obligations mapped out so you can see what's ahead.</p>
+      </div>
+
+      <div class="feat">
+        <div class="feat-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="8"/>
+            <path d="M12 7 L13 11 L17 12 L13 13 L12 17 L11 13 L7 12 L11 11 Z" fill="currentColor" stroke="none"/>
+          </svg>
+        </div>
+        <h3>AI-assisted CFO reports</h3>
+        <p>A CFO-style review of your financials, organized into one clear report — with risks, anomalies, and opportunities explained in plain language.</p>
+      </div>
+
+      <div class="feat">
+        <div class="feat-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M7 16 V9"/><path d="M12 16 V5"/><path d="M17 16 V12"/><path d="M4 20 H20"/>
+          </svg>
+        </div>
+        <h3>Revenue &amp; expense analysis</h3>
+        <p>Your revenue streams and spending categorized and analyzed for trends, margins, and anything that looks off.</p>
+      </div>
+
+      <div class="feat">
+        <div class="feat-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3.4"/>
+          </svg>
+        </div>
+        <h3>Budget &amp; scenario planning</h3>
+        <p>Compare budgets to actuals and model best- and worst-case scenarios so you can plan your next move with confidence.</p>
+      </div>
+
+      <div class="feat">
+        <div class="feat-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8 H15 M9 12 H15 M9 16 H13"/>
+          </svg>
+        </div>
+        <h3>Monthly financial summaries</h3>
+        <p>Clear monthly summaries of performance and forecasts, written so you — and your CPA or partners — can act on them.</p>
+      </div>
+
+      <div class="feat">
+        <div class="feat-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="7" cy="12" r="3.2"/><circle cx="17" cy="12" r="3.2"/><path d="M10.2 12 H13.8"/>
+          </svg>
+        </div>
+        <h3>Report delivery by email</h3>
+        <p>Your finished report is sent straight to your inbox, ready to read, share, and put to work — no login required.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ======= HOW IT WORKS ======= -->
+<section class="section section--alt" id="how" aria-labelledby="how-heading">
+  <div class="wrap">
+    <div class="shead">
+      <div class="eyebrow">How it works</div>
+      <h2 id="how-heading">From financial files to CFO-level insight in three steps.</h2>
+    </div>
+    <div class="steps home-steps">
+      <div class="step">
+        <div class="step-n">STEP 01</div>
+        <h3>Submit your financial information</h3>
+        <p>Export your reports, statements, or accounting files and send them securely through FinsightCFO. Your submission is delivered directly to our team for review.</p>
+      </div>
+      <div class="step">
+        <div class="step-n">STEP 02</div>
+        <h3>We analyze your numbers with AI</h3>
+        <p>Our team uses AI-assisted financial analysis to organize your data, review cash flow, identify trends, flag risks, and build a clear CFO-style report.</p>
+      </div>
+      <div class="step">
+        <div class="step-n">STEP 03</div>
+        <h3>Receive your completed report</h3>
+        <p>Once the analysis is complete, we send you a practical financial report with insights, forecasts, risks, and recommended next steps for your business.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======= INSIDE THE REPORT ======= -->
+<section class="section" id="platform" aria-labelledby="platform-heading">
+  <div class="wrap platform-grid">
+    <div>
+      <div class="eyebrow">Inside the report</div>
+      <h2 id="platform-heading" class="serif" style="font-family:var(--serif);font-weight:500;font-size:clamp(32px,4vw,46px);line-height:1.05;letter-spacing:-.02em;margin:14px 0 0;">A clear financial picture, delivered back to you.</h2>
+      <ul class="bullets">
+        <li>
+          <span class="tick">✓</span>
+          <span><strong>CFO-level summary</strong> — cash, revenue, expenses, profit, runway, obligations, and key financial trends organized in one report.</span>
+        </li>
+        <li>
+          <span class="tick">✓</span>
+          <span><strong>Forecasts and insights</strong> — see where cash is heading, what risks need attention, and which decisions matter most.</span>
+        </li>
+        <li>
+          <span class="tick">✓</span>
+          <span><strong>Practical next steps</strong> — recommendations your business can actually act on, not just raw numbers.</span>
+        </li>
+      </ul>
+      <div style="margin-top:32px;">
+        <a href="mailto:contact@finsightcfo.org?subject=Start%20my%20report" class="btn btn--solid">Start your report</a>
+      </div>
+    </div>
+    <div class="browser">
+      <div class="browser-bar">
+        <i></i><i></i><i></i>
+        <span class="url">FinsightCFO — Financial Health Report.pdf</span>
+      </div>
+      <img src="assets/dashboard-preview.png" alt="Example FinsightCFO financial report preview" />
+    </div>
+  </div>
+</section>
+
+<!-- ======= WHAT YOU CAN SUBMIT ======= -->
+<section class="section" id="submit" aria-labelledby="submit-heading">
+  <div class="wrap">
+    <div class="shead">
+      <div class="eyebrow">What you can submit</div>
+      <h2 id="submit-heading">Send whatever you have — we'll work with it.</h2>
+      <p>Export your numbers from your bank or accounting tools and send them our way. Common documents and formats include:</p>
+    </div>
+    <div class="submit-grid" role="list">
+      <span class="submit-item" role="listitem">Profit &amp; loss statements</span>
+      <span class="submit-item" role="listitem">Balance sheets</span>
+      <span class="submit-item" role="listitem">Cash flow statements</span>
+      <span class="submit-item" role="listitem">Bank statements</span>
+      <span class="submit-item" role="listitem">Revenue reports</span>
+      <span class="submit-item" role="listitem">Expense reports</span>
+      <span class="submit-item" role="listitem">Accounts receivable reports</span>
+      <span class="submit-item" role="listitem">Accounts payable reports</span>
+      <span class="submit-item" role="listitem">Payroll summaries</span>
+      <span class="submit-item" role="listitem">Budget files</span>
+      <span class="submit-item" role="listitem">Forecast files</span>
+      <span class="submit-item" role="listitem">QuickBooks or accounting exports</span>
+      <span class="submit-item" role="listitem">Excel or CSV files</span>
+    </div>
+    <div class="submit-note">
+      <strong>A note on privacy:</strong> Please do not submit passwords, bank login credentials, Social Security numbers, or unnecessary sensitive personal information.
+    </div>
+  </div>
+</section>
+
+<!-- ======= PRICING ======= -->
+<section class="section section--alt" id="pricing" aria-labelledby="pricing-heading">
+  <div class="wrap">
+    <div class="shead shead--center">
+      <div class="eyebrow">Pricing</div>
+      <h2 id="pricing-heading">Financial clarity, priced simply.</h2>
+      <p>Start with a one-time cleanup or CFO-style report, or get ongoing monthly visibility into your numbers.</p>
+    </div>
+    <div class="price-grid">
+
+      <!-- Financial Cleanup -->
+      <div class="plan">
+        <div class="plan-name">Financial Cleanup</div>
+        <div class="plan-price">$500<span> one-time</span></div>
+        <div class="plan-desc">For business owners who need their financial information organized before they can understand what the numbers are saying.</div>
+        <ul>
+          <li>Review of current financial records</li>
+          <li>Basic cleanup recommendations</li>
+          <li>Organization of income and expense categories</li>
+          <li>Identification of missing or unclear information</li>
+          <li>Notes on what needs to be fixed before deeper analysis</li>
+          <li>Simple summary of the biggest bookkeeping issues</li>
+        </ul>
+        <details class="plan-more">
+          <summary>See everything you get</summary>
+          <div class="pm-body">
+            <div class="pm-block">
+              <h5>What you submit</h5>
+              <ul>
+                <li>Profit and loss statement</li>
+                <li>Balance sheet</li>
+                <li>Bank statements or transaction exports</li>
+                <li>Revenue and expense reports</li>
+                <li>QuickBooks, Excel, CSV, or accounting exports</li>
+                <li>Any notes about known bookkeeping issues</li>
+              </ul>
+            </div>
+            <div class="pm-block">
+              <h5>What you receive</h5>
+              <ul>
+                <li>Financial records review summary</li>
+                <li>List of missing, unclear, or inconsistent information</li>
+                <li>Income and expense category review</li>
+                <li>Bookkeeping issue summary</li>
+                <li>Cleanup recommendation checklist</li>
+                <li>Questions to ask your bookkeeper or CPA</li>
+                <li>Priority action plan for what to fix first</li>
+                <li>Clean PDF summary emailed back to you</li>
+              </ul>
+            </div>
+            <div class="pm-block">
+              <h5>Sample report sections</h5>
+              <ul>
+                <li>Executive summary</li>
+                <li>Records reviewed</li>
+                <li>Biggest cleanup issues</li>
+                <li>Category and classification problems</li>
+                <li>Missing information checklist</li>
+                <li>Cash, revenue, and expense inconsistencies</li>
+                <li>Recommended fixes</li>
+                <li>Next steps before deeper analysis</li>
+              </ul>
+            </div>
+            <div class="pm-turn"><strong>Turnaround:</strong> Delivered by email after your files are reviewed.</div>
+          </div>
+        </details>
+        <a href="mailto:contact@finsightcfo.org?subject=Financial%20Cleanup%20(%24500)" class="btn btn--ghost">Start Financial Cleanup</a>
+      </div>
+
+      <!-- Financial Health Report (featured) -->
+      <div class="plan plan--feat">
+        <div class="plan-name">Financial Health Report</div>
+        <div class="plan-price">$800<span> one-time</span></div>
+        <div class="plan-desc">A CFO-style review of your business financials that shows what is working, what is risky, and what needs attention.</div>
+        <ul>
+          <li>Review of profit and loss statement</li>
+          <li>Balance sheet review</li>
+          <li>Revenue, margin, and expense analysis</li>
+          <li>Cash flow and working capital review</li>
+          <li>Red flags and risk areas</li>
+          <li>CFO-style recommendations</li>
+          <li>Simple action plan</li>
+          <li>Questions to ask your CPA or bookkeeper</li>
+        </ul>
+        <details class="plan-more">
+          <summary>See everything you get</summary>
+          <div class="pm-body">
+            <div class="pm-block">
+              <h5>What you submit</h5>
+              <ul>
+                <li>Profit and loss statement</li>
+                <li>Balance sheet</li>
+                <li>Cash flow statement, if available</li>
+                <li>Bank statements or accounting exports</li>
+                <li>Revenue reports</li>
+                <li>Expense reports</li>
+                <li>Accounts receivable and payable reports, if available</li>
+                <li>Payroll or major fixed cost summaries</li>
+              </ul>
+            </div>
+            <div class="pm-block">
+              <h5>What you receive</h5>
+              <ul>
+                <li>CFO-style financial health report</li>
+                <li>Revenue, expense, and profit analysis</li>
+                <li>Margin and cost structure review</li>
+                <li>Cash flow and working capital review</li>
+                <li>Risk and red flag summary</li>
+                <li>AI-assisted trend and anomaly review</li>
+                <li>Key financial metrics explained in plain language</li>
+                <li>Recommended next actions</li>
+                <li>Questions to ask your CPA, bookkeeper, or leadership team</li>
+                <li>Clean PDF report emailed back to you</li>
+              </ul>
+            </div>
+            <div class="pm-block">
+              <h5>Sample report sections</h5>
+              <ul>
+                <li>Executive financial summary</li>
+                <li>Revenue performance</li>
+                <li>Expense breakdown</li>
+                <li>Profitability and margin review</li>
+                <li>Cash flow position</li>
+                <li>Working capital and obligations</li>
+                <li>Red flags and risks</li>
+                <li>Opportunities to improve</li>
+                <li>CFO recommendations</li>
+                <li>30-day action plan</li>
+              </ul>
+            </div>
+            <div class="pm-turn"><strong>Turnaround:</strong> Delivered by email after your files are reviewed.</div>
+          </div>
+        </details>
+        <a href="mailto:contact@finsightcfo.org?subject=Financial%20Health%20Report%20(%24800)" class="btn btn--solid">Order Financial Health Report</a>
+      </div>
+
+      <!-- Monthly Subscription -->
+      <div class="plan">
+        <div class="plan-name">Monthly Subscription</div>
+        <div class="plan-price">$700<span> / month</span></div>
+        <div class="plan-desc">Ongoing monthly financial review for business owners who want consistent visibility into their numbers.</div>
+        <ul>
+          <li>Monthly financial review</li>
+          <li>Monthly financial health summary</li>
+          <li>Revenue, expense, and cash flow tracking</li>
+          <li>Red flag monitoring</li>
+          <li>Monthly recommendations</li>
+          <li>Basic KPI tracking</li>
+          <li>Email support for financial questions</li>
+          <li>Ongoing business decision support</li>
+        </ul>
+        <details class="plan-more">
+          <summary>See everything you get</summary>
+          <div class="pm-body">
+            <div class="pm-block">
+              <h5>What you submit each month</h5>
+              <ul>
+                <li>Updated profit and loss statement</li>
+                <li>Updated balance sheet</li>
+                <li>Bank or accounting exports</li>
+                <li>Revenue and expense reports</li>
+                <li>Accounts receivable and payable updates</li>
+                <li>Payroll or major cost updates</li>
+                <li>Any business questions or decisions you want reviewed</li>
+              </ul>
+            </div>
+            <div class="pm-block">
+              <h5>What you receive each month</h5>
+              <ul>
+                <li>Monthly financial health summary</li>
+                <li>Revenue, expense, profit, and cash flow tracking</li>
+                <li>Month-over-month trend review</li>
+                <li>Red flag and risk monitoring</li>
+                <li>AI-assisted anomaly detection</li>
+                <li>KPI tracking</li>
+                <li>Monthly recommendations</li>
+                <li>Decision support for spending, hiring, pricing, and growth</li>
+                <li>Email support for financial questions</li>
+                <li>Monthly PDF report emailed back to you</li>
+              </ul>
+            </div>
+            <div class="pm-block">
+              <h5>Sample report sections</h5>
+              <ul>
+                <li>Monthly executive summary</li>
+                <li>Key metrics snapshot</li>
+                <li>Revenue movement</li>
+                <li>Expense movement</li>
+                <li>Cash flow update</li>
+                <li>Profitability review</li>
+                <li>Budget or prior-month comparison</li>
+                <li>Red flags and unusual changes</li>
+                <li>Recommendations for the next month</li>
+                <li>Owner action items</li>
+              </ul>
+            </div>
+            <div class="pm-turn"><strong>Turnaround:</strong> Delivered monthly by email after updated files are received.</div>
+          </div>
+        </details>
+        <a href="mailto:contact@finsightcfo.org?subject=Monthly%20Subscription%20(%24700%2Fmonth)" class="btn btn--ghost">Start Monthly Review</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ======= SAMPLE REPORT PREVIEW ======= -->
+<section class="section section--alt" id="sample" aria-labelledby="sample-heading">
+  <div class="wrap">
+    <div class="shead shead--center">
+      <div class="eyebrow">Sample report preview</div>
+      <h2 id="sample-heading">A report built for decisions, not confusion.</h2>
+    </div>
+    <div class="sample-grid">
+      <div class="report-doc">
+        <div class="report-doc-h">
+          <div class="report-doc-title">Financial Health Report</div>
+          <div class="report-doc-sub">FinsightCFO · Example deliverable</div>
+        </div>
+        <ul class="report-toc">
+          <li><span class="n">01</span>Financial snapshot</li>
+          <li><span class="n">02</span>Key risks</li>
+          <li><span class="n">03</span>Cash flow summary</li>
+          <li><span class="n">04</span>Revenue and expense trends</li>
+          <li><span class="n">05</span>AI-assisted insights</li>
+          <li><span class="n">06</span>CFO recommendations</li>
+          <li><span class="n">07</span>Next 30-day action plan</li>
+        </ul>
+      </div>
+      <div class="insight-col">
+        <h4>Sample AI-assisted insights</h4>
+        <div class="insight-ex">"Revenue increased 12%, but expenses increased 19%, reducing margin."</div>
+        <div class="insight-ex">"Cash flow may tighten over the next 45 days if receivables are delayed."</div>
+        <div class="insight-ex">"Software and contractor costs are growing faster than revenue."</div>
+        <div class="insight-ex">"Three expense categories should be reviewed before next month."</div>
+        <div class="insight-ex">"The business should prioritize collections, vendor review, and cash planning."</div>
+      </div>
+    </div>
+    <p class="trust-note">FinsightCFO provides business financial analysis and decision support. We do not replace your CPA, tax advisor, bookkeeper, or legal advisor.</p>
+  </div>
+</section>
+
+<!-- ======= FOOTER ======= -->
+<footer class="footer" aria-label="Site footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a href="index.html" class="logo">
+          <img src="assets/logo.png" class="logo-img logo-img--foot" alt="FinsightCFO" />
+        </a>
+        <p>AI-assisted CFO reports for small businesses — understand your numbers, plan ahead, and act with confidence.</p>
+      </div>
+      <div class="foot-col">
+        <h4>Product</h4>
+        <a href="#features">Features</a>
+        <a href="#how">How it works</a>
+        <a href="#pricing">Pricing</a>
+        <a href="mailto:contact@finsightcfo.org?subject=Start%20my%20report">Start your report</a>
+      </div>
+      <div class="foot-col">
+        <h4>Company</h4>
+        <a href="team.html">Team</a>
+        <a href="team.html">Our story</a>
+        <a href="mailto:contact@finsightcfo.org">Contact</a>
+      </div>
+      <div class="foot-col">
+        <h4>Resources</h4>
+        <a href="#how">How it works</a>
+        <a href="#submit">What to submit</a>
+        <a href="#sample">Sample report</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 FinsightCFO, Inc. All rights reserved.</span>
+      <span class="foot-legal">
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="privacy.html#security">Security</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Mobile menu toggle
+  const navToggle = document.getElementById('navToggle');
+  const mobileMenu = document.getElementById('mobileMenu');
+  navToggle.addEventListener('click', function () {
+    const isOpen = mobileMenu.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', isOpen);
+    navToggle.textContent = isOpen ? '✕' : '☰';
+  });
+  // Close mobile menu when a link is clicked
+  mobileMenu.querySelectorAll('a').forEach(function (a) {
+    a.addEventListener('click', function () {
+      mobileMenu.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+      navToggle.textContent = '☰';
+    });
+  });
+
+  // Scroll-spy: highlight active nav section
+  const navLinks = Array.from(document.querySelectorAll('.nav-links a'));
+  const anchors = navLinks.map(function (a) {
+    const h = a.getAttribute('href');
+    return h && h.startsWith('#') ? document.querySelector(h) : null;
+  });
+  function updateActive() {
+    const y = window.scrollY + 120;
+    let idx = 0;
+    anchors.forEach(function (s, i) {
+      if (s && s.offsetTop <= y) idx = i;
+    });
+    navLinks.forEach(function (a, i) { a.classList.toggle('active', i === idx); });
+  }
+  window.addEventListener('scroll', updateActive, { passive: true });
+  updateActive();
+
+  // Pre-fill sign-up emails so the compose window opens ready to send, not blank
+  (function () {
+    var PRIVACY = '(No need to include passwords, bank logins, or Social Security numbers.)';
+    var bodies = {
+      report:
+        "Hi FinsightCFO team,\r\n\r\nI'd like to get started on a financial report.\r\n\r\n" +
+        "About my business:\r\n- Business name:\r\n- What we do:\r\n- The main question I want answered:\r\n\r\n" +
+        "I'll attach the financial files I have, which may include my profit & loss statement, balance sheet, cash flow statement, bank statements, revenue/expense reports, and any QuickBooks, Excel, or CSV exports.\r\n\r\n" +
+        PRIVACY + "\r\n\r\nThanks!",
+      cleanup:
+        "Hi FinsightCFO team,\r\n\r\nI'd like to order the Financial Cleanup ($500).\r\n\r\n" +
+        "About my business:\r\n- Business name:\r\n- What we do:\r\n- Known bookkeeping issues (if any):\r\n\r\n" +
+        "I'll attach what I have: profit & loss statement, balance sheet, bank statements or transaction exports, revenue/expense reports, and any QuickBooks, Excel, or CSV exports.\r\n\r\n" +
+        PRIVACY + "\r\n\r\nThanks!",
+      health:
+        "Hi FinsightCFO team,\r\n\r\nI'd like to order the Financial Health Report ($800).\r\n\r\n" +
+        "About my business:\r\n- Business name:\r\n- What we do:\r\n- The main question I want answered:\r\n\r\n" +
+        "I'll attach what I have: profit & loss statement, balance sheet, cash flow statement, bank statements or accounting exports, revenue reports, expense reports, accounts receivable/payable reports, and payroll or major fixed-cost summaries.\r\n\r\n" +
+        PRIVACY + "\r\n\r\nThanks!",
+      monthly:
+        "Hi FinsightCFO team,\r\n\r\nI'd like to start the Monthly Subscription ($700/month).\r\n\r\n" +
+        "About my business:\r\n- Business name:\r\n- What we do:\r\n- What I want to keep an eye on each month:\r\n\r\n" +
+        "Each month I'll send updated files: profit & loss statement, balance sheet, bank or accounting exports, revenue/expense reports, accounts receivable/payable updates, and payroll or major cost updates.\r\n\r\n" +
+        PRIVACY + "\r\n\r\nThanks!",
+      review:
+        "Hi FinsightCFO team,\r\n\r\nI'd like to book a CFO review.\r\n\r\n" +
+        "About my business:\r\n- Business name:\r\n- What we do:\r\n- What I'd like to talk through:\r\n- Best way to reach me:\r\n\r\n" +
+        "Happy to share financial files ahead of time if that helps.\r\n\r\nThanks!"
+    };
+    function pick(subject) {
+      var s = subject.toLowerCase();
+      if (s.indexOf('cleanup') > -1) return bodies.cleanup;
+      if (s.indexOf('health report') > -1) return bodies.health;
+      if (s.indexOf('monthly') > -1) return bodies.monthly;
+      if (s.indexOf('cfo review') > -1) return bodies.review;
+      return bodies.report;
+    }
+    document.querySelectorAll('a[href^="mailto:contact@finsightcfo.org"]').forEach(function (a) {
+      var href = a.getAttribute('href');
+      if (href.indexOf('body=') > -1) return;
+      var qIndex = href.indexOf('?');
+      if (qIndex === -1) {
+        a.setAttribute('href', href + '?subject=' + encodeURIComponent('FinsightCFO — General inquiry'));
+        return;
+      }
+      var subject = new URLSearchParams(href.slice(qIndex + 1)).get('subject') || '';
+      a.setAttribute('href', href + '&body=' + encodeURIComponent(pick(subject)));
+    });
+  })();
+</script>
+
+</body>
+</html>
