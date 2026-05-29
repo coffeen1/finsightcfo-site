@@ -1369,7 +1369,11 @@
     // (e.g. Formspree "https://formspree.io/f/xxxxxxx" or your own handler that
     // forwards to contact@finsightcfo.org). Leave empty to use the mailto fallback.
     // Do NOT put private API keys in this file.
-    var FORM_ENDPOINT = "";
+    // Web3Forms delivers each submission (including uploaded files) to your inbox.
+    // Get a free Access Key at https://web3forms.com (enter contact@finsightcfo.org,
+    // confirm via the email it sends), then paste the key below. The key is safe to
+    // expose publicly. Until it is set, the form falls back to opening an email draft.
+    var WEB3FORMS_KEY = "";
     var CONTACT_EMAIL = "contact@finsightcfo.org";
 
     var SERVICES = {
@@ -1429,7 +1433,7 @@
 
     function renderStep3() {
       step3.innerHTML = SERVICES[plan].q.map(function (label, i) {
-        return '<div class="field"><label class="field-label" for="q_' + i + '">' + esc(label) + '</label><textarea id="q_' + i + '" data-q="' + esc(label) + '"></textarea></div>';
+        return '<div class="field"><label class="field-label" for="q_' + i + '">' + esc(label) + '</label><textarea id="q_' + i + '" name="' + esc(label) + '" data-q="' + esc(label) + '"></textarea></div>';
       }).join('');
     }
 
@@ -1513,14 +1517,26 @@
       var s = SERVICES[plan];
       var subject = 'Intake: ' + s.name + ' - ' + (form.querySelector('#f_biz').value.trim() || 'New request');
 
-      if (FORM_ENDPOINT) {
+      if (WEB3FORMS_KEY) {
+        // Send to your inbox via Web3Forms (includes the uploaded files)
         var fd = new FormData(form);
-        fd.append('_subject', subject);
+        fd.append('access_key', WEB3FORMS_KEY);
+        fd.append('subject', subject);
+        fd.append('from_name', 'FinsightCFO website');
+        var rep = form.querySelector('#f_email').value.trim();
+        if (rep) fd.append('replyto', rep);
         fd.append('Service', s.name + ' (' + s.price + ')');
-        fetch(FORM_ENDPOINT, { method: 'POST', body: fd, headers: { Accept: 'application/json' } })
-          .then(function () { showSuccess(); })
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Sending...';
+        fetch('https://api.web3forms.com/submit', { method: 'POST', body: fd })
+          .then(function (r) { return r.json(); })
+          .then(function (data) {
+            if (data && data.success) { showSuccess(); }
+            else { window.location.href = mailtoUrl(subject); showSuccess(); }
+          })
           .catch(function () { window.location.href = mailtoUrl(subject); showSuccess(); });
       } else {
+        // No key configured yet: open a prefilled email draft as a fallback
         window.location.href = mailtoUrl(subject);
         showSuccess();
       }
