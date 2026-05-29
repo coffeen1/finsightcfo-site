@@ -642,6 +642,15 @@
       a.setAttribute('href', href + '&body=' + encodeURIComponent(body));
     });
   })();
+
+  // Floating nav: gains a soft background once you scroll off the hero/top
+  (function () {
+    var nav = document.querySelector('.nav');
+    if (!nav) return;
+    function onScroll() { nav.classList.toggle('is-scrolled', window.scrollY > 30); }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
 </script>
 </body>
 </html>

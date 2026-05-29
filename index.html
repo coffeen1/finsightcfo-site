@@ -26,7 +26,7 @@
     /* ---- Hero ---- */
     .hero {
       position: relative; padding: 0; overflow: hidden;
-      min-height: calc(100vh - 72px);
+      margin-top: -72px; min-height: 100vh;
       display: flex; flex-direction: column; justify-content: center;
       background-color: #dfe3ee;
       background-image: url("assets/hero-bg.webp");
@@ -1701,6 +1701,15 @@
     }
   ]
 }
+
+  // Floating nav: gains a soft background once you scroll off the hero/top
+  (function () {
+    var nav = document.querySelector('.nav');
+    if (!nav) return;
+    function onScroll() { nav.classList.toggle('is-scrolled', window.scrollY > 30); }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
 </script>
 
 </body>
