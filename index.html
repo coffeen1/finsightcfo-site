@@ -650,15 +650,17 @@
       background-position: center top;
       background-repeat: no-repeat;
     }
-    /* top fade: the page melts into the mountain's hazy sky for a seamless seam,
-       while leaving the mountain itself clearly visible */
+    /* top fade: starts at the page color (so the boundary with the section above is
+       invisible), bridges through a warm midtone, then clears to reveal the mountain's
+       hazy sky — a seamless gray->warm->photo blend with no visible line */
     .skyfoot::after {
-      content: ""; position: absolute; left: 0; right: 0; top: 0; height: 34%; z-index: -1; pointer-events: none;
+      content: ""; position: absolute; left: 0; right: 0; top: 0; height: 40%; z-index: -1; pointer-events: none;
       background: linear-gradient(to bottom,
         #F4F5F6 0%,
-        rgba(244, 245, 246, .82) 20%,
-        rgba(244, 245, 246, .4) 52%,
-        rgba(244, 245, 246, 0) 100%);
+        rgba(240, 233, 233, .9) 18%,
+        rgba(235, 223, 225, .6) 42%,
+        rgba(235, 223, 225, .28) 68%,
+        rgba(235, 223, 225, 0) 100%);
     }
     .skyfoot .footer {
       position: relative;
