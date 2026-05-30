@@ -600,13 +600,32 @@
     /* expanded stage (full section view) */
     .acc-stage { animation: accFade .4s ease; }
     @keyframes accFade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
-    .acc-backbar { padding-top: 30px; padding-bottom: 4px; }
-    .acc-back { display: inline-flex; align-items: center; gap: 7px; font: inherit; cursor: pointer;
+    .acc-backbar { padding-top: 30px; padding-bottom: 4px; display: flex; align-items: center; gap: 12px 16px; flex-wrap: wrap; }
+    .acc-back { display: inline-flex; align-items: center; gap: 7px; font: inherit; cursor: pointer; flex: none;
       background: var(--panel); border: 1px solid var(--line); border-radius: 30px; padding: 9px 18px 9px 13px;
       font-size: 13.5px; font-weight: 600; color: var(--ink); box-shadow: 0 1px 2px rgba(11, 11, 11, .04);
       transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease; }
     .acc-back:hover { border-color: var(--ink-4); box-shadow: 0 8px 20px -12px rgba(11, 11, 11, .42); transform: translateX(-2px); }
     .acc-back svg { color: var(--accent); }
+    /* section switcher tabs next to the back button */
+    .acc-tabs { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; padding-left: 16px;
+      border-left: 1px solid var(--line); }
+    .acc-tab { display: inline-flex; align-items: center; gap: 7px; font: inherit; cursor: pointer;
+      background: transparent; border: 1px solid transparent; border-radius: 30px; padding: 8px 15px;
+      font-size: 13.5px; font-weight: 600; color: var(--ink-3); white-space: nowrap;
+      transition: color .2s ease, background .2s ease, border-color .2s ease; }
+    .acc-tab .at-n { font-family: var(--mono); font-size: 11px; color: var(--ink-4); letter-spacing: .06em; }
+    .acc-tab:hover { color: var(--ink); background: var(--panel); border-color: var(--line); }
+    .acc-tab:hover .at-n { color: var(--accent); }
+    .acc-tab.active { color: #fff; background: var(--ink); border-color: var(--ink); }
+    .acc-tab.active .at-n { color: rgba(255,255,255,.6); }
+    @media (max-width: 860px) {
+      .acc-backbar { gap: 10px; }
+      .acc-tabs { width: 100%; padding-left: 0; border-left: none; padding-top: 4px;
+        flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
+      .acc-tabs::-webkit-scrollbar { display: none; }
+      .acc-tab { flex: none; }
+    }
     .acc-panel[hidden], .acc-stage[hidden] { display: none; }
     .acc-panel > .section { padding-top: 10px; }
 
@@ -1052,6 +1071,12 @@
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
         All sections
       </button>
+      <div class="acc-tabs" id="accTabs" role="tablist" aria-label="Switch section">
+        <button class="acc-tab" data-tab="features" type="button" role="tab"><span class="at-n">01</span> Services</button>
+        <button class="acc-tab" data-tab="how" type="button" role="tab"><span class="at-n">02</span> How it works</button>
+        <button class="acc-tab" data-tab="platform" type="button" role="tab"><span class="at-n">03</span> The report</button>
+        <button class="acc-tab" data-tab="pricing" type="button" role="tab"><span class="at-n">04</span> Pricing</button>
+      </div>
     </div>
     <div class="acc-panel" data-panel="features" hidden><section class="section" id="features" aria-labelledby="features-heading">
   <div class="wrap">
@@ -1741,6 +1766,7 @@
     var KEYS = ['features', 'how', 'platform', 'pricing'];
     var cards = Array.prototype.slice.call(deck.querySelectorAll('.acc-card'));
     var panels = Array.prototype.slice.call(stage.querySelectorAll('.acc-panel'));
+    var tabs = Array.prototype.slice.call(stage.querySelectorAll('.acc-tab'));
     var backBtn = document.getElementById('accBack');
     var deckWrap = deck.closest('.wrap');
 
@@ -1756,6 +1782,11 @@
     function openPanel(key, doScroll, focusBack) {
       if (KEYS.indexOf(key) === -1) return;
       panels.forEach(function (p) { p.hidden = p.getAttribute('data-panel') !== key; });
+      tabs.forEach(function (t) {
+        var on = t.getAttribute('data-tab') === key;
+        t.classList.toggle('active', on);
+        t.setAttribute('aria-selected', on ? 'true' : 'false');
+      });
       stage.hidden = false;
       if (deckWrap) deckWrap.style.display = 'none';
       setNavActive(key);
@@ -1780,6 +1811,11 @@
       });
     });
     if (backBtn) backBtn.addEventListener('click', function () { closePanel(true); });
+
+    // Tabs switch directly between sections without collapsing
+    tabs.forEach(function (t) {
+      t.addEventListener('click', function () { openPanel(t.getAttribute('data-tab'), false, false); });
+    });
 
     // Any in-page link to the four sections opens the matching panel
     document.querySelectorAll('a[href]').forEach(function (a) {
