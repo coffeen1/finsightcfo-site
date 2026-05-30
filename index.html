@@ -686,28 +686,6 @@
     .skyfoot .footer .foot-bottom span,
     .skyfoot .footer .foot-legal a { text-shadow: 0 1px 3px rgba(0, 0, 0, .45); }
 
-    /* ===== Synced lightning over every cloud area (hero, accordion, sky-footer) ===== */
-    .storm-flash { position: absolute; inset: 0; z-index: 4; pointer-events: none; opacity: 0;
-      mix-blend-mode: screen; background:
-        radial-gradient(120% 80% at 50% -10%, rgba(255,255,255,.95) 0%, rgba(228,238,255,.5) 26%, rgba(228,238,255,0) 60%); }
-    .hero .storm-flash { z-index: 2; }      /* above the moon image, below the headline text */
-    .acc .storm-flash { z-index: -1; }       /* over the clouds, behind the cards */
-    .skyfoot .storm-flash { z-index: -1; }   /* over the mountain sky, behind content */
-    .storm-flash.flash { animation: stormFlash 1.5s ease-out; }
-    @keyframes stormFlash {
-      0%   { opacity: 0; }
-      4%   { opacity: .95; }   /* first strike */
-      9%   { opacity: .15; }
-      13%  { opacity: .85; }   /* flicker */
-      18%  { opacity: .2; }
-      24%  { opacity: .6; }    /* afterglow */
-      100% { opacity: 0; }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .storm-flash.flash { animation: stormFlashSoft 1s ease-out; }
-      @keyframes stormFlashSoft { 0% { opacity: 0; } 20% { opacity: .4; } 100% { opacity: 0; } }
-    }
-
     /* ---- Start your report (intake) ---- */
     .intake-grid { display: grid; grid-template-columns: 1.25fr .85fr; gap: 40px; align-items: start; margin-top: 48px; }
     .intake-step { margin-bottom: 36px; }
@@ -1001,7 +979,6 @@
 <!-- ======= HERO ======= -->
 <section class="hero" aria-label="Hero">
   <div class="hero-scrim" aria-hidden="true"></div>
-  <div class="storm-flash" data-storm aria-hidden="true"></div>
   <div class="hero-inner">
     <span class="badge"><span class="pulse" aria-hidden="true"></span>AI Finance Office</span>
     <h1>Finance with<span class="l2"><em class="disp">Foresight.</em></span></h1>
@@ -1028,7 +1005,6 @@
   <div class="acc-room" aria-hidden="true">
     <div class="acc-room-layer acc-clouds"></div>
   </div>
-  <div class="storm-flash" data-storm aria-hidden="true"></div>
   <div class="wrap">
     <div class="acc-intro" data-reveal>
       <div class="eyebrow">Explore</div>
@@ -1458,7 +1434,6 @@
 <!-- ======= START YOUR REPORT (intake) ======= -->
 <!-- ======= SKY FOOTER (FAQ + footer over cloud image) ======= -->
 <div class="skyfoot">
-  <div class="storm-flash" data-storm aria-hidden="true"></div>
 
 <!-- ======= FAQ ======= -->
 <section class="section" id="faq" aria-labelledby="faq-heading">
@@ -1824,92 +1799,6 @@
     if (KEYS.indexOf(initial) > -1) {
       openPanel(initial, false, false);
       window.addEventListener('load', function () { explore.scrollIntoView({ block: 'start' }); });
-    }
-  })();
-
-  // ===== Synced thunder over all cloud areas: 3s after the home screen, then every 2 min =====
-  (function () {
-    var layers = Array.prototype.slice.call(document.querySelectorAll('[data-storm]'));
-    if (!layers.length) return;
-    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var AudioCtx = window.AudioContext || window.webkitAudioContext;
-    var ac = null, audioReady = false;
-
-    // Audio can only start after a user gesture; arm it on the first interaction.
-    function unlockAudio() {
-      if (audioReady || !AudioCtx) return;
-      try { ac = new AudioCtx(); audioReady = true; } catch (e) { audioReady = false; }
-    }
-    ['pointerdown', 'keydown', 'touchstart'].forEach(function (ev) {
-      window.addEventListener(ev, unlockAudio, { once: true, passive: true });
-    });
-
-    // Synthesize a thunder rumble: filtered noise burst with a slow decay + a low boom.
-    function playThunder() {
-      if (!audioReady || !ac) return;
-      if (ac.state === 'suspended') { try { ac.resume(); } catch (e) {} }
-      var now = ac.currentTime, dur = 2.6;
-
-      // Noise crackle
-      var len = Math.floor(ac.sampleRate * dur);
-      var buf = ac.createBuffer(1, len, ac.sampleRate);
-      var d = buf.getChannelData(0);
-      for (var i = 0; i < len; i++) { d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 2); }
-      var noise = ac.createBufferSource(); noise.buffer = buf;
-      var lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 480; lp.Q.value = 0.7;
-      var ng = ac.createGain();
-      ng.gain.setValueAtTime(0.0001, now);
-      ng.gain.exponentialRampToValueAtTime(0.9, now + 0.06);   // crack
-      ng.gain.exponentialRampToValueAtTime(0.28, now + 0.5);
-      ng.gain.exponentialRampToValueAtTime(0.0001, now + dur); // long rumble tail
-      noise.connect(lp).connect(ng).connect(ac.destination);
-
-      // Low boom
-      var osc = ac.createOscillator(); osc.type = 'sine';
-      osc.frequency.setValueAtTime(72, now);
-      osc.frequency.exponentialRampToValueAtTime(38, now + 1.4);
-      var og = ac.createGain();
-      og.gain.setValueAtTime(0.0001, now);
-      og.gain.exponentialRampToValueAtTime(0.6, now + 0.08);
-      og.gain.exponentialRampToValueAtTime(0.0001, now + 1.8);
-      osc.connect(og).connect(ac.destination);
-
-      noise.start(now); noise.stop(now + dur);
-      osc.start(now); osc.stop(now + 1.9);
-    }
-
-    // Flash every cloud layer at once so the storm reads as one synced strike.
-    function strike() {
-      layers.forEach(function (el) {
-        el.classList.remove('flash');
-        void el.offsetWidth; // restart the animation
-        el.classList.add('flash');
-      });
-      playThunder();
-    }
-    layers.forEach(function (el) {
-      el.addEventListener('animationend', function () { el.classList.remove('flash'); });
-    });
-
-    // First strike 3s after the home screen is visible; if the intro overlay is playing,
-    // wait until it's gone so the storm hits over the real hero.
-    function begin() {
-      setTimeout(strike, 3000);
-      setInterval(strike, 120000); // every 2 minutes
-    }
-    var overlay = document.getElementById('introOverlay');
-    if (overlay && document.body.classList.contains('intro-lock')) {
-      var started = false;
-      var go = function () { if (started) return; started = true; begin(); };
-      // when the intro fades out it removes intro-lock; poll briefly for that
-      var iv = setInterval(function () {
-        if (!document.body.classList.contains('intro-lock') || !document.getElementById('introOverlay')) {
-          clearInterval(iv); go();
-        }
-      }, 200);
-      setTimeout(function () { clearInterval(iv); go(); }, 8000); // safety fallback
-    } else {
-      begin();
     }
   })();
 </script>
