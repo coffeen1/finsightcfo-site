@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Start your FinsightCFO report. Choose a service, share your financial information, and our team will use AI-assisted analysis to deliver a clear CFO-level report." />
+  <title>FinsightCFO - Start your report</title>
+  <link rel="canonical" href="https://finsightcfo.org/start.html" />
+  <link rel="icon" type="image/png" href="assets/logo-mark.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500;1,6..72,600&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* ---- Intake form (start your report) ---- */
+    .intake-grid { display: grid; grid-template-columns: 1.25fr .85fr; gap: 40px; align-items: start; margin-top: 48px; }
+    .intake-step { margin-bottom: 36px; }
+    .intake-step:last-of-type { margin-bottom: 0; }
+    .intake-steplabel { display: flex; align-items: center; gap: 11px; margin-bottom: 16px; }
+    .intake-stepn { font-family: var(--mono); font-size: 12px; font-weight: 700; color: #fff; background: var(--btn); width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; flex: none; }
+    .intake-steptitle { font-family: var(--serif); font-size: 20px; font-weight: 600; letter-spacing: -.01em; }
+    .svc-toggle { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .svc-opt { position: relative; text-align: left; background: #fff; border: 1px solid var(--line-2); border-radius: 10px; padding: 16px; cursor: pointer; font: inherit; box-shadow: 0 1px 1px rgba(11, 11, 11, .03); transition: border-color .15s, box-shadow .15s; }
+    .svc-opt:hover { border-color: var(--line); }
+    .svc-opt.active { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent), 0 0 0 3px rgba(122, 74, 40, .1); }
+    .svc-opt .so-name { font-weight: 700; font-size: 14px; color: var(--ink); }
+    .svc-opt .so-price { font-size: 12.5px; color: var(--ink-3); margin-top: 3px; }
+    .svc-opt .so-dot { position: absolute; top: 13px; right: 13px; width: 9px; height: 9px; border-radius: 50%; border: 1.5px solid var(--ink-4); }
+    .svc-opt.active .so-dot { border-color: var(--accent); background: var(--accent); }
+    .field { margin-bottom: 22px; }
+    .field-label { display: block; font-size: 10.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 10px; }
+    .field-label .req { color: var(--accent); }
+    .field input, .field select, .field textarea { width: 100%; font: inherit; font-size: 15px; color: var(--ink); background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 14px 15px; box-shadow: 0 1px 1px rgba(11, 11, 11, .02); transition: border-color .15s, box-shadow .15s; }
+    .field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(122, 74, 40, .12); }
+    .field textarea { min-height: 104px; resize: vertical; }
+    .field.invalid input, .field.invalid select, .field.invalid textarea { border-color: #b3261e; box-shadow: 0 0 0 3px rgba(179, 38, 30, .12); }
+    .frow { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; }
+    .upload { border: 1px dashed var(--ink-4); border-radius: 12px; padding: 18px 18px; background: var(--panel-2); }
+    .upload input[type=file] { font-size: 13.5px; color: var(--ink-2); width: 100%; }
+    .upload .uphelp { font-size: 13px; color: var(--ink-3); margin: 10px 0 0; line-height: 1.5; }
+    .filechecks { display: grid; grid-template-columns: 1fr 1fr; gap: 9px 18px; margin-top: 16px; }
+    .chk { display: flex; gap: 9px; align-items: flex-start; font-size: 14px; color: var(--ink-2); cursor: pointer; }
+    .chk input { margin-top: 2px; accent-color: var(--btn); flex: none; }
+    .intake-note { margin-top: 16px; background: var(--accent-soft); border-left: 3px solid var(--accent); border-radius: 0 10px 10px 0; padding: 13px 16px; font-size: 13.5px; color: var(--ink-2); line-height: 1.5; }
+    .intake-note strong { color: var(--ink); }
+    .consent { display: flex; gap: 11px; align-items: flex-start; margin: 6px 0 20px; font-size: 14px; color: var(--ink-2); line-height: 1.5; cursor: pointer; }
+    .consent input { margin-top: 3px; accent-color: var(--btn); flex: none; }
+    .intake-form .btn { width: 100%; justify-content: center; }
+    .formerr { color: #b3261e; font-size: 13.5px; margin: 0 0 14px; display: none; }
+    .formerr.show { display: block; }
+    .svc-summary { position: sticky; top: 96px; background: #fff; border: 1px solid var(--line-2); border-radius: 14px; padding: 30px 28px; box-shadow: 0 1px 1px rgba(11, 11, 11, .03), 0 4px 14px -10px rgba(11, 11, 11, .12); }
+    .ss-name { font-family: var(--serif); font-size: 23px; font-weight: 600; letter-spacing: -.01em; }
+    .ss-price { font-size: 14px; font-weight: 700; color: var(--accent); letter-spacing: .02em; margin-top: 5px; }
+    .ss-best { font-size: 13.5px; color: var(--ink-2); margin: 12px 0 0; line-height: 1.5; }
+    .ss-block { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--line-2); }
+    .ss-block h5 { font-size: 10.5px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--ink-3); margin: 0 0 9px; }
+    .ss-block ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+    .ss-block li { display: flex; gap: 8px; font-size: 13.5px; color: var(--ink-2); line-height: 1.4; }
+    .ss-block li::before { content: "\203A"; color: var(--accent); font-weight: 700; flex: none; }
+    .ss-turn { font-size: 12.5px; color: var(--ink-3); margin-top: 16px; line-height: 1.45; }
+    .ss-turn strong { color: var(--ink-2); }
+    .ss-review { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--line-2); }
+    .ss-review dl { display: grid; grid-template-columns: auto 1fr; gap: 7px 14px; margin: 0; }
+    .ss-review dt { font-size: 11.5px; color: var(--ink-3); font-weight: 600; }
+    .ss-review dd { margin: 0; font-size: 13px; color: var(--ink); word-break: break-word; }
+    .intake-success { display: none; text-align: center; max-width: 560px; margin: 40px auto 0; background: #fff; border: 1px solid var(--line-2); border-radius: 14px; padding: 48px 32px; box-shadow: 0 1px 1px rgba(11, 11, 11, .03), 0 4px 14px -10px rgba(11, 11, 11, .12); }
+    .intake-success.show { display: block; }
+    .intake-success .ico { width: 56px; height: 56px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); display: grid; place-items: center; margin: 0 auto 18px; font-size: 26px; }
+    .intake-success h3 { font-family: var(--serif); font-weight: 600; font-size: 26px; margin: 0 0 10px; letter-spacing: -.01em; }
+    .intake-success p { color: var(--ink-2); font-size: 16px; margin: 0 auto; max-width: 420px; line-height: 1.6; }
+    @media (max-width: 900px) { .intake-grid { grid-template-columns: 1fr; } .svc-summary { position: static; } }
+    @media (max-width: 560px) { .svc-toggle { grid-template-columns: 1fr; } .frow { grid-template-columns: 1fr; } .filechecks { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<!-- ======= NAV ======= -->
+<header class="nav" aria-label="Site header">
+  <div class="wrap nav-in">
+    <a href="index.html" class="logo">
+      <img src="assets/logo.webp" class="logo-img" alt="FinsightCFO" />
+    </a>
+    <nav class="nav-links" aria-label="Main navigation">
+      <a href="index.html#features">Features</a>
+      <a href="index.html#how">How it works</a>
+      <a href="index.html#platform">The report</a>
+      <a href="index.html#pricing">Pricing</a>
+      <a href="team.html">Team</a>
+    </nav>
+    <div class="nav-right">
+      <a href="#start" class="btn btn--dark btn--sm">Start your report</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">☰</button>
+    </div>
+  </div>
+  <div class="mobile-menu" id="mobileMenu" role="navigation" aria-label="Mobile navigation">
+    <a href="index.html#features">Features</a>
+    <a href="index.html#how">How it works</a>
+    <a href="index.html#platform">The report</a>
+    <a href="index.html#pricing">Pricing</a>
+    <a href="team.html">Team</a>
+    <a href="#start">Start your report →</a>
+  </div>
+</header>
+
+<!-- ======= START YOUR REPORT ======= -->
+<section class="section section--alt" id="start" aria-labelledby="start-heading">
+  <div class="wrap">
+    <div class="shead shead--center" data-reveal>
+      <div class="eyebrow">Start your report</div>
+      <h2 id="start-heading">Start your FinsightCFO report</h2>
+      <p>Choose the service that fits your business, send us your financial information, and our team will use AI-assisted analysis to prepare a clear CFO-level report with insights, risks, forecasts, and next steps.</p>
+    </div>
+
+    <form class="intake-grid intake-form" id="intakeForm" novalidate>
+      <!-- LEFT: the form -->
+      <div>
+        <!-- Step 1: Service -->
+        <div class="intake-step">
+          <div class="intake-steplabel"><span class="intake-stepn">1</span><span class="intake-steptitle">Choose your service</span></div>
+          <div class="svc-toggle" role="tablist" aria-label="Choose your service">
+            <button type="button" class="svc-opt" data-plan="cleanup" role="tab" aria-selected="false">
+              <span class="so-dot" aria-hidden="true"></span>
+              <span class="so-name">Financial Cleanup</span>
+              <span class="so-price">$500 one-time</span>
+            </button>
+            <button type="button" class="svc-opt active" data-plan="health" role="tab" aria-selected="true">
+              <span class="so-dot" aria-hidden="true"></span>
+              <span class="so-name">Financial Health Report</span>
+              <span class="so-price">$800 one-time</span>
+            </button>
+            <button type="button" class="svc-opt" data-plan="monthly" role="tab" aria-selected="false">
+              <span class="so-dot" aria-hidden="true"></span>
+              <span class="so-name">Monthly Review</span>
+              <span class="so-price">$700/month</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 2: Business information -->
+        <div class="intake-step">
+          <div class="intake-steplabel"><span class="intake-stepn">2</span><span class="intake-steptitle">Business information</span></div>
+          <div class="frow">
+            <div class="field"><label class="field-label" for="f_biz">Business name <span class="req">*</span></label><input id="f_biz" name="Business name" type="text" required /></div>
+            <div class="field"><label class="field-label" for="f_owner">Owner name <span class="req">*</span></label><input id="f_owner" name="Owner name" type="text" required /></div>
+          </div>
+          <div class="frow">
+            <div class="field"><label class="field-label" for="f_email">Email <span class="req">*</span></label><input id="f_email" name="Email" type="email" required /></div>
+            <div class="field"><label class="field-label" for="f_phone">Phone number</label><input id="f_phone" name="Phone" type="tel" /></div>
+          </div>
+          <div class="frow">
+            <div class="field"><label class="field-label" for="f_site">Business website</label><input id="f_site" name="Website" type="text" placeholder="https://" /></div>
+            <div class="field"><label class="field-label" for="f_industry">Industry</label><input id="f_industry" name="Industry" type="text" /></div>
+          </div>
+          <div class="frow">
+            <div class="field"><label class="field-label" for="f_type">Business type</label><input id="f_type" name="Business type" type="text" placeholder="LLC, S-corp, sole prop, etc." /></div>
+            <div class="field"><label class="field-label" for="f_state">State</label><input id="f_state" name="State" type="text" /></div>
+          </div>
+          <div class="frow">
+            <div class="field"><label class="field-label" for="f_emp">Number of employees</label><input id="f_emp" name="Employees" type="text" /></div>
+            <div class="field"><label class="field-label" for="f_rev">Annual revenue range</label>
+              <select id="f_rev" name="Annual revenue">
+                <option value="">Not selected</option>
+                <option>Under $100k</option><option>$100k to $250k</option><option>$250k to $500k</option>
+                <option>$500k to $1M</option><option>$1M to $3M</option><option>$3M+</option>
+              </select>
+            </div>
+          </div>
+          <div class="frow">
+            <div class="field"><label class="field-label" for="f_soft">Accounting software used</label>
+              <select id="f_soft" name="Accounting software">
+                <option value="">Not selected</option>
+                <option>QuickBooks</option><option>Xero</option><option>Excel / Google Sheets</option>
+                <option>Wave</option><option>FreshBooks</option><option>Other</option><option>Not sure</option>
+              </select>
+            </div>
+            <div class="field"><label class="field-label" for="f_book">Do you have a bookkeeper or CPA?</label>
+              <select id="f_book" name="Has bookkeeper/CPA">
+                <option value="">Not selected</option><option>Yes</option><option>No</option><option>Not sure</option>
+              </select>
+            </div>
+          </div>
+          <div class="field"><label class="field-label" for="f_concern">Biggest financial concern</label><textarea id="f_concern" name="Biggest concern"></textarea></div>
+        </div>
+
+        <!-- Step 3: Financial review details (updates with service) -->
+        <div class="intake-step">
+          <div class="intake-steplabel"><span class="intake-stepn">3</span><span class="intake-steptitle">Financial review details</span></div>
+          <div id="step3fields"></div>
+        </div>
+
+        <!-- Step 4: Files -->
+        <div class="intake-step">
+          <div class="intake-steplabel"><span class="intake-stepn">4</span><span class="intake-steptitle">Your financial files</span></div>
+          <div class="field">
+            <label class="field-label" for="f_files">Upload your financial files</label>
+            <div class="upload">
+              <input id="f_files" name="files" type="file" multiple accept=".pdf,.xls,.xlsx,.csv,.doc,.docx,.png,.jpg,.jpeg,.txt,.qbo,.qbb" />
+              <p class="uphelp">Upload any reports, statements, exports, or spreadsheets you want us to review. If you don't have everything ready, you can still submit and send files later by email.</p>
+            </div>
+          </div>
+          <label class="field-label" style="margin-top:6px;">Which files are you submitting?</label>
+          <div class="filechecks">
+            <label class="chk"><input type="checkbox" name="ftype" value="Profit and loss statement" /> Profit and loss statement</label>
+            <label class="chk"><input type="checkbox" name="ftype" value="Balance sheet" /> Balance sheet</label>
+            <label class="chk"><input type="checkbox" name="ftype" value="Cash flow statement" /> Cash flow statement</label>
+            <label class="chk"><input type="checkbox" name="ftype" value="Bank statements" /> Bank statements</label>
+            <label class="chk"><input type="checkbox" name="ftype" value="Revenue report" /> Revenue report</label>
+            <label class="chk"><input type="checkbox" name="ftype" value="Expense report" /> Expense report</label>
+            <label class="chk"><input type="checkbox" name="ftype" value="Accounts receivable report" /> Accounts receivable report</label>
+            <label class="chk"><input type="checkbox" name="ftype" value="Accounts payable report" /> Accounts payable report</label>
+            <label class="chk"><input type="checkbox" name="ftype" value="Payroll summary" /> Payroll summary</label>
+            <label class="chk"><input type="checkbox" name="ftype" value="Budget or forecast file" /> Budget or forecast file</label>
+            <label class="chk"><input type="checkbox" name="ftype" value="Other supporting files" /> Other supporting files</label>
+          </div>
+          <div class="intake-note"><strong>A note on privacy:</strong> Please do not submit passwords, bank login credentials, Social Security numbers, or unnecessary sensitive personal information.</div>
+        </div>
+
+        <!-- Step 5: Review and submit -->
+        <div class="intake-step">
+          <div class="intake-steplabel"><span class="intake-stepn">5</span><span class="intake-steptitle">Review and submit</span></div>
+          <label class="consent"><input type="checkbox" id="f_consent" required /> I understand FinsightCFO provides business financial analysis and decision support and does not replace my CPA, tax advisor, bookkeeper, or legal advisor.</label>
+          <p class="formerr" id="formErr">Please complete the required fields (service, business name, owner name, a valid email, and the consent box).</p>
+          <button type="submit" class="btn btn--solid" id="submitBtn">Send intake request</button>
+        </div>
+      </div>
+
+      <!-- RIGHT: live service summary -->
+      <aside class="svc-summary" id="svcSummary" aria-live="polite"></aside>
+    </form>
+
+    <!-- Success state (shown after submit) -->
+    <div class="intake-success" id="intakeSuccess" role="status">
+      <div class="ico" aria-hidden="true">✓</div>
+      <h3>Your intake request has been sent</h3>
+      <p>Our team will review your information and contact you with next steps. If your email did not open automatically, write to <a href="mailto:contact@finsightcfo.org" style="color:var(--accent);text-decoration:underline;">contact@finsightcfo.org</a>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ======= FOOTER ======= -->
+<footer class="footer" aria-label="Site footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a href="index.html" class="logo">
+          <img src="assets/logo.webp" class="logo-img logo-img--foot" alt="FinsightCFO" />
+        </a>
+        <p>AI-assisted CFO reports for small businesses, understand your numbers, plan ahead, and act with confidence.</p>
+      </div>
+      <div class="foot-col">
+        <h4>Product</h4>
+        <a href="index.html#features">Features</a>
+        <a href="index.html#how">How it works</a>
+        <a href="index.html#pricing">Pricing</a>
+        <a href="start.html">Start your report</a>
+      </div>
+      <div class="foot-col">
+        <h4>Company</h4>
+        <a href="team.html">Team</a>
+        <a href="team.html">Our story</a>
+        <a href="mailto:contact@finsightcfo.org">Contact</a>
+      </div>
+      <div class="foot-col">
+        <h4>Legal</h4>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="privacy.html#security">Security</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 FinsightCFO, Inc. All rights reserved.</span>
+      <span class="foot-legal">
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="privacy.html#security">Security</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Mobile menu toggle
+  const navToggle = document.getElementById('navToggle');
+  const mobileMenu = document.getElementById('mobileMenu');
+  navToggle.addEventListener('click', function () {
+    const isOpen = mobileMenu.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', isOpen);
+    navToggle.textContent = isOpen ? '✕' : '☰';
+  });
+  mobileMenu.querySelectorAll('a').forEach(function (a) {
+    a.addEventListener('click', function () {
+      mobileMenu.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+      navToggle.textContent = '☰';
+    });
+  });
+
+  // Floating nav: gains a soft background once you scroll off the top
+  (function () {
+    var nav = document.querySelector('.nav');
+    if (!nav) return;
+    function onScroll() { nav.classList.toggle('is-scrolled', window.scrollY > 30); }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+
+  // Gentle scroll reveal
+  (function () {
+    document.body.classList.add('reveal-on');
+    var els = Array.prototype.slice.call(document.querySelectorAll('[data-reveal]'));
+    if (!('IntersectionObserver' in window)) { els.forEach(function (e) { e.classList.add('in'); }); return; }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+    els.forEach(function (e) { io.observe(e); });
+  })();
+
+  // ===== Start your report - intake form =====
+  (function () {
+    var form = document.getElementById('intakeForm');
+    if (!form) return;
+
+    // To enable direct submission + file upload, paste a form endpoint below.
+    // Web3Forms delivers each submission (including uploaded files) to your inbox.
+    // Get a free Access Key at https://web3forms.com (enter contact@finsightcfo.org,
+    // confirm via the email it sends), then paste the key below. The key is safe to
+    // expose publicly. Until it is set, the form falls back to opening an email draft.
+    var WEB3FORMS_KEY = "";
+    var CONTACT_EMAIL = "contact@finsightcfo.org";
+
+    var SERVICES = {
+      cleanup: {
+        name: 'Financial Cleanup', price: '$500 one-time', btn: 'Start Financial Cleanup',
+        best: 'Businesses with messy, incomplete, or unclear financial records.',
+        get: ['Review of current financial records','Basic cleanup recommendations','Income and expense category review','Missing information checklist','Bookkeeping issue summary','Priority cleanup action plan'],
+        files: ['Profit and loss statement','Balance sheet','Bank statements or transaction exports','Revenue and expense reports','QuickBooks, Excel, CSV, or accounting exports'],
+        turn: 'Delivered by email after your files are reviewed, typically a few business days.',
+        q: ['What feels messy or unclear in your books?','Are your income and expense categories organized?','Are there missing transactions or statements?','What period do you want reviewed?']
+      },
+      health: {
+        name: 'Financial Health Report', price: '$800 one-time', btn: 'Order Financial Health Report',
+        best: 'Business owners who want a CFO-style review of where the business stands financially.',
+        get: ['Revenue, expense, and profit analysis','Margin and cost structure review','Cash flow and working capital review','Risk and red flag summary','AI-assisted trend review','CFO-style recommendations','30-day action plan'],
+        files: ['Profit and loss statement','Balance sheet','Cash flow statement, if available','Bank statements or accounting exports','Revenue reports','Expense reports','Accounts receivable and payable reports','Payroll or major fixed cost summaries'],
+        turn: 'Delivered by email, typically 3 to 5 business days after we receive your files.',
+        q: ['What period should we review?','What decisions are you trying to make?','What are your biggest concerns right now?','Should we focus on cash flow, profitability, expenses, debt, growth, or all of the above?']
+      },
+      monthly: {
+        name: 'Monthly Review', price: '$700/month', btn: 'Start Monthly Review',
+        best: 'Business owners who want ongoing financial visibility and monthly CFO-style support.',
+        get: ['Monthly financial health summary','Revenue, expense, profit, and cash flow tracking','Month-over-month trend review','Red flag monitoring','KPI tracking','Monthly recommendations','Email support for financial questions'],
+        files: ['Updated profit and loss statement','Updated balance sheet','Bank or accounting exports','Revenue and expense reports','Accounts receivable and payable updates','Payroll or major cost updates'],
+        turn: 'Delivered by email each month after your updated files are received.',
+        q: ['What day of the month do you want your report prepared?','What KPIs matter most to your business?','What decisions do you want help reviewing each month?','Do you want ongoing email support included?']
+      }
+    };
+
+    var plan = 'health';
+    var summary = document.getElementById('svcSummary');
+    var step3 = document.getElementById('step3fields');
+    var submitBtn = document.getElementById('submitBtn');
+    var opts = Array.prototype.slice.call(form.querySelectorAll('.svc-opt'));
+
+    function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+    function renderSummary() {
+      var s = SERVICES[plan];
+      summary.innerHTML =
+        '<div class="ss-name">' + esc(s.name) + '</div>' +
+        '<div class="ss-price">' + esc(s.price) + '</div>' +
+        '<p class="ss-best">' + esc(s.best) + '</p>' +
+        '<div class="ss-block"><h5>What you get</h5><ul>' + s.get.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul></div>' +
+        '<div class="ss-block"><h5>Files requested</h5><ul>' + s.files.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul></div>' +
+        '<p class="ss-turn"><strong>Estimated turnaround:</strong> ' + esc(s.turn) + '</p>' +
+        '<div class="ss-review"><dl>' +
+          '<dt>Service</dt><dd>' + esc(s.name) + '</dd>' +
+          '<dt>Price</dt><dd>' + esc(s.price) + '</dd>' +
+          '<dt>Business</dt><dd id="rv-biz">-</dd>' +
+          '<dt>Email</dt><dd id="rv-email">-</dd>' +
+          '<dt>Concern</dt><dd id="rv-concern">-</dd>' +
+          '<dt>Files</dt><dd id="rv-files">None selected</dd>' +
+        '</dl></div>';
+      updateReview();
+    }
+
+    function renderStep3() {
+      step3.innerHTML = SERVICES[plan].q.map(function (label, i) {
+        return '<div class="field"><label class="field-label" for="q_' + i + '">' + esc(label) + '</label><textarea id="q_' + i + '" name="' + esc(label) + '" data-q="' + esc(label) + '"></textarea></div>';
+      }).join('');
+    }
+
+    function updateReview() {
+      var biz = form.querySelector('#f_biz').value.trim();
+      var email = form.querySelector('#f_email').value.trim();
+      var concern = form.querySelector('#f_concern').value.trim();
+      var files = Array.prototype.slice.call(form.querySelectorAll('input[name=ftype]:checked'));
+      var set = function (id, v) { var el = document.getElementById(id); if (el) el.textContent = v; };
+      set('rv-biz', biz || '-'); set('rv-email', email || '-');
+      set('rv-concern', concern ? (concern.length > 60 ? concern.slice(0, 57) + '...' : concern) : '-');
+      set('rv-files', files.length ? files.length + ' selected' : 'None selected');
+    }
+
+    function selectPlan(p) {
+      if (!SERVICES[p]) return;
+      plan = p;
+      opts.forEach(function (o) {
+        var on = o.getAttribute('data-plan') === p;
+        o.classList.toggle('active', on);
+        o.setAttribute('aria-selected', on ? 'true' : 'false');
+      });
+      submitBtn.textContent = SERVICES[p].btn;
+      renderSummary(); renderStep3();
+    }
+
+    opts.forEach(function (o) { o.addEventListener('click', function () { selectPlan(o.getAttribute('data-plan')); }); });
+    form.addEventListener('input', updateReview);
+
+    function buildEmail() {
+      var s = SERVICES[plan], lines = [];
+      lines.push('NEW FINSIGHTCFO INTAKE REQUEST', '', 'Service: ' + s.name + ' (' + s.price + ')', '', '-- Business information --');
+      ['f_biz|Business name','f_owner|Owner name','f_email|Email','f_phone|Phone','f_site|Website','f_industry|Industry','f_type|Business type','f_state|State','f_emp|Employees','f_rev|Annual revenue','f_soft|Accounting software','f_book|Bookkeeper or CPA','f_concern|Biggest concern'].forEach(function (pair) {
+        var parts = pair.split('|'), el = form.querySelector('#' + parts[0]), v = el ? el.value.trim() : '';
+        if (v) lines.push(parts[1] + ': ' + v);
+      });
+      lines.push('', '-- Financial review details --');
+      form.querySelectorAll('#step3fields [data-q]').forEach(function (t) {
+        if (t.value.trim()) lines.push(t.getAttribute('data-q') + ' ' + t.value.trim());
+      });
+      var files = Array.prototype.slice.call(form.querySelectorAll('input[name=ftype]:checked')).map(function (c) { return c.value; });
+      lines.push('', '-- Files the customer is submitting --', files.length ? files.join(', ') : 'None indicated');
+      var picked = form.querySelector('#f_files');
+      if (picked && picked.files && picked.files.length) {
+        lines.push('Selected file names: ' + Array.prototype.slice.call(picked.files).map(function (f) { return f.name; }).join(', '));
+      }
+      lines.push('', 'Please attach the files listed above to this email before sending.');
+      return lines.join('\r\n');
+    }
+
+    function mailtoUrl(subject) {
+      return 'mailto:' + CONTACT_EMAIL + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(buildEmail());
+    }
+
+    function showSuccess() {
+      form.style.display = 'none';
+      var ok = document.getElementById('intakeSuccess');
+      ok.classList.add('show');
+      ok.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var ok = true;
+      ['f_biz', 'f_owner', 'f_email'].forEach(function (id) {
+        var el = form.querySelector('#' + id), wrap = el.closest('.field');
+        var bad = !el.value.trim() || (el.type === 'email' && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(el.value.trim()));
+        if (bad) ok = false;
+        if (wrap) wrap.classList.toggle('invalid', bad);
+      });
+      if (!form.querySelector('#f_consent').checked) ok = false;
+      var err = document.getElementById('formErr');
+      if (!ok) { err.classList.add('show'); return; }
+      err.classList.remove('show');
+
+      var s = SERVICES[plan];
+      var subject = 'Intake: ' + s.name + ' - ' + (form.querySelector('#f_biz').value.trim() || 'New request');
+
+      if (WEB3FORMS_KEY) {
+        var fd = new FormData(form);
+        fd.append('access_key', WEB3FORMS_KEY);
+        fd.append('subject', subject);
+        fd.append('from_name', 'FinsightCFO website');
+        var rep = form.querySelector('#f_email').value.trim();
+        if (rep) fd.append('replyto', rep);
+        fd.append('Service', s.name + ' (' + s.price + ')');
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Sending...';
+        fetch('https://api.web3forms.com/submit', { method: 'POST', body: fd })
+          .then(function (r) { return r.json(); })
+          .then(function (data) {
+            if (data && data.success) { showSuccess(); }
+            else { window.location.href = mailtoUrl(subject); showSuccess(); }
+          })
+          .catch(function () { window.location.href = mailtoUrl(subject); showSuccess(); });
+      } else {
+        window.location.href = mailtoUrl(subject);
+        showSuccess();
+      }
+    });
+
+    // Default to the Health report, but honor ?plan= from a pricing button on the home page
+    selectPlan('health');
+    var pp = new URLSearchParams(window.location.search).get('plan');
+    if (pp && SERVICES[pp]) selectPlan(pp);
+  })();
+
+  // Pre-fill the success-state contact email so the compose window opens ready, not blank
+  (function () {
+    var PRIVACY = '(No need to include passwords, bank logins, or Social Security numbers.)';
+    var body =
+      "Hi FinsightCFO team,\r\n\r\nI'd like to get started on a financial report.\r\n\r\n" +
+      "About my business:\r\n- Business name:\r\n- What we do:\r\n- The main question I want answered:\r\n\r\n" +
+      "I'll attach the financial files I have, which may include my profit & loss statement, balance sheet, cash flow statement, bank statements, revenue/expense reports, and any QuickBooks, Excel, or CSV exports.\r\n\r\n" +
+      PRIVACY + "\r\n\r\nThanks!";
+    document.querySelectorAll('a[href^="mailto:contact@finsightcfo.org"]').forEach(function (a) {
+      var href = a.getAttribute('href');
+      if (href.indexOf('body=') > -1) return;
+      var sep = href.indexOf('?') === -1 ? '?subject=' + encodeURIComponent('FinsightCFO, Start my report') + '&body=' : '&body=';
+      a.setAttribute('href', href + sep + encodeURIComponent(body));
+    });
+  })();
+</script>
+</body>
+</html>
