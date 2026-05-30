@@ -218,43 +218,6 @@
     .browser img { display: block; width: 100%; }
 
     /* ---- What you can submit ---- */
-    .submit-grid { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 44px; }
-    .submit-item {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      background: var(--panel);
-      border: 1px solid var(--line-2);
-      border-radius: 10px;
-      padding: 13px 17px;
-      font-size: 14.5px;
-      font-weight: 500;
-      color: var(--ink);
-      box-shadow: 0 1px 1px rgba(11, 11, 11, .03);
-      transition: border-color .18s ease, box-shadow .18s ease;
-    }
-    .submit-item:hover { border-color: var(--line); box-shadow: 0 1px 1px rgba(11, 11, 11, .03), 0 8px 20px -16px rgba(11, 11, 11, .26); }
-    .submit-item::before {
-      content: "";
-      width: 7px;
-      height: 7px;
-      border-radius: 2px;
-      background: var(--accent);
-      flex: none;
-    }
-    .submit-note {
-      margin-top: 30px;
-      background: var(--accent-soft);
-      border-left: 3px solid var(--accent);
-      border-radius: 0 12px 12px 0;
-      padding: 16px 20px;
-      font-size: 14.5px;
-      color: var(--ink-2);
-      max-width: 840px;
-      line-height: 1.55;
-    }
-    .submit-note strong { color: var(--ink); }
-
     /* ---- Pricing ---- */
     .price-grid {
       display: grid;
@@ -1449,35 +1412,6 @@
 </section>
 
 
-<!-- ======= WHAT YOU CAN SUBMIT ======= -->
-<section class="section" id="submit" aria-labelledby="submit-heading">
-  <div class="wrap">
-    <div class="shead" data-reveal>
-      <div class="eyebrow">What we can review</div>
-      <h2 id="submit-heading">Send the financial files you already have.</h2>
-      <p>We can work with common business financial documents, accounting exports, spreadsheets, and reports. If your records are incomplete or messy, we can still help identify what needs cleanup.</p>
-    </div>
-    <div class="submit-grid" role="list" data-reveal>
-      <span class="submit-item" role="listitem">Profit &amp; loss statements</span>
-      <span class="submit-item" role="listitem">Balance sheets</span>
-      <span class="submit-item" role="listitem">Cash flow statements</span>
-      <span class="submit-item" role="listitem">Bank statements</span>
-      <span class="submit-item" role="listitem">Revenue reports</span>
-      <span class="submit-item" role="listitem">Expense reports</span>
-      <span class="submit-item" role="listitem">Accounts receivable reports</span>
-      <span class="submit-item" role="listitem">Accounts payable reports</span>
-      <span class="submit-item" role="listitem">Payroll summaries</span>
-      <span class="submit-item" role="listitem">Budget files</span>
-      <span class="submit-item" role="listitem">Forecast files</span>
-      <span class="submit-item" role="listitem">QuickBooks or accounting exports</span>
-      <span class="submit-item" role="listitem">Excel or CSV files</span>
-    </div>
-    <div class="submit-note">
-      <strong>A note on privacy:</strong> Please do not submit passwords, bank login credentials, Social Security numbers, or unnecessary sensitive personal information.
-    </div>
-  </div>
-</section>
-
 <!-- ======= START YOUR REPORT (intake) ======= -->
 <!-- ======= SKY FOOTER (FAQ + footer over cloud image) ======= -->
 <div class="skyfoot">
@@ -1513,7 +1447,7 @@
       </details>
       <details class="faq-item">
         <summary>What do I actually need to send?</summary>
-        <div class="faq-a">Whatever you have, profit &amp; loss statements, balance sheets, bank statements, revenue and expense reports, or QuickBooks/Excel/CSV exports. See the full list under <a href="#submit">What you can submit</a>.</div>
+        <div class="faq-a">Whatever you have, profit &amp; loss statements, balance sheets, bank statements, revenue and expense reports, or QuickBooks/Excel/CSV exports. See the full list under <a href="start.html#submit">What you can submit</a>.</div>
       </details>
       <details class="faq-item">
         <summary>How do I get started and pay?</summary>
@@ -1549,7 +1483,7 @@
       <div class="foot-col">
         <h4>Resources</h4>
         <a href="#how">How it works</a>
-        <a href="#submit">What to submit</a>
+        <a href="start.html#submit">What to submit</a>
         <a href="start.html">Start your report</a>
         <a href="#faq">FAQ</a>
       </div>
