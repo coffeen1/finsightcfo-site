@@ -1568,10 +1568,11 @@
   });
   function updateActive() {
     const y = window.scrollY + 120;
-    let idx = 0;
+    let idx = -1;
     anchors.forEach(function (s, i) {
-      if (s && s.offsetTop <= y) idx = i;
+      if (s && s.offsetParent !== null && s.offsetTop <= y) idx = i;
     });
+    if (idx === -1) return; // accordion targets hidden (collapsed) — leave highlight to the accordion controller
     navLinks.forEach(function (a, i) { a.classList.toggle('active', i === idx); });
   }
   window.addEventListener('scroll', updateActive, { passive: true });
