@@ -618,44 +618,6 @@
     @media (prefers-reduced-motion: reduce) {
       .trust-track, .badge .pulse { animation: none !important; }
     }
-
-    /* ===== Moon intro: pinned spinning moon + panels whose words scroll out of frame ===== */
-    .moonstage { position: relative; margin-top: -72px; height: 300vh; background: #dfe3ee; }
-    .moonstage-sticky { position: sticky; top: 0; height: 100vh; overflow: hidden; }
-    .moon-bg {
-      position: absolute; inset: -30%; z-index: 0;
-      background: url("assets/hero-bg.webp") center 42% / cover no-repeat;
-      transform: rotate(0deg) scale(1.5); transform-origin: 50% 55%; will-change: transform;
-    }
-    .moon-scrim {
-      position: absolute; inset: 0; z-index: 1; pointer-events: none;
-      background:
-        linear-gradient(to right, rgba(255,255,255,.84) 0%, rgba(255,255,255,.46) 32%, rgba(255,255,255,.08) 60%, rgba(255,255,255,0) 76%),
-        linear-gradient(to bottom, rgba(255,255,255,.28) 0%, rgba(255,255,255,0) 22%);
-    }
-    .moon-panels { position: absolute; inset: 0; z-index: 2; }
-    .moon-panel { position: absolute; inset: 0; display: flex; align-items: center; pointer-events: none; will-change: transform, opacity; }
-    .moon-panel.is-active { pointer-events: auto; }
-    .moon-panel-in { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 32px; }
-    .moon-panel h1 { font-family: var(--serif); font-weight: 500; font-size: clamp(48px, 7vw, 94px); line-height: .98; letter-spacing: -.02em; margin: 22px 0 0; color: var(--ink); }
-    .moon-panel h1 .l2 { display: block; }
-    .moon-panel .lede { color: var(--ink-2); font-size: clamp(17px, 1.5vw, 19px); max-width: 540px; margin: 26px 0 0; }
-    .moon-cta { display: flex; gap: 14px; margin-top: 34px; flex-wrap: wrap; }
-    .moon-strip { display: flex; align-items: center; gap: 22px; margin-top: 44px; max-width: 760px; }
-    .moon-strip .hero-strip-label { position: static; }
-    /* white veil that fades the moon into the page at the very end (seamless handoff) */
-    .moon-fade { position: absolute; inset: 0; z-index: 3; pointer-events: none; opacity: 0; background: #F4F5F6; }
-    /* green scroll hint, fades out after the first scroll */
-    .moon-hint { position: absolute; left: 50%; bottom: 30px; transform: translateX(-50%); z-index: 4;
-      display: flex; flex-direction: column; align-items: center; gap: 6px; transition: opacity .5s ease; }
-    .moon-hint.gone { opacity: 0; pointer-events: none; }
-    .moon-hint .hint-lbl { font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: #1E9E63; }
-    .moon-hint .chevs { display: flex; flex-direction: column; align-items: center; }
-    .moon-hint .chevs svg { width: 24px; height: 24px; color: #1E9E63; margin-top: -10px; animation: hintBounce 1.7s ease-in-out infinite; }
-    .moon-hint .chevs svg:nth-child(2) { opacity: .55; animation-delay: .22s; }
-    @keyframes hintBounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(5px); } }
-    @media (max-width: 640px) { .moon-strip { display: none; } }
-    @media (prefers-reduced-motion: reduce) { .moon-hint .chevs svg { animation: none !important; } }
   </style>
 </head>
 <body>
@@ -795,61 +757,27 @@
   </div>
 </header>
 
-<!-- ======= MOON INTRO (pinned spinning moon + scrolling word panels) ======= -->
-<section class="moonstage" id="moonstage" aria-label="Hero">
-  <div class="moonstage-sticky">
-    <div class="moon-bg" id="moonBg" aria-hidden="true"></div>
-    <div class="moon-scrim" aria-hidden="true"></div>
-
-    <div class="moon-panels" id="moonPanels">
-      <!-- Panel 1 -->
-      <div class="moon-panel" data-panel="0">
-        <div class="moon-panel-in">
-          <span class="badge"><span class="pulse" aria-hidden="true"></span>AI Finance Office</span>
-          <h1>Finance with<span class="l2"><em class="disp">Foresight.</em></span></h1>
-          <p class="lede">FinsightCFO turns your financial files into a clear CFO-level report, showing cash flow, risk, and the next move for your business.</p>
-          <div class="moon-cta">
-            <a href="#start" class="btn btn--solid">Start your report</a>
-          </div>
-        </div>
-      </div>
-      <!-- Panel 2 -->
-      <div class="moon-panel" data-panel="1">
-        <div class="moon-panel-in">
-          <h1>Your numbers,<span class="l2"><em class="disp">decoded.</em></span></h1>
-          <p class="lede">An advanced AI-assisted system reviews your financials, then our team turns the analysis into clear, CFO-level guidance.</p>
-        </div>
-      </div>
-      <!-- Panel 3 -->
-      <div class="moon-panel" data-panel="2">
-        <div class="moon-panel-in">
-          <h1>The next move,<span class="l2"><em class="disp">made clear.</em></span></h1>
-          <p class="lede">Cash flow, risk, and recommendations written for business owners, not accountants.</p>
-          <div class="moon-strip">
-            <span class="hero-strip-label">Works with exports from</span>
-            <div class="trust-logos" aria-label="Supported platforms">
-              <div class="trust-track">
-                <span>Mercury</span><span>QuickBooks</span><span>Stripe</span><span>Ramp</span><span>Gusto</span><span>Brex</span><span>Xero</span><span>Wave</span><span>Excel</span>
-                <span aria-hidden="true">Mercury</span><span aria-hidden="true">QuickBooks</span><span aria-hidden="true">Stripe</span><span aria-hidden="true">Ramp</span><span aria-hidden="true">Gusto</span><span aria-hidden="true">Brex</span><span aria-hidden="true">Xero</span><span aria-hidden="true">Wave</span><span aria-hidden="true">Excel</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+<!-- ======= HERO ======= -->
+<section class="hero" aria-label="Hero">
+  <div class="hero-scrim" aria-hidden="true"></div>
+  <div class="hero-inner">
+    <span class="badge"><span class="pulse" aria-hidden="true"></span>AI Finance Office</span>
+    <h1>Finance with<span class="l2"><em class="disp">Foresight.</em></span></h1>
+    <p class="lede">FinsightCFO turns your financial files into a clear CFO-level report, showing cash flow, risk, and the next move for your business.</p>
+    <div class="hero-cta">
+      <a href="#start" class="btn btn--solid">Start your report</a>
     </div>
-
-    <!-- green scroll hint, fades after first scroll -->
-    <div class="moon-hint" id="moonHint" aria-hidden="true">
-      <span class="hint-lbl">Scroll</span>
-      <span class="chevs">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
-      </span>
-    </div>
-
-    <!-- seamless fade into the page at the end -->
-    <div class="moon-fade" id="moonFade" aria-hidden="true"></div>
   </div>
+  <div class="hero-strip">
+    <span class="hero-strip-label">Works with exports from</span>
+    <div class="trust-logos" aria-label="Supported platforms">
+      <div class="trust-track">
+        <span>Mercury</span><span>QuickBooks</span><span>Stripe</span><span>Ramp</span><span>Gusto</span><span>Brex</span><span>Xero</span><span>Wave</span><span>Excel</span>
+        <span aria-hidden="true">Mercury</span><span aria-hidden="true">QuickBooks</span><span aria-hidden="true">Stripe</span><span aria-hidden="true">Ramp</span><span aria-hidden="true">Gusto</span><span aria-hidden="true">Brex</span><span aria-hidden="true">Xero</span><span aria-hidden="true">Wave</span><span aria-hidden="true">Excel</span>
+      </div>
+    </div>
+  </div>
+  <div class="hero-bleed" aria-hidden="true"></div>
 </section>
 
 <!-- ======= FEATURES ======= -->
@@ -1846,57 +1774,6 @@
     function onScroll() { nav.classList.toggle('is-scrolled', window.scrollY > 30); }
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
-  })();
-
-  // Moon intro: spin the moon with scroll, slide each panel's words out of frame,
-  // fade the green hint after the first scroll, then dissolve into the page at the end.
-  (function () {
-    var stage = document.getElementById('moonstage');
-    var bg = document.getElementById('moonBg');
-    var fade = document.getElementById('moonFade');
-    var hint = document.getElementById('moonHint');
-    if (!stage || !bg) return;
-    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var panels = Array.prototype.slice.call(stage.querySelectorAll('.moon-panel'));
-    var n = panels.length;
-    var hintGone = false, ticking = false;
-
-    function clamp(v, a, b) { return v < a ? a : (v > b ? b : v); }
-
-    function update() {
-      var rect = stage.getBoundingClientRect();
-      var total = stage.offsetHeight - window.innerHeight; // scrollable distance inside the stage
-      var p = clamp(-rect.top / total, 0, 1);               // 0 at top, 1 when stage is fully scrolled
-
-      // moon rotates a little across the whole stage + gentle zoom
-      if (!reduce) bg.style.transform = 'rotate(' + (p * 26) + 'deg) scale(' + (1.5 + p * 0.12) + ')';
-
-      // each panel owns a slice of the scroll; words rise out of frame and fade as you pass
-      var seg = 1 / n;
-      panels.forEach(function (panel, i) {
-        var local = (p - i * seg) / seg;        // -inf..1+ ; 0 = entering, 1 = leaving
-        var inner = panel.firstElementChild;
-        if (local <= -1 || local >= 2) { panel.style.opacity = 0; panel.classList.remove('is-active'); return; }
-        var y, op;
-        if (local < 0) { y = (-local) * 60; op = 1 + local; }        // coming up from below
-        else if (local <= 1) { y = -local * 18; op = local < .85 ? 1 : (1 - (local - .85) / .15); } // holding, then leaving
-        else { y = -(18 + (local - 1) * 70); op = clamp(2 - local, 0, 1); } // out of frame upward
-        if (inner) inner.style.transform = 'translate3d(0,' + y + 'vh,0)';
-        panel.style.opacity = clamp(op, 0, 1);
-        panel.classList.toggle('is-active', local >= -0.1 && local < 0.95);
-      });
-
-      // seamless handoff: white veil fades in over the last ~16% so it dissolves into the page
-      if (fade) fade.style.opacity = clamp((p - 0.84) / 0.16, 0, 1);
-      ticking = false;
-    }
-
-    window.addEventListener('scroll', function () {
-      if (!hintGone && (window.scrollY || 0) > 12 && hint) { hint.classList.add('gone'); hintGone = true; }
-      if (!ticking) { window.requestAnimationFrame(update); ticking = true; }
-    }, { passive: true });
-    window.addEventListener('resize', update, { passive: true });
-    update();
   })();
 </script>
 
