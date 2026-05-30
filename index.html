@@ -592,122 +592,20 @@
     .acc-panel[hidden], .acc-stage[hidden] { display: none; }
     .acc-panel > .section { padding-top: 10px; }
 
-    /* ===== Room backdrop + pull-cord light switch (scoped to the accordion) ===== */
-    .acc { overflow: hidden; isolation: isolate; background-color: var(--bg); transition: background-color .9s ease; }
+    /* ===== Clouds backdrop (scoped to the accordion) ===== */
+    .acc { overflow: hidden; isolation: isolate; background-color: var(--bg); min-height: 100vh; }
     .acc-room { position: absolute; inset: 0; z-index: -2; pointer-events: none; overflow: hidden; }
-    /* the section reserves a fixed full-screen height in every view, so the collapsed deck
-       and any expanded panel are the same length (empty room below the cards is intentional) */
-    .acc { min-height: 100vh; }
     .acc-room-layer { position: absolute; inset: 0; background-size: cover; background-position: center;
-      background-repeat: no-repeat; transition: opacity 1s ease; will-change: opacity; }
-    /* default (light) layer = clouds, with its top & bottom edges faded into the page color
-       so it blends seamlessly into the hero above and the sky-footer below */
-    .acc-room-white { background-image: url("assets/clouds-bg.webp"); background-color: var(--bg); opacity: 1;
+      background-repeat: no-repeat; }
+    /* clouds, with top & bottom edges faded into the page color so the section blends
+       seamlessly into the hero above and the sky-footer below */
+    .acc-clouds { background-image: url("assets/clouds-bg.webp"); background-color: var(--bg);
       -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 16%, #000 80%, transparent 100%);
       mask-image: linear-gradient(to bottom, transparent 0%, #000 16%, #000 80%, transparent 100%); }
-    .acc-room-black { background-image: url("assets/room-black.webp"); background-color: #131312; opacity: 0; }
-    /* overhead light pool that "ignites" in dark mode */
-    .acc-room-glow { position: absolute; left: 50%; top: -8%; transform: translateX(-50%);
-      width: 78%; height: 120%; opacity: 0; transition: opacity 1.1s ease; pointer-events: none;
-      background: radial-gradient(60% 52% at 50% 38%, rgba(255,196,128,.20), rgba(255,170,90,.06) 45%, transparent 72%); }
 
     /* light scrim so headings/cards stay readable over the clouds without hiding them */
     .acc::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
-      background: linear-gradient(180deg, rgba(244,245,246,.30) 0%, rgba(244,245,246,.08) 28%, rgba(244,245,246,.34) 100%);
-      transition: background .9s ease; }
-
-    .acc-intro h2, .acc-lead { transition: color .6s ease, text-shadow .6s ease; }
-
-    /* ---- DARK ROOM ---- */
-    .acc.is-dark-room { background-color: #0c0c0d; }
-    .acc.is-dark-room .acc-room-white { opacity: 0; }
-    .acc.is-dark-room .acc-room-black { opacity: 1; }
-    .acc.is-dark-room .acc-room-glow { opacity: 1; }
-    .acc.is-dark-room::before {
-      background: radial-gradient(70% 60% at 50% 32%, rgba(20,20,22,.30), rgba(8,8,9,.74) 78%);
-    }
-    .acc.is-dark-room .acc-intro h2 { color: #F4F1EC; text-shadow: 0 1px 24px rgba(0,0,0,.6); }
-    .acc.is-dark-room .eyebrow { color: #E6A35C; }
-    .acc.is-dark-room .acc-lead { color: rgba(238,234,228,.74); }
-
-    /* cards become premium dark glass in dark mode */
-    .acc.is-dark-room .acc-card {
-      background: rgba(26,26,28,.62); border-color: rgba(255,255,255,.14); color: #F1EEE9;
-      box-shadow: 0 1px 2px rgba(0,0,0,.4); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-    }
-    .acc.is-dark-room .acc-card:hover, .acc.is-dark-room .acc-card:focus-visible {
-      border-color: rgba(230,163,92,.6);
-      box-shadow: 0 26px 60px -26px rgba(0,0,0,.85), 0 0 0 1px rgba(230,163,92,.18);
-    }
-    .acc.is-dark-room .acc-title { color: #F4F1EC; }
-    .acc.is-dark-room .acc-prev { color: rgba(238,234,228,.82); }
-    .acc.is-dark-room .acc-more { color: rgba(238,234,228,.62); }
-    .acc.is-dark-room .acc-num { color: rgba(255,255,255,.34); }
-    .acc.is-dark-room .acc-hint { color: rgba(238,234,228,.6); }
-    .acc.is-dark-room .acc-hint .ah-line { background: linear-gradient(90deg, rgba(255,255,255,.22), transparent); }
-    .acc.is-dark-room .acc-hint .ah-open { color: #E6A35C; }
-    .acc.is-dark-room .acc-ico { background: rgba(230,163,92,.14); border-color: rgba(230,163,92,.34); color: #E6A35C; }
-
-    /* back bar + tabs in dark mode */
-    .acc.is-dark-room .acc-back { background: rgba(26,26,28,.7); border-color: rgba(255,255,255,.16); color: #F1EEE9; }
-    .acc.is-dark-room .acc-back svg { color: #E6A35C; }
-    .acc.is-dark-room .acc-tabs { border-left-color: rgba(255,255,255,.16); }
-    .acc.is-dark-room .acc-tab { color: rgba(238,234,228,.66); }
-    .acc.is-dark-room .acc-tab .at-n { color: rgba(255,255,255,.34); }
-    .acc.is-dark-room .acc-tab:hover { color: #fff; background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.18); }
-    .acc.is-dark-room .acc-tab.active { background: #E6A35C; border-color: #E6A35C; color: #1a1a1c; }
-    .acc.is-dark-room .acc-tab.active .at-n { color: rgba(26,26,28,.6); }
-
-    /* expanded full sections: keep text readable over the dark wall */
-    .acc.is-dark-room .acc-panel, .acc.is-dark-room .acc-panel .section { color: #ECE8E2; }
-    .acc.is-dark-room .acc-panel :is(h2,h3,.plan-name,.plan-price,.rm-title,.feat h3) { color: #F4F1EC; }
-    .acc.is-dark-room .acc-panel :is(p,li,.shead p,.feat p,.step p,.acc-lead) { color: rgba(236,232,226,.8); }
-    .acc.is-dark-room .acc-panel .eyebrow { color: #E6A35C; }
-    .acc.is-dark-room .acc-panel .step-n { color: #E6A35C; }
-    .acc.is-dark-room .acc-panel .feat { background: rgba(26,26,28,.55); border-color: rgba(255,255,255,.12); }
-    .acc.is-dark-room .acc-panel .plan { background: rgba(26,26,28,.62); border-color: rgba(255,255,255,.14); }
-    .acc.is-dark-room .acc-panel .browser { background: rgba(26,26,28,.66); border-color: rgba(255,255,255,.12); }
-    .acc.is-dark-room .acc-panel .bullets .tick { color: #E6A35C; }
-
-    /* page dims slightly behind the lit room */
-    body.room-dimmed { background-color: #0a0a0b; }
-    body.room-dimmed .acc { box-shadow: 0 0 0 100vmax rgba(6,6,7,.0); }
-
-    /* ---- Pull cord / lever ---- */
-    .acc-cord { position: absolute; top: 0; left: 50%; transform: translateX(-50%); z-index: 4;
-      width: 46px; padding: 0 0 14px; border: 0; background: transparent; cursor: pointer;
-      display: flex; flex-direction: column; align-items: center; transform-origin: top center;
-      -webkit-tap-highlight-color: transparent; }
-    .acc-cord-wire { width: 1px; height: 76px; border-radius: 2px;
-      background: linear-gradient(180deg, transparent 0%, rgba(140,130,128,.10) 45%, rgba(140,130,128,.28) 100%); }
-    .acc-cord-knob { width: 9px; height: 22px; border-radius: 6px; margin-top: -1px;
-      background: linear-gradient(180deg, #d8d8d8, #9a9a9a); box-shadow: 0 2px 5px rgba(0,0,0,.28); }
-    .acc-cord-tip { width: 0; height: 0; }
-    .acc-cord::after { content: "Pull"; margin-top: 8px; font-family: var(--mono); font-size: 9.5px;
-      letter-spacing: .18em; text-transform: uppercase; color: var(--ink-4); opacity: 0; transition: opacity .3s ease; white-space: nowrap; }
-    .acc-cord:hover::after, .acc-cord:focus-visible::after { opacity: 1; }
-    .acc-cord:hover .acc-cord-knob { transform: translateY(3px); }
-    .acc-cord:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 8px; }
-    .acc-cord-knob, .acc-cord:hover .acc-cord-knob { transition: transform .25s cubic-bezier(.34,1.56,.64,1); }
-    .acc.is-dark-room .acc-cord-wire { background: linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,.45)); }
-    .acc.is-dark-room .acc-cord-knob { background: linear-gradient(180deg, #f0d6ad, #d89b54); box-shadow: 0 0 10px rgba(230,163,92,.6); }
-    .acc.is-dark-room .acc-cord::after { content: "Lights on"; color: rgba(238,234,228,.6); }
-    .acc-cord.pulling { animation: cordPull .5s cubic-bezier(.34,1.56,.64,1); }
-    @keyframes cordPull {
-      0% { transform: translateX(-50%) scaleY(1); }
-      35% { transform: translateX(-50%) scaleY(1.16); }
-      70% { transform: translateX(-50%) scaleY(.97); }
-      100% { transform: translateX(-50%) scaleY(1); }
-    }
-
-    @media (max-width: 860px) {
-      .acc-cord { width: 40px; }
-      .acc-cord-wire { height: 56px; }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .acc, .acc::before, .acc-room-layer, .acc-room-glow, .acc-intro h2, .acc-lead { transition: none !important; }
-      .acc-cord.pulling { animation: none !important; }
-    }
+      background: linear-gradient(180deg, rgba(244,245,246,.30) 0%, rgba(244,245,246,.08) 28%, rgba(244,245,246,.34) 100%); }
 
     @media (max-width: 860px) {
       .acc { padding-top: 104px; }
@@ -1103,18 +1001,10 @@
 
 <!-- ======= EXPLORE (interactive accordion of Services / How it works / Report / Pricing) ======= -->
 <section class="acc" id="explore" aria-label="Explore FinsightCFO">
-  <!-- Room backdrop: white (default) + black crossfade layers, lit by the overhead light -->
+  <!-- Clouds backdrop -->
   <div class="acc-room" aria-hidden="true">
-    <div class="acc-room-layer acc-room-white"></div>
-    <div class="acc-room-layer acc-room-black"></div>
-    <div class="acc-room-glow"></div>
+    <div class="acc-room-layer acc-clouds"></div>
   </div>
-  <!-- Pull-cord lever to switch the room lights off/on -->
-  <button class="acc-cord" id="accCord" type="button" aria-pressed="false" aria-label="Pull the cord to dim the room">
-    <span class="acc-cord-wire" aria-hidden="true"></span>
-    <span class="acc-cord-knob" aria-hidden="true"></span>
-    <span class="acc-cord-tip" aria-hidden="true"></span>
-  </button>
   <div class="wrap">
     <div class="acc-intro" data-reveal>
       <div class="eyebrow">Explore</div>
@@ -1832,24 +1722,6 @@
     var tabs = Array.prototype.slice.call(stage.querySelectorAll('.acc-tab'));
     var backBtn = document.getElementById('accBack');
     var deckWrap = deck.closest('.wrap');
-
-    // Pull-cord light switch: toggle the room between white (default) and black
-    var cord = document.getElementById('accCord');
-    if (cord) {
-      var reduceMo = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      cord.addEventListener('click', function () {
-        var dark = explore.classList.toggle('is-dark-room');
-        document.body.classList.toggle('room-dimmed', dark);
-        cord.setAttribute('aria-pressed', dark ? 'true' : 'false');
-        cord.setAttribute('aria-label', dark ? 'Pull the cord to light the room' : 'Pull the cord to dim the room');
-        if (!reduceMo) {
-          cord.classList.remove('pulling');
-          void cord.offsetWidth; // restart the pull animation
-          cord.classList.add('pulling');
-        }
-      });
-      cord.addEventListener('animationend', function () { cord.classList.remove('pulling'); });
-    }
 
     function navLinksFor(key) {
       return Array.prototype.slice.call(document.querySelectorAll('.nav-links a'))
