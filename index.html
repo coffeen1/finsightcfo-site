@@ -595,9 +595,10 @@
     /* ===== Room backdrop + pull-cord light switch (scoped to the accordion) ===== */
     .acc { overflow: hidden; isolation: isolate; transition: background-color .9s ease; }
     .acc-room { position: absolute; inset: 0; z-index: -2; pointer-events: none; overflow: hidden; }
-    /* full-fill: the entire room image fills the whole box in every view (collapsed or
-       expanded), so the complete room shows top-to-bottom with no empty floor strip */
-    .acc-room-layer { position: absolute; inset: 0; background-size: 100% 100%; background-position: center;
+    /* the section reserves a fixed full-screen height in every view, so the collapsed deck
+       and any expanded panel are the same length (empty room below the cards is intentional) */
+    .acc { min-height: 100vh; }
+    .acc-room-layer { position: absolute; inset: 0; background-size: cover; background-position: center;
       background-repeat: no-repeat; transition: opacity 1s ease; will-change: opacity; }
     .acc-room-white { background-image: url("assets/room-white.webp"); background-color: #bfbdbd; opacity: 1; }
     .acc-room-black { background-image: url("assets/room-black.webp"); background-color: #131312; opacity: 0; }
