@@ -547,6 +547,76 @@
       .intro-row:nth-child(n+9) { display: none; }
     }
 
+    /* ===== Explore: interactive horizontal accordion (Services / How it works / Report / Pricing) ===== */
+    .acc { padding: 60px 0 12px; position: relative; }
+    .acc-intro { max-width: 760px; }
+    .acc-intro h2 { font-family: var(--serif); font-weight: 500; font-size: clamp(28px, 3.4vw, 40px);
+      line-height: 1.08; letter-spacing: -.02em; margin: 10px 0 0; color: var(--ink); }
+    .acc-lead { color: var(--ink-3); font-size: 15px; margin-top: 12px; }
+    .acc-lead .acc-grab { color: var(--accent); font-weight: 600; }
+
+    .acc-deck { display: flex; gap: 16px; margin-top: 34px; align-items: stretch;
+      overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
+      scrollbar-width: none; cursor: grab; padding: 4px 2px 8px; }
+    .acc-deck::-webkit-scrollbar { display: none; }
+    .acc-deck.dragging { cursor: grabbing; }
+    .acc-deck.dragging .acc-card { pointer-events: none; }
+
+    .acc-card {
+      position: relative; flex: 1 1 0; min-width: 0; scroll-snap-align: center;
+      display: flex; flex-direction: column; align-items: flex-start; text-align: left;
+      background: var(--panel); border: 1px solid var(--line); border-radius: 16px;
+      padding: 26px 24px; min-height: 296px; cursor: pointer; font: inherit; color: var(--ink);
+      box-shadow: 0 1px 2px rgba(11, 11, 11, .04); overflow: hidden;
+      transition: flex-grow .45s cubic-bezier(.4,0,.2,1), box-shadow .3s ease, border-color .3s ease, transform .3s ease;
+    }
+    .acc-card:hover, .acc-card:focus-visible {
+      border-color: var(--ink-4); outline: none;
+      box-shadow: 0 20px 44px -24px rgba(11, 11, 11, .42), 0 2px 6px rgba(11, 11, 11, .05);
+    }
+    .acc-ico { width: 46px; height: 46px; border-radius: 12px; border: 1px solid var(--accent-soft);
+      display: grid; place-items: center; color: var(--accent); background: var(--accent-soft); flex: none; }
+    .acc-ico svg { width: 23px; height: 23px; }
+    .acc-num { position: absolute; top: 23px; right: 24px; font-family: var(--mono); font-size: 12px;
+      color: var(--ink-4); letter-spacing: .1em; }
+    .acc-title { font-family: var(--serif); font-weight: 600; font-size: 23px; letter-spacing: -.01em; margin-top: 20px; }
+    .acc-prev { color: var(--ink-2); font-size: 14.5px; line-height: 1.5; margin-top: 8px; }
+    .acc-more { color: var(--ink-3); font-size: 13.5px; line-height: 1.55; overflow: hidden; }
+    .acc-hint { margin-top: auto; padding-top: 18px; display: flex; align-items: center; gap: 10px; width: 100%;
+      font-size: 11px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; color: var(--ink-3); }
+    .acc-hint .ah-line { flex: 1; height: 1px; background: linear-gradient(90deg, var(--line), transparent); }
+    .acc-hint .ah-open { color: var(--accent); font-size: 15px; transition: transform .3s ease; }
+    .acc-card:hover .ah-open, .acc-card:focus-visible .ah-open { transform: translateX(4px); }
+
+    /* desktop: hovered card expands like a horizontal accordion and reveals more */
+    @media (hover: hover) and (min-width: 861px) {
+      .acc-deck:hover .acc-card { flex-grow: .72; }
+      .acc-card:hover, .acc-card:focus-visible { flex-grow: 2.3; }
+      .acc-more { max-height: 0; opacity: 0; margin-top: 0;
+        transition: max-height .45s ease, opacity .35s ease, margin-top .45s ease; }
+      .acc-card:hover .acc-more, .acc-card:focus-visible .acc-more { max-height: 130px; opacity: 1; margin-top: 12px; }
+    }
+
+    /* expanded stage (full section view) */
+    .acc-stage { animation: accFade .4s ease; }
+    @keyframes accFade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+    .acc-backbar { padding-top: 30px; padding-bottom: 4px; }
+    .acc-back { display: inline-flex; align-items: center; gap: 7px; font: inherit; cursor: pointer;
+      background: var(--panel); border: 1px solid var(--line); border-radius: 30px; padding: 9px 18px 9px 13px;
+      font-size: 13.5px; font-weight: 600; color: var(--ink); box-shadow: 0 1px 2px rgba(11, 11, 11, .04);
+      transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease; }
+    .acc-back:hover { border-color: var(--ink-4); box-shadow: 0 8px 20px -12px rgba(11, 11, 11, .42); transform: translateX(-2px); }
+    .acc-back svg { color: var(--accent); }
+    .acc-panel[hidden], .acc-stage[hidden] { display: none; }
+    .acc-panel > .section { padding-top: 10px; }
+
+    @media (max-width: 860px) {
+      .acc { padding-top: 48px; }
+      .acc-deck { gap: 14px; margin-top: 26px; }
+      .acc-card { flex: 0 0 82%; min-width: 82%; min-height: 0; padding: 24px 22px; }
+      .acc-card .acc-more { margin-top: 12px; max-height: none; opacity: 1; }
+    }
+
     /* ---- FAQ ---- */
     .faq-list { max-width: 820px; margin: 48px auto 0; }
     .faq-item { border-bottom: 1px solid var(--line); }
@@ -932,8 +1002,58 @@
   <div class="hero-bleed" aria-hidden="true"></div>
 </section>
 
-<!-- ======= FEATURES ======= -->
-<section class="section" id="features" aria-labelledby="features-heading">
+<!-- ======= EXPLORE (interactive accordion of Services / How it works / Report / Pricing) ======= -->
+<section class="acc" id="explore" aria-label="Explore FinsightCFO">
+  <div class="wrap">
+    <div class="acc-intro" data-reveal>
+      <div class="eyebrow">Explore</div>
+      <h2>Everything FinsightCFO does, one card away.</h2>
+      <p class="acc-lead">Drag to browse &mdash; click a card to open the full section.</p>
+    </div>
+    <div class="acc-deck" id="accDeck">
+      <button class="acc-card" data-acc="features" type="button" aria-controls="features">
+        <span class="acc-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17 L9 11 L13 14 L21 5"/><path d="M21 9 V5 H17"/></svg></span>
+        <span class="acc-num">01</span>
+        <span class="acc-title">Services</span>
+        <span class="acc-prev">CFO consulting for small businesses, powered by advanced AI reporting.</span>
+        <span class="acc-more">Financial cleanup, health reports, monthly CFO review, cash-flow forecasting, margin analysis, and decision support.</span>
+        <span class="acc-hint"><span class="ah-line" aria-hidden="true"></span>Drag &middot; Click to open<span class="ah-open" aria-hidden="true">&rarr;</span></span>
+      </button>
+      <button class="acc-card" data-acc="how" type="button" aria-controls="how">
+        <span class="acc-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="6" r="1.6"/><circle cx="5" cy="12" r="1.6"/><circle cx="5" cy="18" r="1.6"/><path d="M9 6h11M9 12h11M9 18h7"/></svg></span>
+        <span class="acc-num">02</span>
+        <span class="acc-title">How it works</span>
+        <span class="acc-prev">From financial files to CFO-level guidance in three steps.</span>
+        <span class="acc-more">Send your files, our AI system and team analyze the numbers, and you receive a clear CFO-level report.</span>
+        <span class="acc-hint"><span class="ah-line" aria-hidden="true"></span>Drag &middot; Click to open<span class="ah-open" aria-hidden="true">&rarr;</span></span>
+      </button>
+      <button class="acc-card" data-acc="platform" type="button" aria-controls="platform">
+        <span class="acc-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span>
+        <span class="acc-num">03</span>
+        <span class="acc-title">The report</span>
+        <span class="acc-prev">A clear financial picture, not just raw numbers.</span>
+        <span class="acc-more">Executive summary, cash-flow analysis, revenue and expense breakdowns, risk flags, forecasts, and an action plan.</span>
+        <span class="acc-hint"><span class="ah-line" aria-hidden="true"></span>Drag &middot; Click to open<span class="ah-open" aria-hidden="true">&rarr;</span></span>
+      </button>
+      <button class="acc-card" data-acc="pricing" type="button" aria-controls="pricing">
+        <span class="acc-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.4 2.4 0 0 0 3.4 0l6.58-6.58a2.4 2.4 0 0 0 0-3.4z"/><circle cx="7.5" cy="7.5" r="1.3" fill="currentColor" stroke="none"/></svg></span>
+        <span class="acc-num">04</span>
+        <span class="acc-title">Pricing</span>
+        <span class="acc-prev">Choose the level of CFO support your business needs.</span>
+        <span class="acc-more">Financial Cleanup $500, Financial Health Report $800, or Monthly CFO Review $700/month.</span>
+        <span class="acc-hint"><span class="ah-line" aria-hidden="true"></span>Drag &middot; Click to open<span class="ah-open" aria-hidden="true">&rarr;</span></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="acc-stage" id="accStage" hidden>
+    <div class="wrap acc-backbar">
+      <button class="acc-back" id="accBack" type="button">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+        All sections
+      </button>
+    </div>
+    <div class="acc-panel" data-panel="features" hidden><section class="section" id="features" aria-labelledby="features-heading">
   <div class="wrap">
     <div class="shead" data-reveal>
       <div class="eyebrow">Our services</div>
@@ -1005,10 +1125,8 @@
 
     </div>
   </div>
-</section>
-
-<!-- ======= HOW IT WORKS ======= -->
-<section class="section section--alt" id="how" aria-labelledby="how-heading">
+</section></div>
+    <div class="acc-panel" data-panel="how" hidden><section class="section section--alt" id="how" aria-labelledby="how-heading">
   <div class="wrap">
     <div class="shead" data-reveal>
       <div class="eyebrow">How it works</div>
@@ -1032,10 +1150,8 @@
       </div>
     </div>
   </div>
-</section>
-
-<!-- ======= INSIDE THE REPORT ======= -->
-<section class="section" id="platform" aria-labelledby="platform-heading">
+</section></div>
+    <div class="acc-panel" data-panel="platform" hidden><section class="section" id="platform" aria-labelledby="platform-heading">
   <div class="wrap platform-grid">
     <div>
       <div class="eyebrow">The AI-assisted report</div>
@@ -1095,39 +1211,8 @@
       </div>
     </div>
   </div>
-</section>
-
-<!-- ======= WHAT YOU CAN SUBMIT ======= -->
-<section class="section" id="submit" aria-labelledby="submit-heading">
-  <div class="wrap">
-    <div class="shead" data-reveal>
-      <div class="eyebrow">What we can review</div>
-      <h2 id="submit-heading">Send the financial files you already have.</h2>
-      <p>We can work with common business financial documents, accounting exports, spreadsheets, and reports. If your records are incomplete or messy, we can still help identify what needs cleanup.</p>
-    </div>
-    <div class="submit-grid" role="list" data-reveal>
-      <span class="submit-item" role="listitem">Profit &amp; loss statements</span>
-      <span class="submit-item" role="listitem">Balance sheets</span>
-      <span class="submit-item" role="listitem">Cash flow statements</span>
-      <span class="submit-item" role="listitem">Bank statements</span>
-      <span class="submit-item" role="listitem">Revenue reports</span>
-      <span class="submit-item" role="listitem">Expense reports</span>
-      <span class="submit-item" role="listitem">Accounts receivable reports</span>
-      <span class="submit-item" role="listitem">Accounts payable reports</span>
-      <span class="submit-item" role="listitem">Payroll summaries</span>
-      <span class="submit-item" role="listitem">Budget files</span>
-      <span class="submit-item" role="listitem">Forecast files</span>
-      <span class="submit-item" role="listitem">QuickBooks or accounting exports</span>
-      <span class="submit-item" role="listitem">Excel or CSV files</span>
-    </div>
-    <div class="submit-note">
-      <strong>A note on privacy:</strong> Please do not submit passwords, bank login credentials, Social Security numbers, or unnecessary sensitive personal information.
-    </div>
-  </div>
-</section>
-
-<!-- ======= PRICING ======= -->
-<section class="section section--alt" id="pricing" aria-labelledby="pricing-heading">
+</section></div>
+    <div class="acc-panel" data-panel="pricing" hidden><section class="section section--alt" id="pricing" aria-labelledby="pricing-heading">
   <div class="wrap">
     <div class="shead shead--center" data-reveal>
       <div class="eyebrow">Pricing</div>
@@ -1332,6 +1417,38 @@
         <a href="start.html?plan=monthly" class="btn btn--ghost">Start Monthly Review</a>
       </div>
 
+    </div>
+  </div>
+</section></div>
+  </div>
+</section>
+
+
+<!-- ======= WHAT YOU CAN SUBMIT ======= -->
+<section class="section" id="submit" aria-labelledby="submit-heading">
+  <div class="wrap">
+    <div class="shead" data-reveal>
+      <div class="eyebrow">What we can review</div>
+      <h2 id="submit-heading">Send the financial files you already have.</h2>
+      <p>We can work with common business financial documents, accounting exports, spreadsheets, and reports. If your records are incomplete or messy, we can still help identify what needs cleanup.</p>
+    </div>
+    <div class="submit-grid" role="list" data-reveal>
+      <span class="submit-item" role="listitem">Profit &amp; loss statements</span>
+      <span class="submit-item" role="listitem">Balance sheets</span>
+      <span class="submit-item" role="listitem">Cash flow statements</span>
+      <span class="submit-item" role="listitem">Bank statements</span>
+      <span class="submit-item" role="listitem">Revenue reports</span>
+      <span class="submit-item" role="listitem">Expense reports</span>
+      <span class="submit-item" role="listitem">Accounts receivable reports</span>
+      <span class="submit-item" role="listitem">Accounts payable reports</span>
+      <span class="submit-item" role="listitem">Payroll summaries</span>
+      <span class="submit-item" role="listitem">Budget files</span>
+      <span class="submit-item" role="listitem">Forecast files</span>
+      <span class="submit-item" role="listitem">QuickBooks or accounting exports</span>
+      <span class="submit-item" role="listitem">Excel or CSV files</span>
+    </div>
+    <div class="submit-note">
+      <strong>A note on privacy:</strong> Please do not submit passwords, bank login credentials, Social Security numbers, or unnecessary sensitive personal information.
     </div>
   </div>
 </section>
@@ -1610,6 +1727,87 @@
     function onScroll() { nav.classList.toggle('is-scrolled', window.scrollY > 30); }
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
+  })();
+
+  // ===== Explore accordion: drag the deck, click a card to open its full section =====
+  (function () {
+    var deck = document.getElementById('accDeck');
+    var stage = document.getElementById('accStage');
+    var explore = document.getElementById('explore');
+    if (!deck || !stage || !explore) return;
+    var KEYS = ['features', 'how', 'platform', 'pricing'];
+    var cards = Array.prototype.slice.call(deck.querySelectorAll('.acc-card'));
+    var panels = Array.prototype.slice.call(stage.querySelectorAll('.acc-panel'));
+    var backBtn = document.getElementById('accBack');
+    var deckWrap = deck.closest('.wrap');
+
+    function navLinksFor(key) {
+      return Array.prototype.slice.call(document.querySelectorAll('.nav-links a'))
+        .filter(function (a) { return (a.getAttribute('href') || '') === '#' + key; });
+    }
+    function setNavActive(key) {
+      document.querySelectorAll('.nav-links a').forEach(function (a) { a.classList.remove('active'); });
+      if (key) navLinksFor(key).forEach(function (a) { a.classList.add('active'); });
+    }
+
+    function openPanel(key, doScroll, focusBack) {
+      if (KEYS.indexOf(key) === -1) return;
+      panels.forEach(function (p) { p.hidden = p.getAttribute('data-panel') !== key; });
+      stage.hidden = false;
+      if (deckWrap) deckWrap.style.display = 'none';
+      setNavActive(key);
+      try { history.replaceState(null, '', '#' + key); } catch (e) {}
+      if (doScroll !== false) explore.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      if (focusBack && backBtn) backBtn.focus();
+    }
+    function closePanel(doScroll) {
+      stage.hidden = true;
+      panels.forEach(function (p) { p.hidden = true; });
+      if (deckWrap) deckWrap.style.display = '';
+      setNavActive(null);
+      try { history.replaceState(null, '', '#explore'); } catch (e) {}
+      if (doScroll !== false) explore.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // Click a card -> open it (ignored if the gesture was a drag)
+    cards.forEach(function (card) {
+      card.addEventListener('click', function () {
+        if (deck.classList.contains('dragging')) return;
+        openPanel(card.getAttribute('data-acc'), true, true);
+      });
+    });
+    if (backBtn) backBtn.addEventListener('click', function () { closePanel(true); });
+
+    // Any in-page link to the four sections opens the matching panel
+    document.querySelectorAll('a[href]').forEach(function (a) {
+      var m = (a.getAttribute('href') || '').match(/^#(features|how|platform|pricing)$/);
+      if (!m) return;
+      a.addEventListener('click', function (e) { e.preventDefault(); openPanel(m[1], true, false); });
+    });
+
+    // Drag / swipe to scroll the deck (with click-vs-drag detection)
+    var down = false, startX = 0, startLeft = 0;
+    deck.addEventListener('pointerdown', function (e) {
+      down = true; startX = e.clientX; startLeft = deck.scrollLeft;
+      deck.classList.remove('dragging');
+    });
+    deck.addEventListener('pointermove', function (e) {
+      if (!down) return;
+      var dx = e.clientX - startX;
+      if (Math.abs(dx) > 6) deck.classList.add('dragging');
+      deck.scrollLeft = startLeft - dx;
+    });
+    function endDrag() { down = false; setTimeout(function () { deck.classList.remove('dragging'); }, 0); }
+    deck.addEventListener('pointerup', endDrag);
+    deck.addEventListener('pointercancel', endDrag);
+    deck.addEventListener('pointerleave', endDrag);
+
+    // Deep link: open the right panel if the page loads with a matching hash
+    var initial = (location.hash || '').replace('#', '');
+    if (KEYS.indexOf(initial) > -1) {
+      openPanel(initial, false, false);
+      window.addEventListener('load', function () { explore.scrollIntoView({ block: 'start' }); });
+    }
   })();
 </script>
 
