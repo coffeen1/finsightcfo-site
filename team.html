@@ -39,26 +39,6 @@
     body.reveal-on [data-reveal] { opacity: 0; transform: translateY(26px); transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1); }
     body.reveal-on [data-reveal].in { opacity: 1; transform: none; }
 
-    /* ===== 001 - Founders hero (centered, black & white) ===== */
-    .ehero { position: relative; overflow: hidden; text-align: center;
-      padding: clamp(96px, 15vh, 168px) 0 clamp(36px, 5vw, 64px); }
-    .ehero > .wrap { position: relative; z-index: 2; max-width: 980px; }
-    .ehero .elabel { justify-content: center; }
-    .ehero h1 {
-      font-family: var(--serif); font-weight: 500;
-      font-size: clamp(46px, 8vw, 100px); line-height: .98;
-      letter-spacing: -.03em; margin: 26px auto 0; max-width: 16ch;
-    }
-    .ehero h1 em { font-style: italic; }
-    .ehero .lede {
-      color: var(--ink-2); font-size: clamp(18px, 1.7vw, 21px);
-      line-height: 1.62; max-width: 600px; margin: 30px auto 0;
-    }
-    .ehero-cta { display: flex; gap: 14px; margin-top: 38px; flex-wrap: wrap; justify-content: center; }
-    /* thin hairline that ties the hero into the founders block below */
-    .founders-divider { width: 100%; max-width: var(--maxw); margin: clamp(40px,6vw,72px) auto 0; height: 1px;
-      background: linear-gradient(to right, transparent, var(--ink-4) 18%, var(--ink-4) 82%, transparent); }
-
     /* ===== Story (horizontal, full-width band) ===== */
     .estory-sec { background: #0c0d10; color: #fff; }
     .estory-head { text-align: center; max-width: 760px; margin: 0 auto; }
@@ -74,7 +54,7 @@
 
     /* ===== 003 - Interactive founder profiles ===== */
     /* ===== 003 - Meet the founders (editorial team cards) ===== */
-    .founders-sec { padding-top: clamp(40px, 5vw, 64px); }
+    .founders-sec { padding-top: clamp(120px, 16vh, 180px); }
     .team-head { text-align: center; max-width: 720px; margin: 0 auto; }
     .team-head .elabel { justify-content: center; }
     .team-h { font-family: var(--serif); font-weight: 500; font-size: clamp(30px, 4vw, 50px); line-height: 1.02; letter-spacing: -.025em; margin: 18px auto 0; max-width: 16ch; }
@@ -133,8 +113,6 @@
       .team-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
     }
     @media (max-width: 560px) {
-      .ehero-cta { flex-direction: column; align-items: stretch; }
-      .ehero-cta .btn { justify-content: center; }
       .team-grid { grid-template-columns: 1fr; max-width: 360px; margin-left: auto; margin-right: auto; }
     }
     @media (prefers-reduced-motion: reduce) {
@@ -249,24 +227,11 @@
   </div>
 </header>
 
-<!-- ======= 001, FOUNDERS HERO + MEET THE FOUNDERS (one section) ======= -->
-<section class="ehero" id="founders" aria-labelledby="ehero-heading">
-  <div class="wrap">
-    <span class="elabel">001 / Our founders<span class="ln" aria-hidden="true"></span></span>
-    <h1 id="ehero-heading">Built for the people building something that <em>matters.</em></h1>
-    <p class="lede">FinsightCFO was founded by Bryce Armstrong and Luke Coffeen to give small businesses the kind of CFO-level insight that larger companies use to make better decisions.</p>
-    <div class="ehero-cta">
-      <a href="index.html#start" class="btn btn--solid">Start your report</a>
-      <a href="index.html#pricing" class="btn btn--ghost">View services</a>
-    </div>
-  </div>
-  <div class="founders-divider" aria-hidden="true"></div>
-</section>
-
-<section class="section founders-sec" aria-labelledby="meet-heading">
+<!-- ======= 001, MEET THE FOUNDERS ======= -->
+<section class="section founders-sec" id="founders" aria-labelledby="meet-heading">
   <div class="wrap">
     <div class="team-head" data-reveal>
-      <span class="elabel">Meet the founders<span class="ln" aria-hidden="true"></span></span>
+      <span class="elabel">001 / Our founders<span class="ln" aria-hidden="true"></span></span>
       <h2 id="meet-heading" class="team-h">The people behind FinsightCFO.</h2>
       <p class="team-intro">Two operators who pair real CFO-style thinking with AI-assisted analysis, on a shared mission to make institutional-grade finance accessible.</p>
     </div>
